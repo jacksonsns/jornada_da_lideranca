@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Jornada da Liderança</title>
+
+    <link rel="icon" href="img/logo.png" type="image/png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap1.min.css" />
+    <!-- themefy CSS -->
+    <link rel="stylesheet" href="vendors/themefy_icon/themify-icons.css" />
+    <!-- swiper slider CSS -->
+    <link rel="stylesheet" href="vendors/swiper_slider/css/swiper.min.css" />
+    <!-- select2 CSS -->
+    <link rel="stylesheet" href="vendors/select2/css/select2.min.css" />
+    <!-- select2 CSS -->
+    <link rel="stylesheet" href="vendors/niceselect/css/nice-select.css" />
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="vendors/owl_carousel/css/owl.carousel.css" />
+    <!-- gijgo css -->
+    <link rel="stylesheet" href="vendors/gijgo/gijgo.min.css" />
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="vendors/font_awesome/css/all.min.css" />
+    <link rel="stylesheet" href="vendors/tagsinput/tagsinput.css" />
+
+    <!-- date picker -->
+    <link rel="stylesheet" href="vendors/datepicker/date-picker.css" />
+
+    <!-- datatable CSS -->
+    <link rel="stylesheet" href="vendors/datatable/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="vendors/datatable/css/responsive.dataTables.min.css" />
+    <link rel="stylesheet" href="vendors/datatable/css/buttons.dataTables.min.css" />
+    <!-- text editor css -->
+    <link rel="stylesheet" href="vendors/text_editor/summernote-bs4.css" />
+    <!-- morris css -->
+    <link rel="stylesheet" href="vendors/morris/morris.css">
+    <!-- metarial icon css -->
+    <link rel="stylesheet" href="vendors/material_icon/material-icons.css" />
+
+    <!-- menu css  -->
+    <link rel="stylesheet" href="css/metisMenu.css">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="css/style1.css" />
+    <link rel="stylesheet" href="css/colors/default.css" id="colorSkinCSS">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+</head>
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .container {
+        max-width: 900px;
+    }
+    .card {
+        cursor: grab;
+    }
+</style>
+
+<body class="crm_body_bg">
+    <nav class="sidebar">
+        <div class="logo d-flex justify-content-between">
+            <a href="index.html"><img src="img/logo.png" alt=""></a>
+            <div class="sidebar_close_icon d-lg-none">
+                <i class="ti-close"></i>
+            </div>
+        </div>
+        <ul id="sidebar_menu">
+            <li>
+                <a class="has-arrow" href="index.html" aria-expanded="false">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="quadro_dos_sonhos.html" aria-expanded="false">
+                    <i class="fas fa-star text-warning"></i>
+                    <span>Quadro dos Sonhos</span>
+                </a>
+            </li>
+            <li>
+                <a href="desafios.html" aria-expanded="false">
+                    <i class="fas fa-trophy text-orange"></i>
+                    <span>Desafio Júnior</span>
+                </a>
+            </li>
+            <li>
+                <a href="escola_de_lideres.html" aria-expanded="false">
+                    <i class="fas fa-graduation-cap text-primary"></i>
+                    <span>Escola de Líderes</span>
+                </a>
+            </li>
+            <li class="mm-active">
+                <a href="capacitacoes.html" aria-expanded="false">
+                    <i class="fas fa-book text-success"></i>
+                    <span>Capacitações</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" aria-expanded="false">
+                    <i class="fas fa-bullseye text-warning"></i>
+                    <span>Projeto Individual</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" aria-expanded="false">
+                    <i class="fas fa-calendar-alt text-primary"></i>
+                    <span>Agenda Google Compartilhada</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" aria-expanded="false">
+                    <i class="fas fa-chart-bar text-success"></i>
+                    <span>Área Financeira</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" aria-expanded="false">
+                    <i class="fas fa-chart-line" style="color:#991ADD"></i>
+                    <span>Integração e Acompanhamento</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    <!-- Adicione o Font Awesome ao seu projeto -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+
+    <section class="main_content dashboard_part">
+        <!-- menu  -->
+        <div class="container-fluid g-0">
+            <div class="row">
+                <div class="col-lg-12 p-0 ">
+                    <div class="header_iner d-flex justify-content-between align-items-center">
+                        <div class="sidebar_icon d-lg-none">
+                            <i class="ti-menu"></i>
+                        </div>
+                        <div class="serach_field-area">
+                            <div class="search_inner">
+                                <form action="#">
+                                    <div class="search_field">
+                                        <input type="text" placeholder="Search here...">
+                                    </div>
+                                    <button type="submit"> <img src="img/icon/icon_search.svg" alt=""> </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="header_right d-flex justify-content-between align-items-center">
+                            <div class="header_notification_warp d-flex align-items-center">
+                                <li>
+                                    <a class="bell_notification_clicker" href="#"> <img src="img/icon/bell.svg" alt="">
+                                        <span>04</span>
+                                    </a>
+                                    <!-- Menu_NOtification_Wrap  -->
+                                    <div class="Menu_NOtification_Wrap">
+                                        <div class="notification_Header">
+                                            <h4>Notifications</h4>
+                                        </div>
+                                        <div class="Notification_body">
+                                            <!-- single_notify  -->
+                                            <div class="single_notify d-flex align-items-center">
+                                                <div class="notify_thumb">
+                                                    <a href="#"><img src="img/staf/2.png" alt=""></a>
+                                                </div>
+                                                <div class="notify_content">
+                                                    <a href="#">
+                                                        <h5>Cool Directory </h5>
+                                                    </a>
+                                                    <p>Lorem ipsum dolor sit amet</p>
+                                                </div>
+                                            </div>
+                                            <!-- single_notify  -->
+                                            <div class="single_notify d-flex align-items-center">
+                                                <div class="notify_thumb">
+                                                    <a href="#"><img src="img/staf/4.png" alt=""></a>
+                                                </div>
+                                                <div class="notify_content">
+                                                    <a href="#">
+                                                        <h5>Awesome packages</h5>
+                                                    </a>
+                                                    <p>Lorem ipsum dolor sit amet</p>
+                                                </div>
+                                            </div>
+                                            <!-- single_notify  -->
+                                            <div class="single_notify d-flex align-items-center">
+                                                <div class="notify_thumb">
+                                                    <a href="#"><img src="img/staf/3.png" alt=""></a>
+                                                </div>
+                                                <div class="notify_content">
+                                                    <a href="#">
+                                                        <h5>what a packages</h5>
+                                                    </a>
+                                                    <p>Lorem ipsum dolor sit amet</p>
+                                                </div>
+                                            </div>
+                                            <!-- single_notify  -->
+                                            <div class="single_notify d-flex align-items-center">
+                                                <div class="notify_thumb">
+                                                    <a href="#"><img src="img/staf/2.png" alt=""></a>
+                                                </div>
+                                                <div class="notify_content">
+                                                    <a href="#">
+                                                        <h5>Cool Directory </h5>
+                                                    </a>
+                                                    <p>Lorem ipsum dolor sit amet</p>
+                                                </div>
+                                            </div>
+                                            <!-- single_notify  -->
+                                            <div class="single_notify d-flex align-items-center">
+                                                <div class="notify_thumb">
+                                                    <a href="#"><img src="img/staf/4.png" alt=""></a>
+                                                </div>
+                                                <div class="notify_content">
+                                                    <a href="#">
+                                                        <h5>Awesome packages</h5>
+                                                    </a>
+                                                    <p>Lorem ipsum dolor sit amet</p>
+                                                </div>
+                                            </div>
+                                            <!-- single_notify  -->
+                                            <div class="single_notify d-flex align-items-center">
+                                                <div class="notify_thumb">
+                                                    <a href="#"><img src="img/staf/3.png" alt=""></a>
+                                                </div>
+                                                <div class="notify_content">
+                                                    <a href="#">
+                                                        <h5>what a packages</h5>
+                                                    </a>
+                                                    <p>Lorem ipsum dolor sit amet</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="nofity_footer">
+                                            <div class="submit_button text-center pt_20">
+                                                <a href="#" class="btn_1">See More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/ Menu_NOtification_Wrap  -->
+                                </li>
+                                <li>
+                                    <a class="CHATBOX_open" href="#"> <img src="img/icon/msg.svg" alt="">
+                                        <span>01</span> </a>
+                                </li>
+                            </div>
+                            <div class="profile_info">
+                                <img src="img/avatar.png" alt="#">
+                                <div class="profile_info_iner">
+                                    <div class="profile_author_name">
+                                        <p>Olá, </p>
+                                        <h5>João Silva</h5>
+                                    </div>
+                                    <div class="profile_info_details">
+                                        <a href="#">My Profile </a>
+                                        <a href="#">Settings</a>
+                                        <a href="#">Log Out </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ menu  -->
+        <div class="main_content_iner ">
+            <div class="container-fluid p-0 sm_padding_15px">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card shadow-lg">
+                            <div class="card-header bg-primary text-white text-center">
+                                <h2 class="text-light">📚 Capacitações Realizadas</h2>
+                                <p class="text-light">Área para adicionar insights e anotações sobre capacitações realizadas pela JCI.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Filtro de Capacitações -->
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-light text-dark text-center">
+                                <h4>🔍 Filtro de Capacitações</h4>
+                            </div>
+                            <div class="card-body">
+                                <form class="form-inline justify-content-center">
+                                    <div class="form-group">
+                                        <label for="training-date" class="mr-2">Data:</label>
+                                        <input type="date" class="form-control" id="training-date">
+                                    </div>
+                                    <div class="form-group ml-3">
+                                        <label for="trainer" class="mr-2">Instrutor:</label>
+                                        <input type="text" class="form-control" id="trainer" placeholder="Nome do instrutor">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary ml-3 mt-3">Filtrar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Lista de Capacitações -->
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <div class="card shadow-lg">
+                            <div class="card-header bg-warning text-white text-center">
+                                <h4>📅 Capacitações Realizadas</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="list-group">
+                                    <!-- Capacitação 1 -->
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5>Capacitação em Liderança</h5>
+                                            <p class="mb-1">Realizada em 12/01/2025</p>
+                                            <p>Instrutor: João Silva</p>
+                                        </div>
+                                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#insightModal">Adicionar Insight</button>
+                                    </div>
+            
+                                    <!-- Capacitação 2 -->
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5>Capacitação em Gestão de Equipes</h5>
+                                            <p class="mb-1">Realizada em 05/03/2025</p>
+                                            <p>Instrutor: Maria Oliveira</p>
+                                        </div>
+                                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#insightModal">Adicionar Insight</button>
+                                    </div>
+            
+                                    <!-- Capacitação 3 -->
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5>Capacitação em Tomada de Decisão</h5>
+                                            <p class="mb-1">Realizada em 18/02/2025</p>
+                                            <p>Instrutor: Carlos Pereira</p>
+                                        </div>
+                                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#insightModal">Adicionar Insight</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Modal para Adicionar Insight -->
+                <div class="modal fade" id="insightModal" tabindex="-1" role="dialog" aria-labelledby="insightModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="insightModalLabel">💡 Adicionar Insight</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="insight-title">Título do Insight</label>
+                                        <input type="text" class="form-control" id="insight-title" placeholder="Título do Insight">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="insight-description">Descrição do Insight</label>
+                                        <textarea class="form-control" id="insight-description" rows="4" placeholder="Detalhe seus insights aqui..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="insight-tags">Tags (separadas por vírgula)</label>
+                                        <input type="text" class="form-control" id="insight-tags" placeholder="Ex: liderança, estratégia, motivação">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary">Salvar Insight</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- footer part -->
+        <div class="footer_part">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="footer_iner text-center">
+                            <p>2025 © Designed by <a href="#"> <i class="ti-heart"></i> </a><a href="#">
+                                    Jsn Developer</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <style>
+        .dream-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            padding: 10px;
+        }
+        .dream-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+        }
+        .dream-item:hover {
+            transform: scale(1.05);
+        }
+        .dream-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .dream-description {
+            position: absolute;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            width: 100%;
+            text-align: center;
+            padding: 5px;
+            font-size: 14px;
+        }
+        .upload-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .upload-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    
+    <script>
+        document.getElementById("add-dream").addEventListener("click", function() {
+            const fileInput = document.getElementById("image-upload");
+            const description = document.getElementById("dream-description").value.trim();
+            const gallery = document.getElementById("dream-gallery");
+    
+            if (fileInput.files.length === 0) {
+                alert("Escolha uma imagem para adicionar ao quadro dos sonhos!");
+                return;
+            }
+    
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+    
+            reader.onload = function(event) {
+                const dreamDiv = document.createElement("div");
+                dreamDiv.classList.add("dream-item");
+    
+                const img = document.createElement("img");
+                img.src = event.target.result;
+    
+                if (description) {
+                    const descDiv = document.createElement("div");
+                    descDiv.classList.add("dream-description");
+                    descDiv.innerText = description;
+                    dreamDiv.appendChild(descDiv);
+                }
+    
+                dreamDiv.appendChild(img);
+                gallery.appendChild(dreamDiv);
+    
+                fileInput.value = "";
+                document.getElementById("dream-description").value = "";
+            };
+    
+            reader.readAsDataURL(file);
+        });
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">    
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const data = new Date();
+            const opcoes = { day: "2-digit", month: "long", year: "numeric" };
+            const dataFormatada = data.toLocaleDateString("pt-BR", opcoes);
+    
+            document.getElementById("resumo").textContent = `Resumo do Dia - ${dataFormatada}`;
+        });
+    </script>
+
+    <!-- footer  -->
+    <!-- jquery slim -->
+    <script src="js/jquery1-3.4.1.min.js"></script>
+    <!-- popper js -->
+    <script src="js/popper1.min.js"></script>
+    <!-- bootstarp js -->
+    <script src="js/bootstrap1.min.js"></script>
+    <!-- sidebar menu  -->
+    <script src="js/metisMenu.js"></script>
+    <!-- waypoints js -->
+    <script src="vendors/count_up/jquery.waypoints.min.js"></script>
+    <!-- waypoints js -->
+    <script src="vendors/chartlist/Chart.min.js"></script>
+    <!-- counterup js -->
+    <script src="vendors/count_up/jquery.counterup.min.js"></script>
+    <!-- swiper slider js -->
+    <script src="vendors/swiper_slider/js/swiper.min.js"></script>
+    <!-- nice select -->
+    <script src="vendors/niceselect/js/jquery.nice-select.min.js"></script>
+    <!-- owl carousel -->
+    <script src="vendors/owl_carousel/js/owl.carousel.min.js"></script>
+    <!-- gijgo css -->
+    <script src="vendors/gijgo/gijgo.min.js"></script>
+    <!-- responsive table -->
+    <script src="vendors/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="vendors/datatable/js/dataTables.responsive.min.js"></script>
+    <script src="vendors/datatable/js/dataTables.buttons.min.js"></script>
+    <script src="vendors/datatable/js/buttons.flash.min.js"></script>
+    <script src="vendors/datatable/js/jszip.min.js"></script>
+    <script src="vendors/datatable/js/pdfmake.min.js"></script>
+    <script src="vendors/datatable/js/vfs_fonts.js"></script>
+    <script src="vendors/datatable/js/buttons.html5.min.js"></script>
+    <script src="vendors/datatable/js/buttons.print.min.js"></script>
+
+    <!-- date picker  -->
+    <script src="vendors/datepicker/datepicker.js"></script>
+    <script src="vendors/datepicker/datepicker.en.js"></script>
+    <script src="vendors/datepicker/datepicker.custom.js"></script>
+
+    <script src="js/chart.min.js"></script>
+    <!-- progressbar js -->
+    <script src="vendors/progressbar/jquery.barfiller.js"></script>
+    <!-- tag input -->
+    <script src="vendors/tagsinput/tagsinput.js"></script>
+    <!-- text editor js -->
+    <script src="vendors/text_editor/summernote-bs4.js"></script>
+    <script src="vendors/am_chart/amcharts.js"></script>
+
+    <script src="vendors/apex_chart/apexcharts.js"></script>
+    <script src="vendors/apex_chart/apex_realestate.js"></script>
+    <!-- <script src="vendors/apex_chart/default.js"></script> -->
+
+    <script src="vendors/chart_am/core.js"></script>
+    <script src="vendors/chart_am/charts.js"></script>
+    <script src="vendors/chart_am/animated.js"></script>
+    <script src="vendors/chart_am/kelly.js"></script>
+    <script src="vendors/chart_am/chart-custom.js"></script>
+    <!-- custom js -->
+    <script src="js/custom.js"></script>
+
+    <script src="vendors/apex_chart/bar_active_1.js"></script>
+    <script src="vendors/apex_chart/apex_chart_list.js"></script>
+</body>
+
+</html>
