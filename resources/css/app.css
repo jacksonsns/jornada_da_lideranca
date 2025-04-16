@@ -1,3 +1,29 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Estilos personalizados */
+body {
+    font-family: 'Nunito', sans-serif;
+}
+
+.sidebar {
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+.card {
+    @apply bg-white rounded-lg shadow-md p-4;
+}
+
+.btn-primary {
+    @apply bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600;
+}
+
+.btn-success {
+    @apply bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600;
+}
+
+.btn-danger {
+    @apply bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600;
+}
