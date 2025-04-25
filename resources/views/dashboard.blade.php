@@ -88,7 +88,7 @@
                         Projeto Individual
                     </h5>
                     <p class="card-text">Gerencie seu projeto individual.</p>
-                    <a href="{{ route('projeto-individual.index') }}" class="btn btn-primary">Acessar</a>
+                    <a href="{{ route('projetos-individuais.index') }}" class="btn btn-primary">Acessar</a>
                 </div>
             </div>
         </div>

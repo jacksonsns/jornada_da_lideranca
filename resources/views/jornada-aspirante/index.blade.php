@@ -19,12 +19,10 @@
                             +{{ $desafio->pontos }} pontos
                         </span>
                         @if(!$desafio->concluido)
-                            <form action="{{ route('desafios.concluir', $desafio) }}" method="POST" class="d-inline">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-outline-success complete-challenge">
-                                    Concluir
-                                </button>
-                            </form>
+                        <form action="{{ route('desafios.concluir', $desafio) }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-outline-success">Concluir</button>
+                        </form>
                         @else
                             <span class="text-success">✅ Concluído</span>
                         @endif
@@ -77,6 +75,7 @@
             button.addEventListener("click", function(e) {
                 e.preventDefault();
                 const form = this.closest('form');
+                
                 fetch(form.action, {
                     method: 'POST',
                     headers: {
@@ -87,10 +86,10 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        this.closest('.list-group-item').querySelector('.badge').classList.add('bg-success');
-                        this.closest('.list-group-item').querySelector('.complete-challenge').outerHTML = '<span class="text-success">✅ Concluído</span>';
+                        const listItem = this.closest('.list-group-item');
+                        listItem.querySelector('.badge').classList.add('bg-success');
+                        this.outerHTML = '<span class="text-success">✅ Concluído</span>';
                         
-                        // Atualiza o progresso
                         const completedCount = parseInt(completedText.textContent) + 1;
                         const totalChallenges = {{ $totalDesafios }};
                         const progressPercentage = (completedCount / totalChallenges) * 100;
@@ -99,9 +98,12 @@
                         progressBar.textContent = Math.round(progressPercentage) + "%";
                         completedText.textContent = completedCount;
                         
-                        // Atualiza o número de conquistas
                         achievementsCount.textContent = parseInt(achievementsCount.textContent) + 1;
                     }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Ocorreu um erro ao tentar concluir o desafio. Por favor, tente novamente.');
                 });
             });
         });

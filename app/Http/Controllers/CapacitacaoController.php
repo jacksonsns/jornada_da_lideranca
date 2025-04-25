@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Capacitacao;
-use App\Models\Inscricao;
+use App\Models\CapacitacaoParticipante;
+use App\Models\CapacitacaoMaterial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -11,9 +12,9 @@ class CapacitacaoController extends Controller
 {
     public function index()
     {
-        $capacitacoes = Capacitacao::with(['inscricoes' => function ($query) {
-            $query->where('user_id', auth()->id());
-        }])->latest()->paginate(9);
+        $capacitacoes = Capacitacao::with(['instrutor', 'participantes', 'materiais'])
+            ->latest()
+            ->paginate(10);
 
         return view('capacitacoes.index', compact('capacitacoes'));
     }
@@ -25,148 +26,115 @@ class CapacitacaoController extends Controller
 
     public function store(Request $request)
     {
-        $validados = $request->validate([
-            'titulo' => 'required|max:255',
-            'descricao' => 'required',
-            'data_inicio' => 'required|date|after:today',
-            'data_fim' => 'required|date|after:data_inicio',
+        $validated = $request->validate([
+            'titulo' => 'required|string|max:255',
+            'descricao' => 'required|string',
+            'data' => 'required|date',
+            'instrutor_id' => 'required|exists:users,id',
+            'local' => 'required|string|max:255',
+            'duracao' => 'required|integer|min:1',
             'vagas' => 'required|integer|min:1',
-            'local' => 'required|string',
-            'imagem' => 'nullable|image|max:2048',
-            'pre_requisitos' => 'nullable|string',
-            'investimento' => 'nullable|numeric|min:0'
+            'materiais.*' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx|max:10240',
         ]);
 
-        if ($request->hasFile('imagem')) {
-            $validados['imagem'] = $request->file('imagem')->store('capacitacoes', 'public');
+        $capacitacao = Capacitacao::create($validated);
+
+        if ($request->hasFile('materiais')) {
+            foreach ($request->file('materiais') as $material) {
+                $path = $material->store('materiais-capacitacao');
+                $capacitacao->materiais()->create([
+                    'nome' => $material->getClientOriginalName(),
+                    'caminho' => $path,
+                    'tamanho' => $material->getSize(),
+                ]);
+            }
         }
 
-        $validados['instrutor_id'] = auth()->id();
-        $validados['status'] = 'agendada';
-
-        Capacitacao::create($validados);
-
         return redirect()->route('capacitacoes.index')
-            ->with('sucesso', 'Capacitação criada com sucesso!');
+            ->with('success', 'Capacitação criada com sucesso!');
     }
 
     public function show(Capacitacao $capacitacao)
     {
-        $inscrito = $capacitacao->inscricoes()->where('user_id', auth()->id())->exists();
-        $vagasDisponiveis = $capacitacao->vagas - $capacitacao->inscricoes()->count();
-
-        return view('capacitacoes.show', compact('capacitacao', 'inscrito', 'vagasDisponiveis'));
+        $capacitacao->load(['instrutor', 'participantes', 'materiais']);
+        return view('capacitacoes.show', compact('capacitacao'));
     }
 
     public function edit(Capacitacao $capacitacao)
     {
-        if ($capacitacao->instrutor_id !== auth()->id()) {
-            abort(403);
-        }
-
         return view('capacitacoes.edit', compact('capacitacao'));
     }
 
     public function update(Request $request, Capacitacao $capacitacao)
     {
-        if ($capacitacao->instrutor_id !== auth()->id()) {
-            abort(403);
-        }
-
-        $validados = $request->validate([
-            'titulo' => 'required|max:255',
-            'descricao' => 'required',
-            'data_inicio' => 'required|date',
-            'data_fim' => 'required|date|after:data_inicio',
-            'vagas' => 'required|integer|min:' . $capacitacao->inscricoes()->count(),
-            'local' => 'required|string',
-            'imagem' => 'nullable|image|max:2048',
-            'pre_requisitos' => 'nullable|string',
-            'investimento' => 'nullable|numeric|min:0',
-            'status' => 'required|in:agendada,em_andamento,concluida,cancelada'
+        $validated = $request->validate([
+            'titulo' => 'required|string|max:255',
+            'descricao' => 'required|string',
+            'data' => 'required|date',
+            'instrutor_id' => 'required|exists:users,id',
+            'local' => 'required|string|max:255',
+            'duracao' => 'required|integer|min:1',
+            'vagas' => 'required|integer|min:1',
+            'materiais.*' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx|max:10240',
         ]);
 
-        if ($request->hasFile('imagem')) {
-            if ($capacitacao->imagem) {
-                Storage::disk('public')->delete($capacitacao->imagem);
+        $capacitacao->update($validated);
+
+        if ($request->hasFile('materiais')) {
+            foreach ($request->file('materiais') as $material) {
+                $path = $material->store('materiais-capacitacao');
+                $capacitacao->materiais()->create([
+                    'nome' => $material->getClientOriginalName(),
+                    'caminho' => $path,
+                    'tamanho' => $material->getSize(),
+                ]);
             }
-            $validados['imagem'] = $request->file('imagem')->store('capacitacoes', 'public');
         }
 
-        $capacitacao->update($validados);
-
-        return redirect()->route('capacitacoes.show', $capacitacao)
-            ->with('sucesso', 'Capacitação atualizada com sucesso!');
+        return redirect()->route('capacitacoes.index')
+            ->with('success', 'Capacitação atualizada com sucesso!');
     }
 
     public function destroy(Capacitacao $capacitacao)
     {
-        if ($capacitacao->instrutor_id !== auth()->id()) {
-            abort(403);
+        foreach ($capacitacao->materiais as $material) {
+            Storage::delete($material->caminho);
         }
-
-        if ($capacitacao->inscricoes()->exists()) {
-            return redirect()->route('capacitacoes.show', $capacitacao)
-                ->with('erro', 'Não é possível excluir uma capacitação com inscrições!');
-        }
-
-        if ($capacitacao->imagem) {
-            Storage::disk('public')->delete($capacitacao->imagem);
-        }
-
+        
         $capacitacao->delete();
 
         return redirect()->route('capacitacoes.index')
-            ->with('sucesso', 'Capacitação excluída com sucesso!');
+            ->with('success', 'Capacitação excluída com sucesso!');
     }
 
     public function inscrever(Capacitacao $capacitacao)
     {
-        if ($capacitacao->inscricoes()->where('user_id', auth()->id())->exists()) {
-            return redirect()->route('capacitacoes.show', $capacitacao)
-                ->with('erro', 'Você já está inscrito nesta capacitação!');
+        if ($capacitacao->vagas_disponiveis > 0) {
+            $capacitacao->participantes()->create([
+                'user_id' => auth()->id(),
+                'status' => 'confirmado'
+            ]);
+
+            return redirect()->back()
+                ->with('success', 'Inscrição realizada com sucesso!');
         }
 
-        if ($capacitacao->inscricoes()->count() >= $capacitacao->vagas) {
-            return redirect()->route('capacitacoes.show', $capacitacao)
-                ->with('erro', 'Não há mais vagas disponíveis!');
-        }
-
-        $capacitacao->inscricoes()->create([
-            'user_id' => auth()->id(),
-            'status' => 'confirmada'
-        ]);
-
-        return redirect()->route('capacitacoes.show', $capacitacao)
-            ->with('sucesso', 'Inscrição realizada com sucesso!');
+        return redirect()->back()
+            ->with('error', 'Não há vagas disponíveis para esta capacitação.');
     }
 
     public function cancelarInscricao(Capacitacao $capacitacao)
     {
-        $inscricao = $capacitacao->inscricoes()->where('user_id', auth()->id())->firstOrFail();
-        $inscricao->delete();
+        $capacitacao->participantes()
+            ->where('user_id', auth()->id())
+            ->delete();
 
-        return redirect()->route('capacitacoes.show', $capacitacao)
-            ->with('sucesso', 'Inscrição cancelada com sucesso!');
+        return redirect()->back()
+            ->with('success', 'Inscrição cancelada com sucesso!');
     }
 
-    public function minhasInscricoes()
+    public function downloadMaterial(CapacitacaoMaterial $material)
     {
-        $inscricoes = auth()->user()->inscricoesCapacitacao()
-            ->with('capacitacao')
-            ->latest()
-            ->paginate(10);
-
-        return view('capacitacoes.minhas-inscricoes', compact('inscricoes'));
-    }
-
-    public function minhasCapacitacoes()
-    {
-        $capacitacoes = auth()->user()->capacitacoesMinistradas()
-            ->withCount('inscricoes')
-            ->latest()
-            ->paginate(10);
-
-        return view('capacitacoes.minhas-capacitacoes', compact('capacitacoes'));
+        return Storage::download($material->caminho, $material->nome);
     }
 } 

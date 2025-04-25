@@ -69,9 +69,24 @@ class DesafioController extends Controller
 
     public function concluir(Desafio $desafio)
     {
-        $desafio->update(['status' => 'concluído']);
+        $user = auth()->user();
+        
+        // Atualiza a relação pivot
+        $user->desafios()->updateExistingPivot($desafio->id, [
+            'concluido' => true,
+            'concluido_em' => now()
+        ]);
 
-        return redirect()->route('desafios.show', $desafio)
-            ->with('sucesso', 'Parabéns! Desafio concluído com sucesso!');
+        // Retorna uma resposta JSON para requisições AJAX
+        if (request()->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Desafio concluído com sucesso!'
+            ]);
+        }
+
+        // Redireciona com mensagem de sucesso para requisições normais
+        return redirect()->back()
+            ->with('sucesso', 'Desafio concluído com sucesso!');
     }
 } 

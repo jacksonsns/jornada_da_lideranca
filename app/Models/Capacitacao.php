@@ -9,26 +9,39 @@ class Capacitacao extends Model
 {
     use HasFactory;
 
+    protected $table = 'capacitacoes';
+
     protected $fillable = [
         'titulo',
         'descricao',
-        'tipo',
-        'data_inicio',
-        'data_fim',
-        'link_material',
-        'ativo'
+        'data_realizacao',
+        'instrutor',
+        'material_url',
+        'insights',
+        'categoria',
+        'carga_horaria',
+        'local'
     ];
 
     protected $casts = [
-        'data_inicio' => 'date',
-        'data_fim' => 'date',
-        'ativo' => 'boolean'
+        'data_realizacao' => 'datetime',
+        'insights' => 'array'
     ];
 
-    public function users()
+    public function participantes()
     {
-        return $this->belongsToMany(User::class, 'capacitacao_user')
-            ->withPivot('concluido', 'data_conclusao')
+        return $this->belongsToMany(User::class, 'capacitacao_participantes')
+            ->withPivot('presente', 'feedback', 'nota')
             ->withTimestamps();
+    }
+
+    public function anexos()
+    {
+        return $this->hasMany(CapacitacaoAnexo::class);
+    }
+
+    public function avaliacoes()
+    {
+        return $this->hasMany(CapacitacaoAvaliacao::class);
     }
 } 

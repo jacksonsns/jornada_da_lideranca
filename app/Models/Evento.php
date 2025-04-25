@@ -15,8 +15,8 @@ class Evento extends Model
         'data_inicio',
         'data_fim',
         'local',
-        'tipo',
-        'user_id'
+        'google_calendar_id',
+        'criador_id'
     ];
 
     protected $casts = [
@@ -24,15 +24,15 @@ class Evento extends Model
         'data_fim' => 'datetime'
     ];
 
-    public function user()
+    public function criador()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'criador_id');
     }
 
     public function participantes()
     {
-        return $this->belongsToMany(User::class, 'evento_user')
-            ->withPivot('confirmado')
+        return $this->belongsToMany(User::class, 'evento_participantes')
+            ->withPivot('confirmado', 'data_confirmacao')
             ->withTimestamps();
     }
 } 

@@ -15,20 +15,31 @@ class EscolaLideres extends Model
         'titulo',
         'descricao',
         'nivel',
-        'duracao_minutos',
-        'link_video',
-        'link_material',
-        'ativo'
+        'carga_horaria',
+        'material_url',
+        'video_url',
+        'certificado_template',
+        'pre_requisitos'
     ];
 
     protected $casts = [
-        'ativo' => 'boolean'
+        'pre_requisitos' => 'array'
     ];
 
-    public function users()
+    public function alunos()
     {
-        return $this->belongsToMany(User::class, 'escola_lideres_user')
-            ->withPivot('concluido', 'data_conclusao')
+        return $this->belongsToMany(User::class, 'escola_lideres_alunos')
+            ->withPivot('progresso', 'concluido', 'data_conclusao', 'nota')
             ->withTimestamps();
+    }
+
+    public function modulos()
+    {
+        return $this->hasMany(ModuloEscolaLideres::class, 'escola_id');
+    }
+
+    public function certificados()
+    {
+        return $this->hasMany(Certificado::class, 'curso_id');
     }
 } 

@@ -14,18 +14,24 @@ class IntegracaoAcompanhamento extends Model
     protected $fillable = [
         'user_id',
         'mentor_id',
-        'feedback',
+        'tipo', // mentoria, feedback, avaliacao
+        'data_encontro',
+        'duracao_minutos',
+        'observacoes',
+        'metas_definidas',
+        'proximos_passos',
         'status',
-        'data_agendamento',
-        'data_realizacao'
+        'metricas_desempenho'
     ];
 
     protected $casts = [
-        'data_agendamento' => 'date',
-        'data_realizacao' => 'date'
+        'data_encontro' => 'datetime',
+        'metas_definidas' => 'array',
+        'proximos_passos' => 'array',
+        'metricas_desempenho' => 'array'
     ];
 
-    public function user()
+    public function usuario()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -33,5 +39,30 @@ class IntegracaoAcompanhamento extends Model
     public function mentor()
     {
         return $this->belongsTo(User::class, 'mentor_id');
+    }
+
+    public function avaliacoes()
+    {
+        return $this->hasMany(AvaliacaoDesempenho::class, 'acompanhamento_id');
+    }
+
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class, 'acompanhamento_id');
+    }
+
+    public function scopeMentorias($query)
+    {
+        return $query->where('tipo', 'mentoria');
+    }
+
+    public function scopeFeedbacks($query)
+    {
+        return $query->where('tipo', 'feedback');
+    }
+
+    public function scopeAvaliacoes($query)
+    {
+        return $query->where('tipo', 'avaliacao');
     }
 } 

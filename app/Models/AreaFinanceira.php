@@ -12,22 +12,39 @@ class AreaFinanceira extends Model
     protected $table = 'area_financeira';
 
     protected $fillable = [
+        'projeto_id',
         'user_id',
-        'tipo',
-        'categoria',
-        'valor',
+        'tipo', // receita ou despesa
         'descricao',
-        'data',
-        'status'
+        'valor',
+        'data_lancamento',
+        'categoria',
+        'status',
+        'comprovante'
     ];
 
     protected $casts = [
         'valor' => 'decimal:2',
-        'data' => 'date'
+        'data_lancamento' => 'datetime'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function projeto()
+    {
+        return $this->belongsTo(ProjetoIndividual::class, 'projeto_id');
+    }
+
+    public function scopeReceitas($query)
+    {
+        return $query->where('tipo', 'receita');
+    }
+
+    public function scopeDespesas($query)
+    {
+        return $query->where('tipo', 'despesa');
     }
 } 

@@ -21,7 +21,7 @@
         <!-- gijgo css -->
         <link rel="stylesheet" href="{{ asset('vendors/gijgo/gijgo.min.css') }}" />
         <!-- font awesome CSS -->
-        <link rel="stylesheet" href="{{ asset('vendors/font_awesome/css/all.min.css') }}" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('vendors/tagsinput/tagsinput.css') }}" />
         <!-- date picker -->
         <link rel="stylesheet" href="{{ asset('vendors/datepicker/date-picker.css') }}" />
@@ -54,7 +54,7 @@
             </div>
             <ul id="sidebar_menu">
                 <li>
-                    <a class="has-arrow" href="{{ route('dashboard') }}" aria-expanded="false">
+                    <a href="{{ route('dashboard') }}" aria-expanded="false">
                         <i class="fas fa-home"></i>
                         <span>Dashboard</span>
                     </a>
@@ -71,7 +71,7 @@
                         <span>Desafio Júnior</span>
                     </a>
                 </li>
-                <li class="mm-active">
+                <li>
                     <a href="{{ route('jornada-aspirante.index') }}" aria-expanded="false">
                         <i class="fas fa-trophy text-orange"></i>
                         <span>Jornada do Aspirante</span>
@@ -82,12 +82,26 @@
                         <i class="fas fa-graduation-cap text-primary"></i>
                         <span>Escola de Líderes</span>
                     </a>
-                </li>
-                <li>
-                    <a href="{{ route('capacitacoes.index') }}" aria-expanded="false">
-                        <i class="fas fa-book text-success"></i>
-                        <span>Capacitações</span>
-                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{ route('capacitacoes.index') }}">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                                <span>Capacitações</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('projetos-individuais.index') }}">
+                                <i class="fas fa-project-diagram"></i>
+                                <span>Projetos Individuais</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('integracao-acompanhamento.index') }}">
+                                <i class="fas fa-handshake"></i>
+                                <span>Integração e Acompanhamento</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="{{ route('projeto-individual.index') }}" aria-expanded="false">
@@ -193,8 +207,8 @@
                                             <h5>{{ auth()->user()->name }}</h5>
                                         </div>
                                         <div class="profile_info_details">
-                                            <a href="{{ route('profile.edit') }}">Meu Perfil</a>
-                                            <a href="{{ route('profile.edit') }}">Configurações</a>
+                                            <a href="{{ route('perfil.index') }}">Meu Perfil</a>
+                                            <a href="{{ route('perfil.index') }}">Configurações</a>
                                             <form method="POST" action="{{ route('logout') }}">
                                                 @csrf
                                                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">Sair</a>

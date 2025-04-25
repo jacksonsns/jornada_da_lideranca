@@ -14,6 +14,8 @@ use App\Http\Controllers\ProjetoIndividualController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\AreaFinanceiraController;
 use App\Http\Controllers\IntegracaoAcompanhamentoController;
+use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\EventoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -70,7 +72,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('capacitacoes/{capacitacao}/concluir', [CapacitacaoController::class, 'concluir'])->name('capacitacoes.concluir');
 
     // Projeto Individual
-    Route::resource('projeto-individual', ProjetoIndividualController::class);
+    Route::resource('projetos-individuais', ProjetoIndividualController::class);
+    Route::post('projetos-individuais/{projeto}/concluir', [ProjetoIndividualController::class, 'concluir'])->name('projetos-individuais.concluir');
+    Route::post('projetos-individuais/{projeto}/atualizar-progresso', [ProjetoIndividualController::class, 'atualizarProgresso'])->name('projetos-individuais.progresso');
 
     // Agenda
     Route::resource('agenda', AgendaController::class);
@@ -78,9 +82,22 @@ Route::middleware(['auth'])->group(function () {
 
     // Área Financeira
     Route::resource('area-financeira', AreaFinanceiraController::class);
+    Route::get('financeiro', [AreaFinanceiraController::class, 'index'])->name('financeiro.index');
+    Route::get('financeiro/metas', [AreaFinanceiraController::class, 'metas'])->name('financeiro.metas');
 
     // Integração e Acompanhamento
     Route::resource('integracao-acompanhamento', IntegracaoAcompanhamentoController::class);
+
+    // Perfil
+    Route::get('/perfil', [PerfilController::class, 'index'])->name('perfil.index');
+    Route::put('/perfil', [PerfilController::class, 'update'])->name('perfil.update');
+    Route::post('/perfil/avatar', [PerfilController::class, 'atualizarAvatar'])->name('perfil.avatar');
+
+    // Google Auth
+    Route::get('google/auth', [EventoController::class, 'googleAuth'])->name('google.auth');
+
+    // Projeto Individual (alias para projetos-individuais)
+    Route::get('projeto-individual', [ProjetoIndividualController::class, 'index'])->name('projeto-individual.index');
 });
 
 require __DIR__.'/auth.php';

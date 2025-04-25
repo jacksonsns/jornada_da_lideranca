@@ -121,4 +121,36 @@ class User extends Authenticatable
             ->withPivot('conquistado_em')
             ->withTimestamps();
     }
+
+    public function visitas()
+    {
+        return $this->hasMany(Visita::class);
+    }
+
+    public function sonhos()
+    {
+        return $this->hasMany(Sonho::class);
+    }
+
+    public function aulasAssistidas()
+    {
+        return $this->belongsToMany(Aula::class, 'aulas_assistidas')
+            ->withTimestamps();
+    }
+
+    public function projetos()
+    {
+        return $this->hasMany(Projeto::class);
+    }
+
+    public function transacoes()
+    {
+        return $this->hasMany(Transacao::class);
+    }
+
+    public function conexoes()
+    {
+        return $this->belongsToMany(User::class, 'conexoes', 'user_id', 'conexao_id')
+            ->withTimestamps();
+    }
 }
