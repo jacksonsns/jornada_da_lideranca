@@ -22,8 +22,9 @@
                                     @endif
 
                                     @if($desafioUser->concluido == 0)
-                                        <form action="{{ route('desafios.concluir', $desafioUser) }}" method="POST" class="inline">
+                                        <form action="{{ route('desafios.concluir') }}" method="POST" class="inline">
                                             @csrf
+                                            <input type="text" value="{{ $desafioUser->id }}" name="desafio_id" hidden>
                                             <button type="submit" class="btn btn-sm btn-outline-success">Concluir</button>
                                         </form>
                                     @endif

@@ -48,8 +48,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('quadro-dos-sonhos', QuadroDosSonhosController::class);
 
     // Desafios
-    Route::resource('desafios', DesafioController::class);
-    Route::post('desafios/{desafio}/concluir', [DesafioController::class, 'concluir'])->name('desafios.concluir');
+    Route::get('desafios', [DesafioController::class, 'index'])->name('desafios.index');
+    Route::post('desafios/concluir', [DesafioController::class, 'concluir'])->name('desafios.concluir');
 
     Route::post('jornada/{desafio}/concluir', [JornadaAspiranteController::class, 'concluir'])->name('jornada.concluir');
 

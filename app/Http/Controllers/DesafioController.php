@@ -106,12 +106,20 @@ class DesafioController extends Controller
             ->with('sucesso', 'Desafio excluído com sucesso!');
     }
 
-    public function concluir(Desafio $desafio)
+    public function concluir(Request $request)
     {
-        $user = auth()->user();
+        $desafio = DesafioUser::where('user_id', auth()->id())
+            ->where('id', $request->input('desafio_id'))
+            ->first();
+     
+        // Valida se o desafio existe
+        if (!$desafio) {
+            return redirect()->back()
+                ->with('erro', 'Desafio não encontrado.');
+        }
         
         // Atualiza a relação pivot
-        $user->desafios()->updateExistingPivot($desafio->id, [
+        $desafio->update([
             'concluido' => true,
             'concluido_em' => now()
         ]);
