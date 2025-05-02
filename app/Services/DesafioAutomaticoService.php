@@ -4,6 +4,9 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\Desafio;
+use App\Models\DesafioUser;
+use App\Models\JornadaAspirante;
+use App\Models\JornadaAspiranteUser;
 use Illuminate\Support\Facades\DB;
 
 class DesafioAutomaticoService
@@ -111,5 +114,42 @@ class DesafioAutomaticoService
         if ($desafiosConcluidos >= $totalDesafiosBasicos) {
             $this->concluirDesafio($user, 'Complete todos os desafios básicos', 10);
         }
+    }
+
+    public function adicionarDesafio(User $user)
+    {
+        $desafios = Desafio::all();
+        if ($desafios) {
+            foreach ($desafios as $desafio) {
+                DesafioUser::create([
+                        'user_id' => $user->id,
+                        'desafio_id' => $desafio->id,
+                        'concluido' => false,
+                ]);
+            }
+        }
+    }
+
+    public function adicionarJornada(User $user)
+    {
+        $desafios = JornadaAspirante::all();
+        if ($desafios) {
+            foreach ($desafios as $desafio) {
+                JornadaAspiranteUser::create([
+                        'user_id' => $user->id,
+                        'jornada_aspirante_id' => $desafio->id,
+                        'concluido' => false,
+                        'data_conclusao' => now()
+                ]);
+            }
+        }
+    }
+
+    public function completarDesafio(User $user, string $descricao)
+    {
+        $desafio = Desafio::where('descricao', $descricao)->first();
+        DesafioUser::where('user_id', $user->id)
+            ->where('desafio_id', $desafio->id)
+            ->update(['concluido' => true, 'concluido_em' => now()]);
     }
 } 

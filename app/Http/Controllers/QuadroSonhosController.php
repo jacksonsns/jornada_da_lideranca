@@ -24,8 +24,7 @@ class QuadroSonhosController extends Controller
         $validados = $request->validate([
             'titulo' => 'required|string|max:255',
             'descricao' => 'required|string',
-            'imagem' => 'nullable|image|max:2048', // máximo 2MB
-            'data_realizacao' => 'nullable|date'
+            'imagem' => 'nullable|image|max:2048',
         ]);
 
         if ($request->hasFile('imagem')) {

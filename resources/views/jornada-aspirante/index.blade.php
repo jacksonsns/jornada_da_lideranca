@@ -19,7 +19,7 @@
                             +{{ $desafio->pontos }} pontos
                         </span>
                         @if(!$desafio->concluido)
-                        <form action="{{ route('desafios.concluir', $desafio) }}" method="POST" class="d-inline">
+                        <form action="{{ route('jornada.concluir', $desafio) }}" method="POST" class="d-inline">
                             @csrf
                             <button type="submit" class="btn btn-sm btn-outline-success">Concluir</button>
                         </form>
@@ -41,8 +41,8 @@
             </div>
             <div class="card-body text-center">
                 <i class="fas fa-medal fa-3x text-warning"></i>
-                <p class="mt-3">Você desbloqueou <span id="achievements-count">{{ $conquistas->count() }}</span> conquistas!</p>
-                <a href="" class="btn btn-outline-primary">Ver Conquistas</a>
+                <h2>{{ $totalPontos }} Pontos</h2>
+                <p class="mt-3">Você desbloqueou <span id="achievements-count">{{ $desafiosConcluidos }}</span> conquistas!</p>
             </div>
         </div>
 

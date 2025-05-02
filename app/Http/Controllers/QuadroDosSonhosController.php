@@ -10,7 +10,10 @@ class QuadroDosSonhosController extends Controller
 {
     public function index()
     {
-        $sonhos = QuadroDosSonhos::latest()->paginate(9);
+        $sonhos = QuadroDosSonhos::where('user_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+ 
         return view('quadro-dos-sonhos.index', compact('sonhos'));
     }
 
@@ -25,15 +28,15 @@ class QuadroDosSonhosController extends Controller
             'titulo' => 'required|max:255',
             'descricao' => 'required',
             'categoria' => 'required|in:pessoal,profissional,financeiro,saude,relacionamentos,outros',
-            'data_realizacao' => 'nullable|date',
             'imagem' => 'nullable|image|max:2048'
         ]);
-
+    
         if ($request->hasFile('imagem')) {
-            $validados['imagem'] = $request->file('imagem')->store('sonhos', 'public');
+            $path = $request->file('imagem')->store('sonhos', 'public');
+            logger('Imagem salva em: ' . $path);
+            $validados['imagem'] = $path;
         }
 
-        $validados['status'] = 'pendente';
         $validados['user_id'] = auth()->id();
 
         QuadroDosSonhos::create($validados);

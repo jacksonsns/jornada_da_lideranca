@@ -9,14 +9,13 @@ class QuadroSonhos extends Model
 {
     use HasFactory;
 
-    protected $table = 'quadro_sonhos';
+    protected $table = 'quadro_dos_sonhos';
 
     protected $fillable = [
         'user_id',
         'titulo',
         'descricao',
         'imagem',
-        'status',
         'data_realizacao'
     ];
 

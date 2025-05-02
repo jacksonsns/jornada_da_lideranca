@@ -51,6 +51,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('desafios', DesafioController::class);
     Route::post('desafios/{desafio}/concluir', [DesafioController::class, 'concluir'])->name('desafios.concluir');
 
+    Route::post('jornada/{desafio}/concluir', [JornadaAspiranteController::class, 'concluir'])->name('jornada.concluir');
+
     // Jornada do Aspirante
     Route::resource('jornada-aspirante', JornadaAspiranteController::class);
     Route::post('jornada-aspirante/{jornada}/concluir', [JornadaAspiranteController::class, 'concluir'])->name('jornada-aspirante.concluir');

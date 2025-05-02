@@ -5,15 +5,19 @@
 @section('content')
 <div class="container py-4">
     <div class="row">
+    @foreach ($errors->all() as $error)
+        <div class="alert alert-danger">{{ $error }}</div>
+    @endforeach
         <!-- Informações Principais -->
         <div class="col-lg-4">
             <div class="card shadow-lg">
                 <div class="card-body text-center">
                     <div class="position-relative mb-4">
-                        <img src="{{ auth()->user()->avatar ?? 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) }}" 
-                             class="rounded-circle img-thumbnail" 
-                             style="width: 150px; height: 150px;"
-                             alt="Foto de Perfil">
+                    <img src="{{ auth()->user()->avatar ? asset('storage/avatars/' . auth()->user()->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) }}" 
+                        class="rounded-circle img-thumbnail" 
+                        style="width: 150px; height: 150px;"
+                        alt="Foto de Perfil">
+
                         <button class="btn btn-sm btn-primary position-absolute bottom-0 end-0" 
                                 style="border-radius: 50%;"
                                 title="Alterar foto">
@@ -155,7 +159,7 @@
                 <h5 class="modal-title">Editar Perfil</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('perfil.update') }}" method="POST">
+            <form action="{{ route('perfil.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
@@ -168,9 +172,26 @@
                         <input type="email" class="form-control" name="email" value="{{ auth()->user()->email }}">
                     </div>
                     <div class="mb-3">
+                        <label class="form-label">Telefone</label>
+                        <input type="text" class="form-control" name="telefone" value="{{ auth()->user()->telefone }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Padrinho</label>
+                        <input type="text" class="form-control" name="padrinho" value="{{ auth()->user()->padrinho }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ano de Ingresso</label>
+                        <input type="text" class="form-control" name="ano_de_ingresso" value="{{ auth()->user()->ano_de_ingresso }}">
+                    </div>
+                    <div class="mb-3">
                         <label class="form-label">Nova Senha</label>
                         <input type="password" class="form-control" name="password">
                         <small class="text-muted">Deixe em branco para manter a senha atual</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Imagem de Perfil</label>
+                        <input type="file" class="form-control" name="avatar">
+                        <small class="text-muted">Escolha uma nova imagem de perfil</small>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -216,4 +237,4 @@
     }
 </style>
 @endpush
-@endsection 
+@endsection

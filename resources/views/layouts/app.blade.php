@@ -44,6 +44,27 @@
         @stack('styles')
     </head>
 
+    <!-- Modal -->
+    <div class="modal fade" id="emDesenvolvimentoModal" tabindex="-1" aria-labelledby="emDesenvolvimentoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-warning">
+        <div class="modal-header bg-warning text-dark">
+            <h5 class="modal-title" id="emDesenvolvimentoModalLabel">Área em Desenvolvimento</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body text-center">
+            <p>Essa área ainda está em desenvolvimento.</p>
+            <p>Estamos trabalhando para disponibilizá-la em breve!</p>
+            <img src="https://cdn-icons-png.flaticon.com/512/2784/2784461.png" alt="Em desenvolvimento" width="80">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
     <body class="crm_body_bg">
         <nav class="sidebar">
             <div class="logo d-flex justify-content-between">
@@ -60,7 +81,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('quadro-dos-sonhos.index') }}" aria-expanded="false">
+                    <a type="button" data-bs-toggle="modal" data-bs-target="#emDesenvolvimentoModal" aria-expanded="false">
                         <i class="fas fa-star text-warning"></i>
                         <span>Quadro dos Sonhos</span>
                     </a>
@@ -78,25 +99,31 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('escola-lideres.index') }}" aria-expanded="false">
+                    <a href="{{ route('area-financeira.index') }}" aria-expanded="false">
+                        <i class="fas fa-chart-bar text-success"></i>
+                        <span>Área Financeira</span>
+                    </a>
+                </li>
+                <li>
+                    <a type="button" data-bs-toggle="modal" data-bs-target="#emDesenvolvimentoModal" aria-expanded="false">
                         <i class="fas fa-graduation-cap text-primary"></i>
                         <span>Escola de Líderes</span>
                     </a>
                     <ul>
                         <li>
-                            <a href="{{ route('capacitacoes.index') }}">
+                            <a type="button" data-bs-toggle="modal" data-bs-target="#emDesenvolvimentoModal" >
                                 <i class="fas fa-chalkboard-teacher"></i>
                                 <span>Capacitações</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('projetos-individuais.index') }}">
+                            <a type="button" data-bs-toggle="modal" data-bs-target="#emDesenvolvimentoModal" >
                                 <i class="fas fa-project-diagram"></i>
                                 <span>Projetos Individuais</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('integracao-acompanhamento.index') }}">
+                            <a type="button" data-bs-toggle="modal" data-bs-target="#emDesenvolvimentoModal" >
                                 <i class="fas fa-handshake"></i>
                                 <span>Integração e Acompanhamento</span>
                             </a>
@@ -104,25 +131,19 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="{{ route('projeto-individual.index') }}" aria-expanded="false">
+                    <a type="button" data-bs-toggle="modal" data-bs-target="#emDesenvolvimentoModal" >
                         <i class="fas fa-bullseye text-warning"></i>
                         <span>Projeto Individual</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('agenda.index') }}" aria-expanded="false">
+                    <a type="button" data-bs-toggle="modal" data-bs-target="#emDesenvolvimentoModal" >
                         <i class="fas fa-calendar-alt text-primary"></i>
-                        <span>Agenda Google Compartilhada</span>
+                        <span>Agenda</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('area-financeira.index') }}" aria-expanded="false">
-                        <i class="fas fa-chart-bar text-success"></i>
-                        <span>Área Financeira</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('integracao-acompanhamento.index') }}" aria-expanded="false">
+                    <a type="button" data-bs-toggle="modal" data-bs-target="#emDesenvolvimentoModal" aria-expanded="false">
                         <i class="fas fa-chart-line" style="color:#991ADD"></i>
                         <span>Integração e Acompanhamento</span>
                     </a>

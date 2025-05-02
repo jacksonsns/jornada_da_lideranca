@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\JornadaAspirante;
-use App\Models\Etapa;
-use App\Models\Desafio;
 use App\Models\Conquista;
-use App\Models\UserConquista;
+use App\Models\JornadaAspiranteUser;
+use App\Models\DesafioUser;
 use Illuminate\Http\Request;
 
 class JornadaAspiranteController extends Controller
@@ -14,17 +13,38 @@ class JornadaAspiranteController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $desafios = Desafio::all();
-        $desafiosConcluidos = $desafios->where('pivot.concluido', true)->count();
-        $totalDesafios = $desafios->count();
-        $progresso = $totalDesafios > 0 ? round(($desafiosConcluidos / $totalDesafios) * 100) : 0;
 
+        $desafios = JornadaAspiranteUser::select('jornada_aspirante_user.*', 'jornada_aspirante.*') 
+            ->leftJoin('jornada_aspirante', 'jornada_aspirante_user.jornada_aspirante_id', '=', 'jornada_aspirante.id')
+            ->where('jornada_aspirante_user.user_id', $user->id)
+            ->get();
+
+        $totalDesafios = JornadaAspiranteUser::where('user_id', $user->id)->count();
+
+        $desafiosConcluidos = JornadaAspiranteUser::where('user_id', $user->id)
+            ->where('concluido', 1)
+            ->count();
+    
+        $totalPontos = JornadaAspiranteUser::where('user_id', $user->id)
+            ->where('concluido', 1)
+            ->join('jornada_aspirante', 'jornada_aspirante.id', '=', 'jornada_aspirante_user.jornada_aspirante_id')
+            ->sum('jornada_aspirante.pontos');
+
+        $totalPontosDesafios = DesafioUser::where('user_id', $user->id)
+            ->where('concluido', 1)
+            ->join('desafios', 'desafios.id', '=', 'desafio_user.desafio_id')
+            ->sum('desafios.pontos');
+       
+        $totalPontos = $totalPontos + $totalPontosDesafios;
+
+        $progresso = $totalDesafios > 0 ? round(($desafiosConcluidos / $totalDesafios) * 100) : 0;
+        
         $conquistas = $user->conquistas()
             ->withPivot('conquistado_em')
             ->get();
     
-        return view('jornada-aspirante.index', compact('desafios', 'desafiosConcluidos', 'totalDesafios', 'progresso', 'conquistas'));
-    }
+        return view('jornada-aspirante.index', compact('desafios', 'desafiosConcluidos', 'totalDesafios', 'progresso', 'conquistas', 'totalPontos'));
+    }    
 
     public function iniciarJornada()
     {
@@ -71,48 +91,6 @@ class JornadaAspiranteController extends Controller
             ->with('success', 'Jornada iniciada com sucesso!');
     }
 
-    public function concluirEtapa(JornadaAspirante $etapa)
-    {
-        $user = auth()->user();
-        
-        // Verifica se a etapa pertence ao usuário
-        if (!$user->jornadaAspirante()->where('jornada_aspirante.id', $etapa->id)->exists()) {
-            return redirect()->route('jornada-aspirante.index')
-                ->with('error', 'Etapa não encontrada!');
-        }
-
-        // Atualiza o status da etapa
-        $user->jornadaAspirante()->updateExistingPivot($etapa->id, [
-            'concluido' => true,
-            'data_conclusao' => now()
-        ]);
-
-        // Verifica se todas as etapas foram concluídas
-        $etapasRestantes = $user->jornadaAspirante()
-            ->wherePivot('concluido', false)
-            ->count();
-
-        if ($etapasRestantes === 0) {
-            return redirect()->route('jornada-aspirante.index')
-                ->with('success', 'Parabéns! Você concluiu todas as etapas da jornada!');
-        }
-
-        return redirect()->route('jornada-aspirante.index')
-            ->with('success', 'Etapa concluída com sucesso!');
-    }
-
-    public function show(JornadaAspirante $etapa)
-    {
-        $user = auth()->user();
-        
-        // Verifica se a etapa pertence ao usuário
-        if (!$user->jornadaAspirante()->where('jornada_aspirante.id', $etapa->id)->exists()) {
-            return redirect()->route('jornada-aspirante.index')
-                ->with('error', 'Etapa não encontrada!');
-        }
-
-        return view('jornada-aspirante.show', compact('etapa'));
-    }
 
     public function atualizarProgresso(JornadaAspirante $etapa, Request $request)
     {
@@ -226,4 +204,41 @@ class JornadaAspiranteController extends Controller
 
         return view('jornada-aspirante.conquistas', compact('conquistas'));
     }
+
+    public function concluir(JornadaAspirante $desafio)
+    {
+        $user = auth()->user();
+        
+        $jornadaAspiranteUser = JornadaAspiranteUser::where('user_id', $user->id)
+            ->where('jornada_aspirante_id', $desafio->id)
+            ->first();
+    
+        if (!$jornadaAspiranteUser) {
+            if (request()->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Desafio não encontrado para este usuário.'
+                ], 404);
+            }
+    
+            return redirect()->back()
+                ->with('erro', 'Desafio não encontrado.');
+        }
+    
+        $jornadaAspiranteUser->update([
+            'concluido' => true,
+            'data_conclusao' => now()
+        ]);
+    
+        if (request()->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Desafio concluído com sucesso!'
+            ]);
+        }
+    
+        return redirect()->back()
+            ->with('sucesso', 'Desafio concluído com sucesso!');
+    }
+    
 } 

@@ -3,14 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Models\Desafio;
+use App\Models\DesafioUser;
 use Illuminate\Http\Request;
+use App\Services\DesafioAutomaticoService;
+use App\Models\JornadaAspiranteUser;
 
 class DesafioController extends Controller
 {
+    protected $desafioAutomaticoService;
+
+    public function __construct(DesafioAutomaticoService $desafioAutomaticoService)
+    {
+        $this->desafioAutomaticoService = $desafioAutomaticoService;
+    }
+
     public function index()
     {
-        $desafios = Desafio::latest()->paginate(10);
-        return view('desafios.index', compact('desafios'));
+        $user = auth()->user();
+        
+        $desafios = DesafioUser::where('user_id', $user->id)
+            ->with('desafio')
+            ->get();
+    
+        $quantidadeDesafiosConcluidos = DesafioUser::where('user_id', $user->id)
+            ->where('concluido', 1)
+            ->count();
+        
+        $totalPontos = DesafioUser::where('user_id', $user->id)
+            ->where('concluido', 1)
+            ->join('desafios', 'desafios.id', '=', 'desafio_user.desafio_id')
+            ->sum('desafios.pontos');
+
+        $totalPontosJornada = JornadaAspiranteUser::where('user_id', $user->id)
+            ->where('concluido', 1)
+            ->join('jornada_aspirante', 'jornada_aspirante.id', '=', 'jornada_aspirante_user.jornada_aspirante_id')
+            ->sum('jornada_aspirante.pontos');
+
+        $totalPontos = $totalPontos + $totalPontosJornada;
+
+        $progresso = DesafioUser::where('user_id', $user->id)->where('concluido', 1)->count();
+        
+        return view('desafios.index', [
+            'desafios' => $desafios,
+            'progresso' => $progresso,
+            'totalDesafios' => Desafio::count(),
+            'conquistas' => $quantidadeDesafiosConcluidos,
+            'totalPontos' => $totalPontos,
+        ]);
     }
 
     public function create()

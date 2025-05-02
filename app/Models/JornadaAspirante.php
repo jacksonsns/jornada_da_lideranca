@@ -15,11 +15,7 @@ class JornadaAspirante extends Model
         'titulo',
         'descricao',
         'ordem',
-        'obrigatorio'
-    ];
-
-    protected $casts = [
-        'obrigatorio' => 'boolean'
+        'pontos'
     ];
 
     public function users()

@@ -1,59 +1,68 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-800">Desafios</h1>
-        <a href="{{ route('desafios.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Novo Desafio
-        </a>
-    </div>
+<div class="main_content_iner">
+    <div class="container-fluid p-0 sm_padding_15px">
+        <div class="row">
+            <!-- Desafios Ativos -->
+            <div class="col-lg-8">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h4 class="text-light">🔥 Desafio Junior</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group" id="challenge-list">
+                            @foreach($desafios as $desafioUser)
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>{{ $desafioUser->desafio->descricao }}</span>
+                                    <span class="badge bg-success">+{{ $desafioUser->desafio->pontos }} pontos</span>
+                            
+                                    @if($desafioUser->concluido == 1)
+                                        <span class="text-success">✅ Concluído</span>
+                                    @endif
 
-    <div class="bg-white shadow-md rounded-lg">
-        @if($desafios->isEmpty())
-            <div class="p-6 text-center text-gray-500">
-                Nenhum desafio encontrado.
-            </div>
-        @else
-            <div class="overflow-x-auto">
-                <table class="min-w-full">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Título</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descrição</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach($desafios as $desafio)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $desafio->titulo }}</td>
-                                <td class="px-6 py-4">{{ Str::limit($desafio->descricao, 100) }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $desafio->status === 'concluído' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                                        {{ ucfirst($desafio->status) }}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="{{ route('desafios.show', $desafio) }}" class="text-blue-600 hover:text-blue-900 mr-3">Ver</a>
-                                    <a href="{{ route('desafios.edit', $desafio) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Editar</a>
-                                    @if($desafio->status !== 'concluído')
-                                        <form action="{{ route('desafios.concluir', $desafio) }}" method="POST" class="inline">
+                                    @if($desafioUser->concluido == 0)
+                                        <form action="{{ route('desafios.concluir', $desafioUser) }}" method="POST" class="inline">
                                             @csrf
-                                            <button type="submit" class="text-green-600 hover:text-green-900">Concluir</button>
+                                            <button type="submit" class="btn btn-sm btn-outline-success">Concluir</button>
                                         </form>
                                     @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="px-6 py-4">
-                {{ $desafios->links() }}
+        
+            <!-- Minhas Conquistas -->
+            <div class="col-lg-4">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-dark text-white text-center">
+                        <h4 class="text-light">🏆 Minhas Conquistas</h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <i class="fas fa-medal fa-3x text-warning"></i>
+                        <h3>{{ $totalPontos }} Pontos</h3>
+                        <strong>
+                            <p class="mt-3">Você desbloqueou <span id="achievements-count">{{ $conquistas }}</span> conquistas!</p>
+                        </strong>
+                    </div>
+                </div>
+
+                <!-- Barra de Progresso -->
+                <div class="card shadow-lg mt-3">
+                    <div class="card-header bg-success text-white text-center">
+                        <h4 class="text-light">📊 Progresso Geral</h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="progress">
+                            <div class="progress-bar bg-success" id="progress-bar" style="width: {{ ($progresso / $totalDesafios) * 100 }}%;" role="progressbar">{{ number_format(($progresso / $totalDesafios) * 100, 2) }}%</div>
+                        </div>
+                        <p class="mt-2">Desafios concluídos: <span id="completed-count">{{ $progresso }}</span> / {{ $totalDesafios }}</p>
+                    </div>
+                </div>
             </div>
-        @endif
+        </div>
     </div>
 </div>
-@endsection 
+@endsection
