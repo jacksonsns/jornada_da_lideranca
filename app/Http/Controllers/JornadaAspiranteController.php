@@ -38,7 +38,7 @@ class JornadaAspiranteController extends Controller
         $totalPontos = $totalPontos + $totalPontosDesafios;
 
         $progresso = $totalDesafios > 0 ? round(($desafiosConcluidos / $totalDesafios) * 100) : 0;
-        
+
         $conquistas = $user->conquistas()
             ->withPivot('conquistado_em')
             ->get();

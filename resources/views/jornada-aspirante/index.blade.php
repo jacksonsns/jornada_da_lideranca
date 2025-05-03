@@ -53,8 +53,8 @@
             </div>
             <div class="card-body text-center">
                 <div class="progress">
-                    <div class="progress-bar bg-success" id="progress-bar" style="width: {{ $progresso }}%;" role="progressbar">
-                        {{ $progresso }}%
+                    <div class="progress" style="width: 100%">
+                        <div class="progress-bar bg-success" id="progress-bar" style="width: {{ (float) $progresso }}%" role="progressbar">{{ $progresso }}%</div>
                     </div>
                 </div>
                 <p class="mt-2">Desafios concluídos: <span id="completed-count">{{ $desafiosConcluidos }}</span> / {{ $totalDesafios }}</p>
@@ -63,51 +63,4 @@
     </div>
 </div>
 
-@push('scripts')
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const progressBar = document.getElementById("progress-bar");
-        const completedText = document.getElementById("completed-count");
-        const achievementsCount = document.getElementById("achievements-count");
-
-        // Atualiza o progresso quando um desafio é concluído
-        document.querySelectorAll(".complete-challenge").forEach(button => {
-            button.addEventListener("click", function(e) {
-                e.preventDefault();
-                const form = this.closest('form');
-                
-                fetch(form.action, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        'Accept': 'application/json'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        const listItem = this.closest('.list-group-item');
-                        listItem.querySelector('.badge').classList.add('bg-success');
-                        this.outerHTML = '<span class="text-success">✅ Concluído</span>';
-                        
-                        const completedCount = parseInt(completedText.textContent) + 1;
-                        const totalChallenges = {{ $totalDesafios }};
-                        const progressPercentage = (completedCount / totalChallenges) * 100;
-                        
-                        progressBar.style.width = progressPercentage + "%";
-                        progressBar.textContent = Math.round(progressPercentage) + "%";
-                        completedText.textContent = completedCount;
-                        
-                        achievementsCount.textContent = parseInt(achievementsCount.textContent) + 1;
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro:', error);
-                    alert('Ocorreu um erro ao tentar concluir o desafio. Por favor, tente novamente.');
-                });
-            });
-        });
-    });
-</script>
-@endpush
 @endsection 

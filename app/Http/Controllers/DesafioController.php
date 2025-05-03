@@ -41,7 +41,10 @@ class DesafioController extends Controller
 
         $totalPontos = $totalPontos + $totalPontosJornada;
 
-        $progresso = DesafioUser::where('user_id', $user->id)->where('concluido', 1)->count();
+        $jornadaConcluida = DesafioUser::where('user_id', $user->id)->where('concluido', 1)->count();
+        $totalJornada = DesafioUser::where('user_id', $user->id)->count();
+
+        $progresso = $jornadaConcluida > 0 ? round(($jornadaConcluida * $totalJornada) / 100) : 0;
         
         return view('desafios.index', [
             'desafios' => $desafios,

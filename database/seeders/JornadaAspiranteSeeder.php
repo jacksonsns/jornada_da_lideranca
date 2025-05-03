@@ -52,12 +52,11 @@ class JornadaAspiranteSeeder extends Seeder
         ];
 
         foreach ($dados as $ordem => [$titulo, $descricao, $pontos]) {
-            DB::table('jornada_aspirante')->insert([
+            DB::table('desafios')->insert([
                 'titulo' => $titulo,
                 'descricao' => $descricao,
                 'pontos' => $pontos,
-                'ordem' => $ordem + 1,
-                'obrigatorio' => 1,
+                'tipo' => '',
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
