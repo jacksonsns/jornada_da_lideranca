@@ -18,7 +18,7 @@
                         Quadro dos Sonhos
                     </h5>
                     <p class="card-text">Visualize e gerencie seus sonhos e objetivos.</p>
-                    <a href="#" class="btn btn-primary btn-modal">Acessar</a>
+                    <a href="{{ route('quadro-dos-sonhos.index') }}" class="btn btn-primary">Acessar</a>
                 </div>
             </div>
         </div>
