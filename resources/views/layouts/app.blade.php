@@ -81,7 +81,7 @@
                     </a>
                 </li>
                 <li>
-                    <a type="button" data-bs-toggle="modal" data-bs-target="#emDesenvolvimentoModal" aria-expanded="false">
+                    <a type="button" href="{{ route('quadro-dos-sonhos.index') }}" aria-expanded="false">
                         <i class="fas fa-star text-warning"></i>
                         <span>Quadro dos Sonhos</span>
                     </a>

@@ -15,9 +15,9 @@ class QuadroDosSonhos extends Model
         'user_id',
         'titulo',
         'descricao',
+        'imagem',
         'categoria',
-        'data_limite',
-        'concluido'
+        'data_realizacao'
     ];
 
     protected $casts = [

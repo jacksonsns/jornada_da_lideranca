@@ -3,49 +3,52 @@
 @section('content')
 <style>
     .dream-gallery {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-        padding: 15px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        padding: 20px;
     }
 
     .dream-item {
-        width: 180px;
-        height: 150px;
         position: relative;
-        border-radius: 10px;
+        border-radius: 12px;
         overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        transition: transform 0.3s ease-in-out;
-        background: #f8f9fa;
+        background: #ffffff;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        height: 240px;
+        cursor: pointer;
     }
 
     .dream-item:hover {
-        transform: scale(1.05);
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
     }
 
     .dream-item img {
+        flex: 1;
         width: 100%;
-        height: 100%;
         object-fit: cover;
+        transition: transform 0.3s ease;
     }
 
     .dream-title {
+        background: rgba(0, 0, 0, 0.65);
+        color: #fff;
+        padding: 10px;
+        font-size: 15px;
+        font-weight: 600;
+        text-align: center;
         position: absolute;
         bottom: 0;
         width: 100%;
-        padding: 5px 10px;
-        background: rgba(0, 0, 0, 0.5);
-        color: #fff;
-        font-weight: 600;
-        font-size: 14px;
+        backdrop-filter: blur(4px);
         display: flex;
         align-items: center;
-        gap: 5px;
-    }
-
-    .dream-title i {
-        color: gold;
+        justify-content: center;
+        gap: 6px;
     }
 
     .upload-btn {
@@ -58,10 +61,24 @@
         transition: background 0.3s;
     }
 
-    .upload-btn:hover {
-        background-color: #0056b3;
+    .dream-title i {
+        color: #ffc107;
+        font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+        .dream-item {
+            height: 200px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .dream-item {
+            height: 180px;
+        }
     }
 </style>
+
 
 <div class="main_content_iner">
     <div class="container-fluid p-0 sm_padding_15px">
@@ -105,12 +122,28 @@
                                 <input type="file" name="imagem" accept="image/*" id="image-upload" hidden>
                                 📷 Escolher Imagem
                             </label>
+                            <img id="image-preview" src="#" alt="Pré-visualização" style="display:none; max-width: 100%; margin-top: 10px; border-radius: 10px;" />
+
                             <div id="image-feedback" class="mt-2 text-success" style="display:none;">
                                 <i class="fas fa-check-circle"></i> Imagem selecionada com sucesso!
                             </div>
+                            <input type="text" name="titulo" class="form-control mt-3 mb-3" placeholder="Título do sonho" required>
+                            <div class="mb-3">
+                                <select name="categoria" id="categoria" class="form-select @error('categoria') is-invalid @enderror" required>
+                                    <option value="">Selecione uma categoria</option>
+                                    <option value="pessoal" {{ old('categoria') === 'pessoal' ? 'selected' : '' }}>Pessoal</option>
+                                    <option value="profissional" {{ old('categoria') === 'profissional' ? 'selected' : '' }}>Profissional</option>
+                                    <option value="financeiro" {{ old('categoria') === 'financeiro' ? 'selected' : '' }}>Financeiro</option>
+                                    <option value="saude" {{ old('categoria') === 'saude' ? 'selected' : '' }}>Saúde</option>
+                                    <option value="relacionamentos" {{ old('categoria') === 'relacionamentos' ? 'selected' : '' }}>Relacionamentos</option>
+                                    <option value="outros" {{ old('categoria') === 'outros' ? 'selected' : '' }}>Outros</option>
+                                </select>
+                                @error('categoria')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
 
                             <textarea name="descricao" class="form-control mt-3" placeholder="Descreva seu sonho..." rows="3" required></textarea>
-                            <input type="text" name="titulo" class="form-control mt-3" placeholder="Título do sonho" required>
 
                             <button type="submit" class="btn btn-success mt-3 w-100">Adicionar ao Quadro</button>
                         </form>
@@ -130,13 +163,24 @@
 <script>
     document.getElementById('image-upload').addEventListener('change', function () {
         const feedback = document.getElementById('image-feedback');
-        if (this.files && this.files.length > 0) {
+        const preview = document.getElementById('image-preview');
+
+        if (this.files && this.files[0]) {
             feedback.style.display = 'block';
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(this.files[0]);
         } else {
             feedback.style.display = 'none';
+            preview.style.display = 'none';
         }
     });
 </script>
+
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 @endsection

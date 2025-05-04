@@ -30,13 +30,13 @@ class QuadroDosSonhosController extends Controller
             'categoria' => 'required|in:pessoal,profissional,financeiro,saude,relacionamentos,outros',
             'imagem' => 'nullable|image|max:2048'
         ]);
-    
+
         if ($request->hasFile('imagem')) {
             $path = $request->file('imagem')->store('sonhos', 'public');
             logger('Imagem salva em: ' . $path);
             $validados['imagem'] = $path;
         }
-
+        
         $validados['user_id'] = auth()->id();
 
         QuadroDosSonhos::create($validados);

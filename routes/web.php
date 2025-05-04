@@ -45,7 +45,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Quadro dos Sonhos
-    Route::resource('quadro-dos-sonhos', QuadroDosSonhosController::class);
+    Route::get('quadro-dos-sonhos', [QuadroDosSonhosController::class, 'index'])->name('quadro-dos-sonhos.index');
+    Route::get('quadro-dos-sonhos/create', [QuadroDosSonhosController::class, 'create'])->name('quadro-dos-sonhos.create');
+    Route::post('quadro-dos-sonhos/store', [QuadroDosSonhosController::class, 'store'])->name('quadro-dos-sonhos.store');
+    Route::get('quadro-dos-sonhos/{quadro_dos_sonho}', [QuadroDosSonhosController::class, 'show'])->name('quadro-dos-sonhos.show');
+    Route::get('quadro-dos-sonhos/{quadro_dos_sonho}/edit', [QuadroDosSonhosController::class, 'edit'])->name('quadro-dos-sonhos.edit');
+    Route::put('quadro-dos-sonhos/{quadro_dos_sonho}', [QuadroDosSonhosController::class, 'update'])->name('quadro-dos-sonhos.update');
+    Route::delete('quadro-dos-sonhos/{quadro_dos_sonho}', [QuadroDosSonhosController::class, 'destroy'])->name('quadro-dos-sonhos.destroy');
 
     // Desafios
     Route::get('desafios', [DesafioController::class, 'index'])->name('desafios.index');
