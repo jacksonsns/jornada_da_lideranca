@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <title>@yield('title', 'Jornada da Liderança')</title>
+        <title>@yield('title', 'Admin - Jornada da Liderança')</title>
 
         <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/png">
         <!-- Bootstrap CSS -->
@@ -67,64 +67,46 @@
     <body class="crm_body_bg">
         <nav class="sidebar">
             <div class="logo d-flex justify-content-between">
-                <a href="{{ route('dashboard') }}"><img src="{{ asset('img/logo.png') }}" alt=""></a>
+                <a href="{{ route('admin.index') }}"><img src="{{ asset('img/logo.png') }}" alt=""></a>
                 <div class="sidebar_close_icon d-lg-none">
                     <i class="ti-close"></i>
                 </div>
             </div>
             <ul id="sidebar_menu">
                 <li>
-                    <a href="{{ route('dashboard') }}" aria-expanded="false">
+                    <a href="{{ route('admin.index') }}" aria-expanded="false">
                         <i class="fas fa-home"></i>
-                        <span>Dashboard</span>
+                        <span>Administrador</span>
                     </a>
                 </li>
-                <li>
-                    <a type="button" href="{{ route('quadro-dos-sonhos.index') }}" aria-expanded="false">
-                        <i class="fas fa-star text-warning"></i>
-                        <span>Quadro dos Sonhos</span>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('admin/desafios*') ? 'active' : '' }}" href="{{ route('admin.desafios.index') }}">
+                        <i class="fas fa-tasks"></i>
+                        <span>Desafios</span>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ route('desafios.index') }}" aria-expanded="false">
-                        <i class="fas fa-trophy text-orange"></i>
-                        <span>Desafio Júnior</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('jornada-aspirante.index') }}" aria-expanded="false">
-                        <i class="fas fa-trophy text-orange"></i>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.jornada.*') ? 'active' : '' }}" href="{{ route('admin.jornada.index') }}">
+                        <i class="fas fa-road"></i>
                         <span>Jornada do Aspirante</span>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ route('area-financeira.index') }}" aria-expanded="false">
-                        <i class="fas fa-chart-bar text-success"></i>
-                        <span>Área Financeira</span>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.aulas.*') ? 'active' : '' }}" href="{{ route('admin.aulas.index') }}">
+                        <i class="fas fa-play-circle"></i>
+                        <span>Aulas</span>
                     </a>
                 </li>
-                <li>
-                    <a type="button" href="{{ route('escola-lideres.index') }}" aria-expanded="false">
-                        <i class="fas fa-graduation-cap text-primary"></i>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('admin/escola-lideres*') ? 'active' : '' }}" href="{{ route('admin.escola-lideres.index') }}">
+                        <i class="fas fa-graduation-cap"></i>
                         <span>Escola de Líderes</span>
                     </a>
                 </li>
-                <li>
-                    <a type="button" href="{{ route('projetos-individuais.index') }}">
-                        <i class="fas fa-bullseye text-warning"></i>
-                        <span>Projeto Individual</span>
-                    </a>
-                </li>
-                <li>
-                    <a type="button" data-bs-toggle="modal" data-bs-target="#emDesenvolvimentoModal" >
-                        <i class="fas fa-calendar-alt text-primary"></i>
-                        <span>Agenda</span>
-                    </a>
-                </li>
-                <li>
-                    <a type="button" data-bs-toggle="modal" data-bs-target="#emDesenvolvimentoModal" aria-expanded="false">
-                        <i class="fas fa-chart-line" style="color:#991ADD"></i>
-                        <span>Integração e Acompanhamento</span>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('admin/projetos-individuais*') ? 'active' : '' }}" href="{{ route('admin.projetos-individuais.index') }}">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>Projetos Individuais</span>
                     </a>
                 </li>
             </ul>
@@ -145,44 +127,6 @@
                             </div>
                             <div class="header_right d-flex justify-content-between align-items-center">
                                 <div class="header_notification_warp d-flex align-items-center">
-                                    <li>
-                                        <a class="bell_notification_clicker" href="#"> <img src="{{ asset('img/icon/bell.svg') }}" alt="">
-                                            <span>04</span>
-                                        </a>
-                                        <!-- Menu_NOtification_Wrap  -->
-                                        <div class="Menu_NOtification_Wrap">
-                                            <div class="notification_Header">
-                                                <h4>Notificações</h4>
-                                            </div>
-                                            <div class="Notification_body">
-                                                <!-- single_notify  -->
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="{{ asset('img/staf/2.png') }}" alt=""></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>Cool Directory </h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-                                                <!-- single_notify  -->
-                                                <div class="single_notify d-flex align-items-center">
-                                                    <div class="notify_thumb">
-                                                        <a href="#"><img src="{{ asset('img/staf/4.png') }}" alt=""></a>
-                                                    </div>
-                                                    <div class="notify_content">
-                                                        <a href="#">
-                                                            <h5>Awesome packages</h5>
-                                                        </a>
-                                                        <p>Lorem ipsum dolor sit amet</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--/ Menu_NOtification_Wrap  -->
-                                    </li>
                                 </div>
                                 <div class="profile_info">
                                     <img src="{{ asset('img/avatar.png') }}" alt="#">

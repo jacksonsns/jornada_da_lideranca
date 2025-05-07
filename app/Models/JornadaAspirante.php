@@ -14,14 +14,25 @@ class JornadaAspirante extends Model
     protected $fillable = [
         'titulo',
         'descricao',
+        'pontos',
         'ordem',
-        'pontos'
+        'obrigatorio'
     ];
+
+    protected $casts = [
+        'obrigatorio' => 'boolean',
+        'ordem' => 'integer'
+    ];
+
+    public function etapas()
+    {
+        return $this->hasMany(JornadaAspiranteEtapa::class)->orderBy('ordem');
+    }
 
     public function users()
     {
         return $this->belongsToMany(User::class, 'jornada_aspirante_user')
-            ->withPivot('concluido', 'data_conclusao', 'progresso')
+            ->withPivot('progresso', 'concluido')
             ->withTimestamps();
     }
 } 

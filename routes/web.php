@@ -16,6 +16,8 @@ use App\Http\Controllers\AreaFinanceiraController;
 use App\Http\Controllers\IntegracaoAcompanhamentoController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\EventoController;
+use App\Http\Controllers\AdminController;
+use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', function () {
     return view('welcome');
@@ -106,6 +108,53 @@ Route::middleware(['auth'])->group(function () {
 
     // Projeto Individual (alias para projetos-individuais)
     Route::get('projeto-individual', [ProjetoIndividualController::class, 'index'])->name('projeto-individual.index');
+    Route::post('admin/projetos-individuais', [ProjetoIndividualController::class, 'store'])->name('projetos-individuais.store');
+    Route::put('admin/projetos-individuais/{projeto}', [ProjetoIndividualController::class, 'update'])->name('projetos-individuais.update');
+    Route::delete('admin/projetos-individuais/{projeto}', [ProjetoIndividualController::class, 'destroy'])->name('projetos-individuais.destroy');
+
+    // Rotas da Escola de Líderes
+    Route::get('/escola-lideres', [EscolaLideresController::class, 'index'])->name('escola-lideres.index');
+    
+    // Rotas para módulos
+    Route::get('/escola-lideres/modulo/{modulo}', [EscolaLideresController::class, 'modulo'])->name('escola-lideres.modulo');
+    Route::post('/escola-lideres/modulo/{modulo}/matricular', [EscolaLideresController::class, 'matricular'])->name('escola-lideres.matricular');
+    
+    // Rotas para aulas
+    Route::get('/escola-lideres/aula/{aula}', [EscolaLideresController::class, 'aula'])->name('escola-lideres.aula');
+    Route::post('/escola-lideres/aula/{aula}/concluir', [EscolaLideresController::class, 'concluirAula'])->name('escola-lideres.concluir-aula');
+    Route::post('/escola-lideres/aula/{aula}/avaliar', [EscolaLideresController::class, 'avaliarAula'])->name('escola-lideres.avaliar-aula');
+});
+
+// Rotas administrativas
+Route::middleware(['auth', AdminMiddleware::class])->group(function () {
+    Route::get('admin', [AdminController::class, 'index'])->name('admin.index');
+    
+    // Rotas de Desafios
+    Route::get('admin/desafios', [AdminController::class, 'desafiosIndex'])->name('admin.desafios.index');
+    Route::post('admin/desafios', [AdminController::class, 'desafioStore'])->name('admin.desafios.store');
+    Route::put('admin/desafios/{desafio}', [AdminController::class, 'desafioUpdate'])->name('admin.desafios.update');
+    Route::delete('admin/desafios/{desafio}', [AdminController::class, 'desafioDestroy'])->name('admin.desafios.destroy');
+
+    // Rotas da Jornada do Aspirante
+    Route::get('admin/jornada', [AdminController::class, 'jornadaIndex'])->name('admin.jornada.index');
+    Route::post('admin/jornada', [AdminController::class, 'jornadaStore'])->name('admin.jornada.store');
+    Route::put('admin/jornada/{jornada}', [AdminController::class, 'jornadaUpdate'])->name('admin.jornada.update');
+    Route::delete('admin/jornada/{jornada}', [AdminController::class, 'jornadaDestroy'])->name('admin.jornada.destroy');
+
+    // Rotas da Escola de Líderes (Admin)
+    Route::get('admin/aulas', [AdminController::class, 'aulasIndex'])->name('admin.aulas.index');
+    Route::post('admin/aulas', [AdminController::class, 'aulaStore'])->name('admin.aulas.store');
+    Route::put('admin/aulas/{aula}', [AdminController::class, 'aulaUpdate'])->name('admin.aulas.update');
+    Route::delete('admin/aulas/{aula}', [AdminController::class, 'aulaDestroy'])->name('admin.aulas.destroy');
+
+    // Rotas da Escola de Líderes (Admin)
+    Route::get('admin/escola-lideres', [AdminController::class, 'escolaLideresIndex'])->name('admin.escola-lideres.index');
+    Route::post('admin/escola-lideres', [AdminController::class, 'escolaLideresStore'])->name('admin.escola-lideres.store');
+    Route::put('admin/escola-lideres/{modulo}', [AdminController::class, 'escolaLideresUpdate'])->name('admin.escola-lideres.update');
+    Route::delete('admin/escola-lideres/{modulo}', [AdminController::class, 'escolaLideresDestroy'])->name('admin.escola-lideres.destroy');
+
+    // Rotas de Projetos Individuais (Admin)
+    Route::get('admin/projetos-individuais', [AdminController::class, 'projetosIndividuaisIndex'])->name('admin.projetos-individuais.index');
 });
 
 require __DIR__.'/auth.php';

@@ -2,112 +2,132 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EscolaLideres;
-use App\Models\Modulo;
+use App\Models\ModuloEscolaLideres;
 use App\Models\Aula;
+use App\Models\MatriculaEscolaLideres;
+use App\Models\AvaliacaoAula;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EscolaLideresController extends Controller
 {
     public function index()
     {
-        $modulos = Modulo::with(['aulas', 'matriculas' => function ($query) {
-            $query->where('user_id', auth()->id());
+        $modulos = ModuloEscolaLideres::with(['aulas', 'matriculas' => function($query) {
+            $query->where('user_id', Auth::id());
         }])->orderBy('ordem')->get();
 
         return view('escola-lideres.index', compact('modulos'));
     }
 
-    public function matricular(Modulo $modulo)
+    public function modulo(ModuloEscolaLideres $modulo)
     {
-        if ($modulo->matriculas()->where('user_id', auth()->id())->exists()) {
-            return redirect()->route('escola-lideres.modulo', $modulo)
-                ->with('erro', 'Você já está matriculado neste módulo!');
-        }
+        $matricula = $modulo->matriculas()
+            ->where('user_id', Auth::id())
+            ->first();
 
-        $modulo->matriculas()->create([
-            'user_id' => auth()->id(),
+        $aulas = $modulo->aulas()->orderBy('ordem')->get();
+
+        return view('escola-lideres.modulo', compact('modulo', 'matricula', 'aulas'));
+    }
+
+    public function matricular(Request $request, ModuloEscolaLideres $modulo)
+    {
+        MatriculaEscolaLideres::create([
+            'user_id' => Auth::id(),
+            'modulo_escola_lideres_id' => $modulo->id,
             'data_inicio' => now(),
             'status' => 'em_andamento'
         ]);
 
         return redirect()->route('escola-lideres.modulo', $modulo)
-            ->with('sucesso', 'Matrícula realizada com sucesso!');
-    }
-
-    public function modulo(Modulo $modulo)
-    {
-        $matricula = $modulo->matriculas()->where('user_id', auth()->id())->first();
-        $aulas = $modulo->aulas()->orderBy('ordem')->get();
-        
-        return view('escola-lideres.modulo', compact('modulo', 'matricula', 'aulas'));
+            ->with('success', 'Matrícula realizada com sucesso!');
     }
 
     public function aula(Aula $aula)
     {
-        $matricula = $aula->modulo->matriculas()->where('user_id', auth()->id())->firstOrFail();
-        
+        $matricula = $aula->modulo->matriculas()
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if (!$matricula) {
+            return redirect()->route('escola-lideres.modulo', $aula->modulo)
+                ->with('error', 'Você precisa estar matriculado para acessar esta aula.');
+        }
+
         return view('escola-lideres.aula', compact('aula', 'matricula'));
     }
 
-    public function concluirAula(Aula $aula)
+    public function concluirAula(Request $request, Aula $aula)
     {
-        $matricula = $aula->modulo->matriculas()->where('user_id', auth()->id())->firstOrFail();
-        
-        $matricula->aulasAssistidas()->attach($aula->id, ['data_conclusao' => now()]);
+        $matricula = $aula->modulo->matriculas()
+            ->where('user_id', Auth::id())
+            ->first();
 
-        // Verifica se todas as aulas do módulo foram concluídas
-        $totalAulas = $aula->modulo->aulas()->count();
-        $aulasAssistidas = $matricula->aulasAssistidas()->count();
-
-        if ($totalAulas === $aulasAssistidas) {
-            $matricula->update([
-                'status' => 'concluido',
-                'data_conclusao' => now()
-            ]);
-
-            return redirect()->route('escola-lideres.modulo', $aula->modulo)
-                ->with('sucesso', 'Parabéns! Você concluiu o módulo com sucesso!');
+        if (!$matricula) {
+            return redirect()->back()->with('error', 'Você precisa estar matriculado para concluir esta aula.');
         }
 
-        return redirect()->route('escola-lideres.modulo', $aula->modulo)
-            ->with('sucesso', 'Aula marcada como concluída!');
+        $matricula->aulasAssistidas()->syncWithoutDetaching([$aula->id]);
+
+        $totalAulas = $aula->modulo->aulas()->count();
+        $aulasConcluidas = $matricula->aulasAssistidas()->count();
+
+        if ($totalAulas === $aulasConcluidas) {
+            $matricula->update([
+                'data_conclusao' => now(),
+                'status' => 'concluido'
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Aula concluída com sucesso!');
     }
 
     public function avaliarAula(Request $request, Aula $aula)
     {
-        $validados = $request->validate([
+        $request->validate([
             'avaliacao' => 'required|integer|min:1|max:5',
-            'comentario' => 'nullable|string|max:500'
+            'comentario' => 'nullable|string|max:1000'
         ]);
 
-        $matricula = $aula->modulo->matriculas()->where('user_id', auth()->id())->firstOrFail();
-        
-        $matricula->aulasAssistidas()->updateExistingPivot($aula->id, [
-            'avaliacao' => $validados['avaliacao'],
-            'comentario' => $validados['comentario']
-        ]);
+        $matricula = $aula->modulo->matriculas()
+            ->where('user_id', Auth::id())
+            ->first();
 
-        return redirect()->route('escola-lideres.aula', $aula)
-            ->with('sucesso', 'Avaliação registrada com sucesso!');
+        if (!$matricula) {
+            return redirect()->back()->with('error', 'Você precisa estar matriculado para avaliar esta aula.');
+        }
+
+        AvaliacaoAula::updateOrCreate(
+            [
+                'aula_id' => $aula->id,
+                'user_id' => Auth::id()
+            ],
+            [
+                'avaliacao' => $request->avaliacao,
+                'comentario' => $request->comentario
+            ]
+        );
+
+        return redirect()->back()->with('success', 'Avaliação registrada com sucesso!');
     }
 
-    public function certificado(Modulo $modulo)
+    public function certificado(ModuloEscolaLideres $ModuloEscolaLideres)
     {
-        $matricula = $modulo->matriculas()
+        $matricula = $ModuloEscolaLideres->matriculas()
             ->where('user_id', auth()->id())
             ->where('status', 'concluido')
             ->firstOrFail();
 
-        return view('escola-lideres.certificado', compact('modulo', 'matricula'));
+        return view('escola-lideres.certificado', compact('ModuloEscolaLideres', 'matricula'));
     }
 
     public function progresso()
     {
         $matriculas = auth()->user()->matriculas()
-            ->with(['modulo', 'aulasAssistidas'])
+            ->with(['ModuloEscolaLideres', 'aulasAssistidas'])
             ->get();
 
         return view('escola-lideres.progresso', compact('matriculas'));
     }
-} 
+}

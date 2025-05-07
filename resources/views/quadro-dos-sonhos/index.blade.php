@@ -66,6 +66,36 @@
         font-size: 16px;
     }
 
+    .dream-delete {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        z-index: 2;
+    }
+
+    .delete-btn {
+        background: rgba(255, 255, 255, 0.85);
+        border: none;
+        border-radius: 50%;
+        padding: 6px;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        height: auto;
+        transition: background 0.3s;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .delete-btn:hover {
+        background: rgba(255, 0, 0, 0.85);
+        color: #fff;
+    }
+
+    .delete-btn i {
+        font-size: 14px;
+    }
+
+
     @media (max-width: 768px) {
         .dream-item {
             height: 200px;
@@ -93,6 +123,15 @@
                         <div class="dream-gallery">
                             @forelse($sonhos as $sonho)
                                 <div class="dream-item">
+                                    <div class="dream-delete">
+                                        <form action="{{ route('quadro-dos-sonhos.destroy', $sonho->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este sonho?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="delete-btn" title="Excluir sonho">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                     @if($sonho->imagem)
                                         <img src="{{ Storage::url($sonho->imagem) }}" alt="{{ $sonho->titulo }}">
                                     @endif

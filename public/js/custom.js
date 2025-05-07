@@ -29,38 +29,7 @@
             $("body").find(".CHAT_MESSAGE_POPUPBOX").removeClass("active");
         }
     });
-    //progressbar js
-    $(document).ready(function() {
-        var proBar = $('#bar1');
-        if (proBar.length) {
-            proBar.barfiller({
-                barColor: '#2F90F7',
-                duration: 3000
-            });
-        }
-        var proBar = $('#bar2');
-        if (proBar.length) {
-            proBar.barfiller({
-                barColor: '#833CDF ',
-                duration: 3000
-            });
-        }
-        var proBar = $('#bar3');
-        if (proBar.length) {
-            proBar.barfiller({
-                barColor: '#FE80B2 ',
-                duration: 3000
-            });
-        }
-        var proBar = $('#bar4');
-        if (proBar.length) {
-            proBar.barfiller({
-                barColor: '#2FF0F7 ',
-                duration: 3000
-            });
-        }
 
-    });
 
 
     //notification section js
@@ -114,25 +83,6 @@
         }
     });
 
-
-
-    //progressbar js
-    var delay = 500;
-    $(".progress-bar").each(function(i) {
-        $(this).delay(delay * i).animate({
-            width: $(this).attr('aria-valuenow') + '%'
-        }, delay);
-
-        $(this).prop('Counter', 0).animate({
-            Counter: $(this).text()
-        }, {
-            duration: delay,
-            easing: 'swing',
-            step: function(now) {
-                $(this).text(Math.ceil(now) + '%');
-            }
-        });
-    });
 
     //active sidebar
     $('.sidebar_icon').on('click', function() {

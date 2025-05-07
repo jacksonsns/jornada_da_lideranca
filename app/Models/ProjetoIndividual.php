@@ -9,28 +9,21 @@ class ProjetoIndividual extends Model
 {
     use HasFactory;
 
-    protected $table = 'projetos_individuais';
+    protected $table = 'projeto_individual';
 
     protected $fillable = [
         'user_id',
         'titulo',
         'descricao',
-        'objetivo',
+        'status',
         'data_inicio',
         'data_fim',
-        'status',
-        'progresso',
-        'meta_5_anos',
-        'indicadores_sucesso',
-        'recursos_necessarios'
+        'resultados'
     ];
 
     protected $casts = [
-        'data_inicio' => 'datetime',
-        'data_fim' => 'datetime',
-        'progresso' => 'integer',
-        'indicadores_sucesso' => 'array',
-        'recursos_necessarios' => 'array'
+        'data_inicio' => 'date',
+        'data_fim' => 'date'
     ];
 
     public function user()
