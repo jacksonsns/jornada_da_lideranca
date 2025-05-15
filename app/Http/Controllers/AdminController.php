@@ -304,7 +304,7 @@ class AdminController extends Controller
         ]);
 
         ModuloEscolaLideres::create($request->all());
-
+        
         return response()->json([
             'success' => true,
             'message' => 'Módulo criado com sucesso!'

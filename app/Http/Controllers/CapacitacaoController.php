@@ -12,10 +12,7 @@ class CapacitacaoController extends Controller
 {
     public function index()
     {
-        $capacitacoes = Capacitacao::with(['instrutor', 'participantes', 'materiais'])
-            ->latest()
-            ->paginate(10);
-
+        $capacitacoes = Capacitacao::orderBy('data', 'desc')->paginate(10);
         return view('capacitacoes.index', compact('capacitacoes'));
     }
 
@@ -28,27 +25,11 @@ class CapacitacaoController extends Controller
     {
         $validated = $request->validate([
             'titulo' => 'required|string|max:255',
-            'descricao' => 'required|string',
             'data' => 'required|date',
-            'instrutor_id' => 'required|exists:users,id',
-            'local' => 'required|string|max:255',
-            'duracao' => 'required|integer|min:1',
-            'vagas' => 'required|integer|min:1',
-            'materiais.*' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx|max:10240',
+            'insights' => 'required|string'
         ]);
 
-        $capacitacao = Capacitacao::create($validated);
-
-        if ($request->hasFile('materiais')) {
-            foreach ($request->file('materiais') as $material) {
-                $path = $material->store('materiais-capacitacao');
-                $capacitacao->materiais()->create([
-                    'nome' => $material->getClientOriginalName(),
-                    'caminho' => $path,
-                    'tamanho' => $material->getSize(),
-                ]);
-            }
-        }
+        Capacitacao::create($validated);
 
         return redirect()->route('capacitacoes.index')
             ->with('success', 'Capacitação criada com sucesso!');
@@ -56,7 +37,6 @@ class CapacitacaoController extends Controller
 
     public function show(Capacitacao $capacitacao)
     {
-        $capacitacao->load(['instrutor', 'participantes', 'materiais']);
         return view('capacitacoes.show', compact('capacitacao'));
     }
 
@@ -69,27 +49,11 @@ class CapacitacaoController extends Controller
     {
         $validated = $request->validate([
             'titulo' => 'required|string|max:255',
-            'descricao' => 'required|string',
             'data' => 'required|date',
-            'instrutor_id' => 'required|exists:users,id',
-            'local' => 'required|string|max:255',
-            'duracao' => 'required|integer|min:1',
-            'vagas' => 'required|integer|min:1',
-            'materiais.*' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx|max:10240',
+            'insights' => 'required|string'
         ]);
 
         $capacitacao->update($validated);
-
-        if ($request->hasFile('materiais')) {
-            foreach ($request->file('materiais') as $material) {
-                $path = $material->store('materiais-capacitacao');
-                $capacitacao->materiais()->create([
-                    'nome' => $material->getClientOriginalName(),
-                    'caminho' => $path,
-                    'tamanho' => $material->getSize(),
-                ]);
-            }
-        }
 
         return redirect()->route('capacitacoes.index')
             ->with('success', 'Capacitação atualizada com sucesso!');
@@ -97,10 +61,6 @@ class CapacitacaoController extends Controller
 
     public function destroy(Capacitacao $capacitacao)
     {
-        foreach ($capacitacao->materiais as $material) {
-            Storage::delete($material->caminho);
-        }
-        
         $capacitacao->delete();
 
         return redirect()->route('capacitacoes.index')

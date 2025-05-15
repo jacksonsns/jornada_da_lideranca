@@ -18,6 +18,7 @@ use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\AdminController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\CapacitacoesController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -77,9 +78,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('escola-lideres', EscolaLideresController::class);
     Route::post('escola-lideres/{escola}/concluir', [EscolaLideresController::class, 'concluir'])->name('escola-lideres.concluir');
 
-    // Capacitações
-    Route::resource('capacitacoes', CapacitacaoController::class);
-    Route::post('capacitacoes/{capacitacao}/concluir', [CapacitacaoController::class, 'concluir'])->name('capacitacoes.concluir');
+
+    // Capacitações (visualização para usuários)
+    Route::get('capacitacoes', [CapacitacoesController::class, 'index'])->name('capacitacoes.index');
+    Route::get('capacitacoes/{capacitacao}', [CapacitacoesController::class, 'show'])->name('capacitacoes.show');
 
     // Projeto Individual
     Route::resource('projetos-individuais', ProjetoIndividualController::class);
@@ -89,11 +91,6 @@ Route::middleware(['auth'])->group(function () {
     // Agenda
     Route::resource('agenda', AgendaController::class);
     Route::post('agenda/{evento}/confirmar-presenca', [AgendaController::class, 'confirmarPresenca'])->name('agenda.confirmar-presenca');
-
-    // Área Financeira
-    Route::resource('area-financeira', AreaFinanceiraController::class);
-    Route::get('financeiro', [AreaFinanceiraController::class, 'index'])->name('financeiro.index');
-    Route::get('financeiro/metas', [AreaFinanceiraController::class, 'metas'])->name('financeiro.metas');
 
     // Integração e Acompanhamento
     Route::resource('integracao-acompanhamento', IntegracaoAcompanhamentoController::class);
@@ -123,12 +120,21 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/escola-lideres/aula/{aula}', [EscolaLideresController::class, 'aula'])->name('escola-lideres.aula');
     Route::post('/escola-lideres/aula/{aula}/concluir', [EscolaLideresController::class, 'concluirAula'])->name('escola-lideres.concluir-aula');
     Route::post('/escola-lideres/aula/{aula}/avaliar', [EscolaLideresController::class, 'avaliarAula'])->name('escola-lideres.avaliar-aula');
+
+    // Google Calendar Routes
+    Route::get('/agenda', [App\Http\Controllers\GoogleCalendarController::class, 'index'])->name('agenda.index');
+    Route::get('/google/connect', [App\Http\Controllers\GoogleCalendarController::class, 'connect'])->name('google.connect');
+    Route::get('/google/callback', [App\Http\Controllers\GoogleCalendarController::class, 'callback'])->name('google.callback');
+    Route::get('/google/disconnect', [App\Http\Controllers\GoogleCalendarController::class, 'disconnect'])->name('google.disconnect');
 });
 
 // Rotas administrativas
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('admin', [AdminController::class, 'index'])->name('admin.index');
     
+    // Rotas de Usuários
+    Route::resource('admin/users', \App\Http\Controllers\Admin\UserController::class)->names('admin.users');
+
     // Rotas de Desafios
     Route::get('admin/desafios', [AdminController::class, 'desafiosIndex'])->name('admin.desafios.index');
     Route::post('admin/desafios', [AdminController::class, 'desafioStore'])->name('admin.desafios.store');
@@ -155,6 +161,19 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
 
     // Rotas de Projetos Individuais (Admin)
     Route::get('admin/projetos-individuais', [AdminController::class, 'projetosIndividuaisIndex'])->name('admin.projetos-individuais.index');
+    
+    // Área Financeira
+    Route::resource('area-financeira', AreaFinanceiraController::class)->parameters([
+        'area-financeira' => 'transacao'
+    ]);
+    Route::get('financeiro', [AreaFinanceiraController::class, 'index'])->name('financeiro.index');
+    Route::get('financeiro/metas', [AreaFinanceiraController::class, 'metas'])->name('financeiro.metas');
+
+    // Rotas de Capacitações
+    Route::get('admin/capacitacoes', [App\Http\Controllers\Admin\CapacitacoesController::class, 'index'])->name('admin.capacitacoes.index');
+    Route::post('admin/capacitacoes', [App\Http\Controllers\Admin\CapacitacoesController::class, 'store'])->name('admin.capacitacoes.store');
+    Route::put('admin/capacitacoes/{capacitacao}', [App\Http\Controllers\Admin\CapacitacoesController::class, 'update'])->name('admin.capacitacoes.update');
+    Route::delete('admin/capacitacoes/{capacitacao}', [App\Http\Controllers\Admin\CapacitacoesController::class, 'destroy'])->name('admin.capacitacoes.destroy');
 });
 
 require __DIR__.'/auth.php';

@@ -13,7 +13,6 @@ class Transacao extends Model
     protected $table = 'transacoes';
 
     protected $fillable = [
-        'user_id',
         'tipo',
         'valor',
         'descricao',

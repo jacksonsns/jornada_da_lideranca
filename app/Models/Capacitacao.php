@@ -12,36 +12,12 @@ class Capacitacao extends Model
     protected $table = 'capacitacoes';
 
     protected $fillable = [
+        'data',
         'titulo',
-        'descricao',
-        'data_realizacao',
-        'instrutor',
-        'material_url',
-        'insights',
-        'categoria',
-        'carga_horaria',
-        'local'
+        'insights'
     ];
 
     protected $casts = [
-        'data_realizacao' => 'datetime',
-        'insights' => 'array'
+        'data' => 'date'
     ];
-
-    public function participantes()
-    {
-        return $this->belongsToMany(User::class, 'capacitacao_participantes')
-            ->withPivot('presente', 'feedback', 'nota')
-            ->withTimestamps();
-    }
-
-    public function anexos()
-    {
-        return $this->hasMany(CapacitacaoAnexo::class);
-    }
-
-    public function avaliacoes()
-    {
-        return $this->hasMany(CapacitacaoAvaliacao::class);
-    }
 } 

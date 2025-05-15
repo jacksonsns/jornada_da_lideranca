@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app-admin')
 
 @section('title', 'Área Financeira')
 
@@ -20,24 +20,24 @@
         <div class="col-md-4">
             <div class="card bg-success text-white">
                 <div class="card-body">
-                    <h5 class="card-title">Receitas</h5>
-                    <h3 class="card-text">R$ {{ number_format($receitas, 2, ',', '.') }}</h3>
+                    <h5 class="card-title text-light">Receitas</h5>
+                    <h3 class="card-text text-light">R$ {{ number_format($receitas, 2, ',', '.') }}</h3>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card bg-danger text-white">
                 <div class="card-body">
-                    <h5 class="card-title">Despesas</h5>
-                    <h3 class="card-text">R$ {{ number_format($despesas, 2, ',', '.') }}</h3>
+                    <h5 class="card-title text-light">Despesas</h5>
+                    <h3 class="card-text text-light">R$ {{ number_format($despesas, 2, ',', '.') }}</h3>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card bg-primary text-white">
                 <div class="card-body">
-                    <h5 class="card-title">Saldo</h5>
-                    <h3 class="card-text">R$ {{ number_format($saldo, 2, ',', '.') }}</h3>
+                    <h5 class="card-title text-light">Saldo</h5>
+                    <h3 class="card-text text-light">R$ {{ number_format($saldo, 2, ',', '.') }}</h3>
                 </div>
             </div>
         </div>
@@ -97,7 +97,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="novaTransacaoModalLabel">Nova Transação</h5>
+                <h5 class="modal-title text-light" id="novaTransacaoModalLabel">Nova Transação</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ route('area-financeira.store') }}" method="POST" enctype="multipart/form-data">

@@ -104,9 +104,27 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->is('admin/capacitacoes*') ? 'active' : '' }}" href="{{ route('admin.capacitacoes.index') }}">
+                        <i class="fas fa-book text-success"></i>
+                        <span>Capacitações</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ request()->is('admin/projetos-individuais*') ? 'active' : '' }}" href="{{ route('admin.projetos-individuais.index') }}">
                         <i class="fas fa-project-diagram"></i>
                         <span>Projetos Individuais</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('area-financeira.index') }}" aria-expanded="false">
+                        <i class="fas fa-chart-bar text-success"></i>
+                        <span>Área Financeira</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">
+                        <i class="fas fa-users"></i>
+                        <span>Usuários</span>
                     </a>
                 </li>
             </ul>
@@ -164,7 +182,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="footer_iner text-center">
-                                <p>2025 © Jsn Developer</p>
+                                <p>© Jornada da Liderança {{ date('Y') }} - <a href="https://github.com/jacksonsns" target="_blank">By Jsn Developer</a></p>
                             </div>
                         </div>
                     </div>

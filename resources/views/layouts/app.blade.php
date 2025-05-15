@@ -73,10 +73,16 @@
                 </div>
             </div>
             <ul id="sidebar_menu">
-                <li>
-                    <a href="{{ route('dashboard') }}" aria-expanded="false">
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
                         <i class="fas fa-home"></i>
                         <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('capacitacoes.*') ? 'active' : '' }}" href="{{ route('capacitacoes.index') }}">
+                        <i class="fas fa-book text-success"></i>
+                        <span>Capacitações</span>
                     </a>
                 </li>
                 <li>
@@ -98,12 +104,6 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('area-financeira.index') }}" aria-expanded="false">
-                        <i class="fas fa-chart-bar text-success"></i>
-                        <span>Área Financeira</span>
-                    </a>
-                </li>
-                <li>
                     <a type="button" href="{{ route('escola-lideres.index') }}" aria-expanded="false">
                         <i class="fas fa-graduation-cap text-primary"></i>
                         <span>Escola de Líderes</span>
@@ -116,15 +116,9 @@
                     </a>
                 </li>
                 <li>
-                    <a type="button" data-bs-toggle="modal" data-bs-target="#emDesenvolvimentoModal" >
+                    <a href="{{ route('agenda.index') }}">
                         <i class="fas fa-calendar-alt text-primary"></i>
                         <span>Agenda</span>
-                    </a>
-                </li>
-                <li>
-                    <a type="button" data-bs-toggle="modal" data-bs-target="#emDesenvolvimentoModal" aria-expanded="false">
-                        <i class="fas fa-chart-line" style="color:#991ADD"></i>
-                        <span>Integração e Acompanhamento</span>
                     </a>
                 </li>
             </ul>
@@ -220,7 +214,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="footer_iner text-center">
-                                <p>2025 © Jsn Developer</p>
+                                <p>© Jornada da Liderança {{ date('Y') }} - <a href="https://github.com/jacksonsns" target="_blank">By Jsn Developer</a></p>
                             </div>
                         </div>
                     </div>

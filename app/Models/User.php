@@ -25,7 +25,6 @@ class User extends Authenticatable
         'ano_de_ingresso',
         'password',
         'avatar',
-        'role',
         'admin',
     ];
 

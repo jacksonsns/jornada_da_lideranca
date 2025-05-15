@@ -9,12 +9,15 @@ use App\Models\ProjetoIndividual;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class AreaFinanceiraController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index(Request $request)
     {
-        $query = Transacao::where('user_id', Auth::id());
+        $query = new Transacao();
 
         // Aplicar filtros
         if ($request->filled('tipo')) {
@@ -34,20 +37,15 @@ class AreaFinanceiraController extends Controller
         }
 
         // Calcular totais
-        $receitas = Transacao::where('user_id', Auth::id())
-            ->where('tipo', 'receita')
-            ->where('status', 'aprovado')
+        $receitas = Transacao::where('tipo', 'receita')
             ->sum('valor');
 
-        $despesas = Transacao::where('user_id', Auth::id())
-            ->where('tipo', 'despesa')
-            ->where('status', 'aprovado')
+        $despesas = Transacao::where('tipo', 'despesa')
             ->sum('valor');
 
         $saldo = $receitas - $despesas;
 
-        $transacoesPendentes = Transacao::where('user_id', Auth::id())
-            ->where('status', 'pendente')
+        $transacoesPendentes = Transacao::where('status', 'pendente')
             ->count();
 
         // Paginar resultados
@@ -80,7 +78,7 @@ class AreaFinanceiraController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validados = $request->validate([
             'tipo' => 'required|in:receita,despesa',
             'valor' => 'required|numeric|min:0',
             'descricao' => 'required|string|max:255',
@@ -90,9 +88,9 @@ class AreaFinanceiraController extends Controller
             'observacoes' => 'nullable|string'
         ]);
 
-        $transacao = new Transacao($request->all());
-        $transacao->user_id = Auth::id();
-        $transacao->status = 'pendente';
+        $validados['status'] = 'pendente';
+
+        $transacao = new Transacao($validados);
 
         if ($request->hasFile('comprovante')) {
             $path = $request->file('comprovante')->store('comprovantes', 'public');
