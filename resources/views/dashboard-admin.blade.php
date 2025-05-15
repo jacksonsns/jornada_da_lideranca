@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
+    <h1 class="mb-5">Integração e Acompanhamento</h1>
     <!-- Cards de Estatísticas -->
     <div class="row mb-4">
         <div class="col-xl-3 col-md-6 mb-4">
@@ -69,95 +70,48 @@
         </div>
     </div>
 
-    <!-- Gráficos -->
-    <div class="row">
-        <div class="col-xl-8 col-lg-7">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Crescimento de Usuários</h6>
-                </div>
-                <div class="card-body">
-                    <canvas id="usuariosChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-4 col-lg-5">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Status dos Desafios</h6>
-                </div>
-                <div class="card-body">
-                    <canvas id="desafiosChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Listas e Tabelas -->
-    <div class="row">
-        <!-- Últimos Usuários -->
-        <div class="col-xl-6 col-lg-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Últimos Usuários Cadastrados</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Email</th>
-                                    <th>Data de Cadastro</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($ultimosUsuarios as $usuario)
-                                <tr>
-                                    <td>{{ $usuario->name }}</td>
-                                    <td>{{ $usuario->email }}</td>
-                                    <td>{{ $usuario->created_at->format('d/m/Y') }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+        <!-- Listas e Tabelas -->
+        <div class="row">
+            <!-- Usuários -->
+            <div class="w-100">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 bg-info">
+                        <h6 class="m-0 font-weight-bold text-light">Usuários</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Email</th>
+                                        <th>Data de Cadastro</th>
+                                        <th>Pontuação Desafios Junior</th>
+                                        <th>Pontuação Jornadas Aspirante</th>
+                                        <th>Pontuação Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($usuarios as $usuario)
+                                    <tr>
+                                        <td>{{ $usuario->name }}</td>
+                                        <td>{{ $usuario->email }}</td>
+                                        <td>{{ $usuario->created_at->format('d/m/Y') }}</td>
+                                        <td>{{ $usuario->total_pontos_desafios ?? 0 }}</td>
+                                        <td>{{ $usuario->total_pontos_jornadas ?? 0 }}</td>
+                                        <td>{{ $usuario->total_pontos_jornadas + $usuario->total_pontos_desafios ?? 0 }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-center">
+                                {{ $usuarios->links() }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Próximos Eventos -->
-        <div class="col-xl-6 col-lg-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Próximos Eventos</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Evento</th>
-                                    <th>Data</th>
-                                    <th>Local</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($proximosEventos as $evento)
-                                <tr>
-                                    <td>{{ $evento->titulo }}</td>
-                                    <td>{{ $evento->data->format('d/m/Y H:i') }}</td>
-                                    <td>{{ $evento->local }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 @push('scripts')

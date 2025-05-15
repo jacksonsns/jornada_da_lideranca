@@ -22,13 +22,11 @@ class AdminController extends Controller
 {
     public function index()
     {
-        // Estatísticas gerais
         $totalUsuarios = User::count();
         $usuariosAtivos = User::count();
         $totalDesafios = Desafio::count();
         $desafiosCompletados = DesafioUser::where('concluido', 1)->count();
-        // $totalModulos = Modulo::count();
-        $totalProjetos = Projeto::count();
+        $totalProjetos = ProjetoIndividual::count();
         
         // Dados para gráficos
         $usuariosPorMes = User::select(
@@ -43,19 +41,28 @@ class AdminController extends Controller
             ->groupBy('concluido')
             ->get();
 
-        // Últimos usuários cadastrados
-        $ultimosUsuarios = User::with('desafios')
-            ->latest()
-            ->take(5)
-            ->get();
-
-        // Desafios mais populares
+        $usuarios = User::select('users.*')
+            ->selectSub(function ($query) {
+                $query->from('desafio_user')
+                    ->join('desafios', 'desafios.id', '=', 'desafio_user.desafio_id')
+                    ->whereColumn('desafio_user.user_id', 'users.id')
+                    ->where('desafio_user.concluido', 1)
+                    ->selectRaw('COALESCE(SUM(desafios.pontos), 0)');
+            }, 'total_pontos_desafios')
+            ->selectSub(function ($query) {
+                $query->from('jornada_aspirante_user')
+                    ->join('jornada_aspirante', 'jornada_aspirante.id', '=', 'jornada_aspirante_user.jornada_aspirante_id')
+                    ->whereColumn('jornada_aspirante_user.user_id', 'users.id')
+                    ->where('jornada_aspirante_user.concluido', 1)
+                    ->selectRaw('COALESCE(SUM(jornada_aspirante.pontos), 0)');
+            }, 'total_pontos_jornadas')
+            ->paginate(15);
+        
         $desafiosPopulares = Desafio::withCount('users')
             ->orderBy('users_count', 'desc')
             ->take(5)
             ->get();
 
-        // Próximos eventos
         $proximosEventos = Evento::where('created_at', '>=', now())
             ->orderBy('created_at')
             ->take(5)
@@ -72,7 +79,7 @@ class AdminController extends Controller
             'totalProjetos',
             'usuariosPorMes',
             'desafiosPorStatus',
-            'ultimosUsuarios',
+            'usuarios',
             'desafiosPopulares',
             'proximosEventos',
         ));

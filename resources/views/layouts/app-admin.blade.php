@@ -75,8 +75,8 @@
             <ul id="sidebar_menu">
                 <li>
                     <a href="{{ route('admin.index') }}" aria-expanded="false">
-                        <i class="fas fa-home"></i>
-                        <span>Administrador</span>
+                        <i class="fas fa-chart-line" style="color:#800080;"></i>
+                        <span>Integração e Acompanhamento</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -93,7 +93,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.aulas.*') ? 'active' : '' }}" href="{{ route('admin.aulas.index') }}">
-                        <i class="fas fa-play-circle"></i>
+                        <i class="fas fa-play-circle text-danger"></i>
                         <span>Aulas</span>
                     </a>
                 </li>
@@ -111,7 +111,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('admin/projetos-individuais*') ? 'active' : '' }}" href="{{ route('admin.projetos-individuais.index') }}">
-                        <i class="fas fa-project-diagram"></i>
+                        <i class="fas fa-bullseye text-warning"></i>
                         <span>Projetos Individuais</span>
                     </a>
                 </li>
@@ -147,7 +147,7 @@
                                 <div class="header_notification_warp d-flex align-items-center">
                                 </div>
                                 <div class="profile_info">
-                                    <img src="{{ asset('img/avatar.png') }}" alt="#">
+                                    <img src="{{ auth()->user()->avatar ? asset('storage/avatars/' . auth()->user()->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) }}" alt="#">
                                     <div class="profile_info_iner">
                                         <div class="profile_author_name">
                                             <p>Olá, </p>

@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Models\User;
 use App\Observers\UserObserver;
 use App\Services\DesafioAutomaticoService;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,5 +26,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         User::observe(UserObserver::class);
+        Paginator::useBootstrap();
     }
 }

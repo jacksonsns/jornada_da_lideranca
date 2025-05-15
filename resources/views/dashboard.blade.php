@@ -60,7 +60,7 @@
                         Escola de Líderes
                     </h5>
                     <p class="card-text">Acesse os conteúdos da escola de líderes.</p>
-                    <a href="#" class="btn btn-primary btn-modal">Acessar</a>
+                    <a href="{{ route('escola-lideres.index') }}" class="btn btn-primary">Acessar</a>
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
                         Capacitações
                     </h5>
                     <p class="card-text">Participe das capacitações disponíveis.</p>
-                    <a href="#" class="btn btn-primary btn-modal">Acessar</a>
+                    <a href="{{ route('capacitacoes.index') }}" class="btn btn-primary">Acessar</a>
                 </div>
             </div>
         </div>
@@ -88,42 +88,16 @@
                         Projeto Individual
                     </h5>
                     <p class="card-text">Gerencie seu projeto individual.</p>
-                    <a href="#" class="btn btn-primary btn-modal">Acessar</a>
+                    <a href="{{ route('projeto-individual.index') }}" class="btn btn-primary">Acessar</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalEmDesenvolvimento" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-warning">
-      <div class="modal-header bg-warning text-dark">
-        <h5 class="modal-title" id="modalLabel">Área em Desenvolvimento</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-      </div>
-      <div class="modal-body text-center">
-        <p>Essa área ainda está em desenvolvimento.</p>
-        <p>Estamos trabalhando para disponibilizá-la em breve!</p>
-        <img src="https://cdn-icons-png.flaticon.com/512/2784/2784461.png" alt="Em desenvolvimento" width="80">
-      </div>
-    </div>
-  </div>
-</div>
 @endsection
 
 @push('scripts')
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const modal = new bootstrap.Modal(document.getElementById('modalEmDesenvolvimento'));
-
-        document.querySelectorAll('.btn-modal').forEach(btn => {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                modal.show();
-            });
-        });
-    });
+    // Removendo o script do modal pois não é mais necessário
 </script>
 @endpush
