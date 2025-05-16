@@ -135,6 +135,15 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     // Rotas de Usuários
     Route::resource('admin/users', \App\Http\Controllers\Admin\UserController::class)->names('admin.users');
 
+
+    Route::get('admin/users/show/{id}', [\App\Http\Controllers\Admin\UserController::class, 'show'])->name('admin.users.show');
+    
+    Route::post('remover-jornada', [\App\Http\Controllers\Admin\UserController::class, 'removerPontuacaoJornada'])->name('remover-pontuacao-jornada');
+    Route::post('remover-desafio-junior', [\App\Http\Controllers\Admin\UserController::class, 'removerPontuacaoDesafioJunior'])->name('remover-pontuacao-desafio-junior');
+
+    Route::post('add-jornada', [\App\Http\Controllers\Admin\UserController::class, 'addPontuacaoJornada'])->name('add-pontuacao-jornada');
+    Route::post('add-desafio-junior', [\App\Http\Controllers\Admin\UserController::class, 'addPontuacaoDesafioJunior'])->name('add-pontuacao-desafio-junior');
+
     // Rotas de Desafios
     Route::get('admin/desafios', [AdminController::class, 'desafiosIndex'])->name('admin.desafios.index');
     Route::post('admin/desafios', [AdminController::class, 'desafioStore'])->name('admin.desafios.store');

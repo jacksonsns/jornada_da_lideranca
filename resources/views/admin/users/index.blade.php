@@ -40,6 +40,9 @@
                                         <td>{{ $user->admin ? 'Admin' : 'Usuário' }}</td>
                                         <td>
                                             <div class="d-flex">
+                                                <a href="{{ route('admin.users.show', ['id' => $user->id]) }}" class="btn btn-primary btn-sm me-2">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
                                                 <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary btn-sm me-2">
                                                     <i class="fas fa-edit"></i>
                                                 </a>

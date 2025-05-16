@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\JornadaAspiranteUser;
+use App\Models\DesafioUser;
 
 class UserController extends Controller
 {
@@ -13,6 +15,84 @@ class UserController extends Controller
     {
         $users = User::all();
         return view('admin.users.index', compact('users'));
+    }
+
+    public function show(Request $request)
+    {
+        $user = User::findOrFail($request->id);
+
+        $desafiosJornada = JornadaAspiranteUser::select('jornada_aspirante_user.*', 'jornada_aspirante_user.id as desafio_user_id', 'jornada_aspirante.*') 
+            ->leftJoin('jornada_aspirante', 'jornada_aspirante_user.jornada_aspirante_id', '=', 'jornada_aspirante.id')
+            ->where('jornada_aspirante_user.user_id', $user->id)
+            ->get();
+
+        $desafios = DesafioUser::select('desafio_user.*','desafio_user.id as desafio_user_id', 'desafios.*') 
+            ->leftJoin('desafios', 'desafio_user.desafio_id', '=', 'desafios.id')
+            ->where('desafio_user.user_id', $user->id)
+            ->get();
+
+        $conquistas = $user->conquistas()
+            ->withPivot('conquistado_em')
+            ->get();
+
+        $totalPontos = JornadaAspiranteUser::where('user_id', $user->id)
+            ->where('concluido', 1)
+            ->join('jornada_aspirante', 'jornada_aspirante.id', '=', 'jornada_aspirante_user.jornada_aspirante_id')
+            ->sum('jornada_aspirante.pontos');
+
+        $totalPontosDesafios = DesafioUser::where('user_id', $user->id)
+            ->where('concluido', 1)
+            ->join('desafios', 'desafios.id', '=', 'desafio_user.desafio_id')
+            ->sum('desafios.pontos');
+       
+        $totalPontos = $totalPontos + $totalPontosDesafios;
+
+        return view('admin.users.show', compact('user', 'desafios', 'desafiosJornada', 'totalPontos', 'conquistas'));
+    }
+
+    public function addPontuacaoJornada(Request $request)
+    {
+        $jornada = JornadaAspiranteUser::findOrFail($request->id);
+        
+        $jornada->update([
+            'concluido' => 1,
+        ]);
+
+        return redirect()->back()->with('success', 'Pontuação atualizada com sucesso!');
+    }
+
+    public function removerPontuacaoJornada(Request $request)
+    {
+        $jornada = JornadaAspiranteUser::findOrFail($request->id);
+        
+        $jornada->update([
+            'concluido' => 0,
+        ]);
+
+        return redirect()->back()->with('success', 'Pontuação atualizada com sucesso!');
+    }
+
+    public function addPontuacaoDesafioJunior(Request $request)
+    {
+        $jornada = DesafioUser::findOrFail($request->desafio_id);
+
+        $jornada->update([
+            'concluido' => 1,
+        ]);
+
+        return redirect()->back()->with('success', 'Pontuação atualizada com sucesso!');
+    }
+
+
+    public function removerPontuacaoDesafioJunior(Request $request)
+    {
+        $jornada = DesafioUser::findOrFail($request->desafio_id);
+
+        $jornada->update([
+            'concluido' => 0,
+        ]);
+
+        return redirect()->back()->with('success', 'Pontuação atualizada com sucesso!');
     }
 
     public function create()
