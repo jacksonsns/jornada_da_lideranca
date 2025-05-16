@@ -17,6 +17,18 @@
                             </div>
                         @endif
 
+                        <div class="mb-4">
+                            <form action="{{ route('admin.users.index') }}" method="GET" class="d-flex align-items-center">
+                                <input type="text" name="search" class="form-control me-2" placeholder="Buscar por nome ou email..." value="{{ request('search') }}">
+                                
+                                <button type="submit" class="btn btn-primary me-2">Buscar</button>
+
+                                @if(request('search'))
+                                    <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Limpar</a>
+                                @endif
+                            </form>
+                        </div>
+                        
                         <table class="table lms_table_active">
                             <thead>
                                 <tr>
