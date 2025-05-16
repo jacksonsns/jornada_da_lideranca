@@ -21,7 +21,7 @@
                         <div class="w-100 mb-5">
                             <div class="card shadow-lg">
                                 <div class="card-header bg-dark text-white text-center">
-                                    <h4 class="text-light">Pontuação do Usuário</h4>
+                                    <h4 class="text-light">{{ $user->name }}</h4>
                                 </div>
                                 <div class="card-body text-center">
                                     <i class="fas fa-medal fa-3x text-warning"></i>
