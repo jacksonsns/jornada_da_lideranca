@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Observers\UserObserver;
 use App\Services\DesafioAutomaticoService;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,5 +28,10 @@ class AppServiceProvider extends ServiceProvider
     {
         User::observe(UserObserver::class);
         Paginator::useBootstrap();
+
+        // Forçar HTTPS em ambiente de produção
+        if (env('APP_ENV') === 'production') {
+            URL::forceScheme('https');
+        }
     }
 }
