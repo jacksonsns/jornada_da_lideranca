@@ -123,7 +123,7 @@
                 </li>
                 <li>
                     <a href="{{ route('curriculo-junior.index') }}" aria-expanded="false">
-                        <i class="fas fa-trophy text-orange"></i>
+                        <i class="fas fa-book-open text-orange"></i>
                         <span>Currículo Junior</span>
                     </a>
                 </li>
