@@ -142,13 +142,19 @@
         <div class="content-grid">
             <div class="grid-row">
                 <div class="sidebar">
-
-                <div class="profile-header">
-                    @if($user->avatar)
-                        <img src="{{ public_path('storage/' . $user->avatar) }}" alt="Foto de Perfil" class="avatar">
-                    @endif
-                </div>
+                    <div class="profile-header">
+                        @php
+                            $avatarPath = $user->avatar ? public_path('storage/avatars/' . $user->avatar) : null;
+                            $avatarUrl = $user->avatar && file_exists($avatarPath) 
+                                ? 'data:image/jpeg;base64,' . base64_encode(file_get_contents($avatarPath))
+                                : 'https://ui-avatars.com/api/?name=' . urlencode($user->name) . '&background=random';
+                        @endphp
+                        <img src="{{ $avatarUrl }}"
+                            alt="Foto de perfil" class="avatar"
+                        >
+                    </div>
                     <div class="section contact-info">
+                        <div class="user-name">{{ $user->name ?? 'Não informado' }}</div>
                         <div class="section-title">Informações Básicas</div>
                         <div class="info-item"><span class="info-label">Email:</span> {{ $user->email ?? 'Não informado' }}</div>
                         <div class="info-item"><span class="info-label">Telefone:</span> {{ $user->telefone ?? 'Não informado' }}</div>
@@ -156,10 +162,9 @@
                         <div class="info-item"><span class="info-label">Ingresso:</span> {{ $user->ano_de_ingresso ?? 'Não informado' }}</div>
                         <div class="info-item"><span class="info-label">Padrinho:</span> {{ $user->padrinho ?? 'Não informado' }}</div>
                     </div>
-                </div> {{-- Fim sidebar --}}
+                </div>
 
                 <div class="main-content">
-                    <div class="user-name">{{ $user->name ?? 'Não informado' }}</div>
                     <div class="section skills-section">
                          <div class="section-title">Cursos oficiais da JCI e outros realizados</div>
                         <ul class="skills-list">

@@ -96,7 +96,10 @@
                                 <div class="avatar-upload">
                                     @if($user->avatar)
                                         <div class="mb-3">
-                                            <img src="{{ Storage::url($user->avatar) }}" alt="Foto de perfil" class="img-thumbnail rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+                                            <img  src="{{ auth()->user()->avatar ? asset('storage/avatars/' . auth()->user()->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) }}"
+                                                  alt="Foto de perfil" class="img-thumbnail rounded-circle" 
+                                                  style="width: 150px; height: 150px; object-fit: cover;"
+                                            >
                                         </div>
                                     @endif
                                     <div class="input-group">

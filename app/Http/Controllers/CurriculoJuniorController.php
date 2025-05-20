@@ -51,10 +51,16 @@ class CurriculoJuniorController extends Controller
             'curso_facilitador',
         ]);
 
+        $user = auth()->user();
+        
         if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-            $path = $avatar->store('avatars', 'public');
-            $data['avatar'] = $path;
+ 
+            if ($user->avatar) {
+                Storage::delete('avatars/' . $user->avatar);
+            }
+    
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar = basename($avatarPath);
         }
 
         // Campos booleanos
