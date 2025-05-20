@@ -169,9 +169,17 @@
 @push('scripts')
 <script>
 $(document).ready(function() {
+    // Configurar o token CSRF globalmente
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     // Criar Desafio
     $('#createDesafioForm').on('submit', function(e) {
         e.preventDefault();
+
         $.ajax({
             url: '{{ route("admin.desafios.store") }}',
             method: 'POST',
@@ -184,6 +192,7 @@ $(document).ready(function() {
             },
             error: function(xhr) {
                 alert('Erro ao criar desafio');
+                console.log(xhr.responseText);
             }
         });
     });
@@ -202,6 +211,7 @@ $(document).ready(function() {
     $('#editDesafioForm').on('submit', function(e) {
         e.preventDefault();
         const desafioId = $('#edit_desafio_id').val();
+
         $.ajax({
             url: `/admin/desafios/${desafioId}`,
             method: 'PUT',
@@ -214,12 +224,14 @@ $(document).ready(function() {
             },
             error: function(xhr) {
                 alert('Erro ao atualizar desafio');
+                console.log(xhr.responseText);
             }
         });
     });
 
     // Excluir Desafio
     let desafioToDelete = null;
+
     $('.delete-desafio').click(function() {
         desafioToDelete = $(this).data('desafio');
     });
@@ -237,6 +249,7 @@ $(document).ready(function() {
                 },
                 error: function(xhr) {
                     alert('Erro ao excluir desafio');
+                    console.log(xhr.responseText);
                 }
             });
         }

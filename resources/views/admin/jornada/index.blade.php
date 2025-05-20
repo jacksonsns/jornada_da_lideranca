@@ -169,9 +169,17 @@
 @push('scripts')
 <script>
 $(document).ready(function() {
+    // Configurar CSRF Token globalmente
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     // Criar Jornada
     $('#createJornadaForm').on('submit', function(e) {
         e.preventDefault();
+
         $.ajax({
             url: '{{ route("admin.jornada.store") }}',
             method: 'POST',
@@ -184,6 +192,7 @@ $(document).ready(function() {
             },
             error: function(xhr) {
                 alert('Erro ao criar jornada');
+                console.log(xhr.responseText);
             }
         });
     });
@@ -202,6 +211,7 @@ $(document).ready(function() {
     $('#editJornadaForm').on('submit', function(e) {
         e.preventDefault();
         const jornadaId = $('#edit_jornada_id').val();
+
         $.ajax({
             url: `/admin/jornada/${jornadaId}`,
             method: 'PUT',
@@ -214,12 +224,14 @@ $(document).ready(function() {
             },
             error: function(xhr) {
                 alert('Erro ao atualizar jornada');
+                console.log(xhr.responseText);
             }
         });
     });
 
     // Excluir Jornada
     let jornadaToDelete = null;
+
     $('.delete-jornada').click(function() {
         jornadaToDelete = $(this).data('jornada');
     });
@@ -237,6 +249,7 @@ $(document).ready(function() {
                 },
                 error: function(xhr) {
                     alert('Erro ao excluir jornada');
+                    console.log(xhr.responseText);
                 }
             });
         }
