@@ -19,6 +19,7 @@ use App\Http\Controllers\EventoController;
 use App\Http\Controllers\AdminController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\CapacitacoesController;
+use App\Http\Controllers\CurriculoJuniorController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -111,6 +112,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Rotas da Escola de Líderes
     Route::get('/escola-lideres', [EscolaLideresController::class, 'index'])->name('escola-lideres.index');
+
+    Route::get('/curriculo-junior', [CurriculoJuniorController::class, 'index'])->name('curriculo-junior.index');
     
     // Rotas para módulos
     Route::get('/escola-lideres/modulo/{modulo}', [EscolaLideresController::class, 'modulo'])->name('escola-lideres.modulo');
@@ -183,6 +186,15 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::post('admin/capacitacoes', [App\Http\Controllers\Admin\CapacitacoesController::class, 'store'])->name('admin.capacitacoes.store');
     Route::put('admin/capacitacoes/{capacitacao}', [App\Http\Controllers\Admin\CapacitacoesController::class, 'update'])->name('admin.capacitacoes.update');
     Route::delete('admin/capacitacoes/{capacitacao}', [App\Http\Controllers\Admin\CapacitacoesController::class, 'destroy'])->name('admin.capacitacoes.destroy');
+
+    Route::get('/admin/users/{id}/curriculo-junior', [App\Http\Controllers\Admin\UserController::class, 'generateCurriculoJunior'])
+        ->name('admin.users.curriculo-junior');
+});
+
+Route::prefix('curriculo')->group(function () {
+    Route::get('/', [CurriculoJuniorController::class, 'index'])->name('curriculo.index');
+    Route::post('/store', [CurriculoJuniorController::class, 'store'])->name('curriculo.store');
+    Route::get('/success', [CurriculoJuniorController::class, 'success'])->name('curriculo.success');
 });
 
 require __DIR__.'/auth.php';

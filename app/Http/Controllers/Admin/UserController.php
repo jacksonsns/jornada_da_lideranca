@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\JornadaAspiranteUser;
 use App\Models\DesafioUser;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class UserController extends Controller
 {
@@ -171,5 +172,14 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect()->route('admin.users.index')->with('success', 'Usuário excluído com sucesso!');
+    }
+
+    public function generateCurriculoJunior($id)
+    {
+        $user = User::findOrFail($id);
+        
+        $pdf = PDF::loadView('admin.users.curriculo-junior-pdf', compact('user'));
+        
+        return $pdf->stream('curriculo-junior-' . $user->name . '.pdf');
     }
 } 

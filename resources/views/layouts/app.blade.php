@@ -121,6 +121,12 @@
                         <span>Agenda</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('curriculo-junior.index') }}" aria-expanded="false">
+                        <i class="fas fa-trophy text-orange"></i>
+                        <span>Currículo Junior</span>
+                    </a>
+                </li>
             </ul>
         </nav>
 

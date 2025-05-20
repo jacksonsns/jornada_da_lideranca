@@ -26,7 +26,35 @@ class User extends Authenticatable
         'password',
         'avatar',
         'admin',
-    ];
+        'data_nascimento',
+        'cargo',
+        'eventos',
+        'comissoes',
+        'concursos_participados',
+        'premiacoes',
+        'empresas_vinculos',
+        'curso_facilitador',
+        'impact',
+        'archieve',
+        'responsabilidade',
+        'reunioes',
+        'networking',
+        'mentoring',
+        'explore',
+        'envolva',
+        'admin_curso',
+        'contruindo_fundacao',
+        'elaborando_mensagem',
+        'entrega_mensagem',
+        'gestao_marketing',
+        'lideranca',
+        'facilitador',
+        'gerenciamento_projeto',
+        'discover',
+        'apresentador',
+        'oratoria',
+        'outro',
+    ];    
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,6 +74,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'data_nascimento' => 'date',
     ];
 
     // Relacionamentos

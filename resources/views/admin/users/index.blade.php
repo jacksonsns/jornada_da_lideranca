@@ -50,18 +50,21 @@
                                         <td>{{ $user->padrinho ?? '-' }}</td>
                                         <td>{{ $user->ano_de_ingresso ?? '-' }}</td>
                                         <td>{{ $user->admin ? 'Admin' : 'Usuário' }}</td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <a href="{{ route('admin.users.show', ['id' => $user->id]) }}" class="btn btn-primary btn-sm me-2">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary btn-sm me-2">
+                                        <td class="text-end">
+                                            <div class="btn-group">
+                                                <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-primary">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este usuário?')">
+                                                <a href="{{ route('admin.users.show', ['id' => $user->id]) }}" class="btn btn-primary btn-sm">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="{{ route('admin.users.curriculo-junior', $user->id) }}" class="btn btn-sm btn-info" target="_blank" title="Currículo Junior">
+                                                    <i class="fas fa-file-pdf"></i>
+                                                </a>
+                                                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este usuário?')">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </form>
