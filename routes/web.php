@@ -20,6 +20,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\CapacitacoesController;
 use App\Http\Controllers\CurriculoJuniorController;
+use App\Http\Controllers\ClassificadoController;
+use App\Http\Controllers\ClassificadoImagemController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -129,6 +131,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/google/connect', [App\Http\Controllers\GoogleCalendarController::class, 'connect'])->name('google.connect');
     Route::get('/google/callback', [App\Http\Controllers\GoogleCalendarController::class, 'callback'])->name('google.callback');
     Route::get('/google/disconnect', [App\Http\Controllers\GoogleCalendarController::class, 'disconnect'])->name('google.disconnect');
+
+    Route::resource('classificados', ClassificadoController::class);
+
+    // Rotas para imagens dos anúncios
+    Route::delete('/classificados/imagens/{imagem}', [ClassificadoImagemController::class, 'destroy'])
+        ->name('classificados.imagens.destroy');
 });
 
 // Rotas administrativas

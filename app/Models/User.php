@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Classificado;
 
 class User extends Authenticatable
 {
@@ -186,4 +187,10 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'conexoes', 'user_id', 'conexao_id')
             ->withTimestamps();
     }
+
+    public function classificados()
+    {
+        return $this->hasMany(Classificado::class);
+    }
+
 }
