@@ -127,9 +127,15 @@
                         <label>Imagens Atuais</label>
                         <div class="row mt-2">
                             @foreach($classificado->imagens as $imagem)
-                                <div class="col-md-3">
-                                    <img src="{{ Storage::url($imagem->caminho) }}"
-                                         class="img-thumbnail mb-2" alt="Imagem" style="height: 100px; object-fit: cover;">
+                                <div class="col-md-3 mb-3">
+                                    <div class="position-relative">
+                                        <img src="{{ Storage::url($imagem->caminho) }}"
+                                             class="img-thumbnail" alt="Imagem" style="height: 150px; object-fit: cover; width: 100%;">
+                                        <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2"
+                                                onclick="excluirImagem({{ $imagem->id }})">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
@@ -139,16 +145,15 @@
                 <!-- Upload de novas imagens -->
                 <div class="form-group">
                     <label for="imagens">Adicionar Novas Imagens</label>
-                    <div class="custom-file">
-                        <input type="file" name="imagens[]" id="imagens" class="custom-file-input @error('imagens') is-invalid @enderror"
-                               multiple accept="image/*">
-                        <label class="custom-file-label" for="imagens">Escolher arquivos...</label>
-                        @error('imagens')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div id="image-preview" class="row mt-3"></div>
+                    <input type="file" name="imagens[]" id="imagens" class="form-control @error('imagens') is-invalid @enderror"
+                           multiple accept="image/*">
+                    <small class="form-text text-muted">Você pode selecionar várias imagens. Tamanho máximo: 2MB por imagem.</small>
+                    @error('imagens')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
                 </div>
+
+                <div id="image-preview" class="row mt-3"></div>
 
                 <!-- Destaque -->
                 <div class="form-group form-check">
@@ -169,28 +174,51 @@
 <!-- Scripts -->
 @push('scripts')
 <script>
-    document.querySelector('.custom-file-input').addEventListener('change', function () {
-        const label = this.nextElementSibling;
-        const previewContainer = document.getElementById('image-preview');
-        label.innerHTML = Array.from(this.files).map(f => f.name).join(', ');
-        previewContainer.innerHTML = '';
-
-        Array.from(this.files).forEach(file => {
+    // Prévia das imagens
+    document.getElementById('imagens').addEventListener('change', function(e) {
+        const preview = document.getElementById('image-preview');
+        preview.innerHTML = '';
+        
+        [...e.target.files].forEach(file => {
             const reader = new FileReader();
-            reader.onload = e => {
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.className = 'img-thumbnail mb-2';
-                img.style.height = '100px';
-                img.style.objectFit = 'cover';
-                const col = document.createElement('div');
-                col.className = 'col-md-3';
-                col.appendChild(img);
-                previewContainer.appendChild(col);
-            };
+            reader.onload = function(e) {
+                const div = document.createElement('div');
+                div.className = 'col-md-3 mb-3';
+                div.innerHTML = `
+                    <div class="position-relative">
+                        <img src="${e.target.result}" class="img-thumbnail" style="height: 150px; object-fit: cover; width: 100%;">
+                    </div>
+                `;
+                preview.appendChild(div);
+            }
             reader.readAsDataURL(file);
         });
     });
+
+    // Exclusão de imagem
+    function excluirImagem(id) {
+        if (confirm('Tem certeza que deseja excluir esta imagem?')) {
+            fetch(`/classificados/imagens/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Erro ao excluir imagem');
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao excluir imagem');
+            });
+        }
+    }
 </script>
 @endpush
 @endsection

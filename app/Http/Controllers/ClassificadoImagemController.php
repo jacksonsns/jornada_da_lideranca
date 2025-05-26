@@ -16,12 +16,16 @@ class ClassificadoImagemController extends Controller
             return response()->json(['success' => false, 'message' => 'Não autorizado'], 403);
         }
 
-        // Remove o arquivo do storage
-        Storage::delete($imagem->caminho);
+        try {
+            // Remove o arquivo do storage
+            Storage::disk('public')->delete($imagem->caminho);
 
-        // Remove o registro do banco
-        $imagem->delete();
+            // Remove o registro do banco
+            $imagem->delete();
 
-        return response()->json(['success' => true]);
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Erro ao excluir imagem'], 500);
+        }
     }
 } 

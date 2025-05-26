@@ -149,10 +149,13 @@ class ClassificadoController extends Controller
             'bairro' => 'nullable|string|max:255',
             'telefone' => 'nullable|string|max:20',
             'imagens.*' => 'nullable|image|max:2048',
+            'destaque' => 'boolean',
         ]);
 
+        // Atualiza os dados básicos
         $classificado->update($validated);
 
+        // Processa as novas imagens
         if ($request->hasFile('imagens')) {
             foreach ($request->file('imagens') as $imagem) {
                 $caminho = $imagem->store('classificados', 'public');
