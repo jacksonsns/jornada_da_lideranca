@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Classificado;
 use App\Services\EstadosService;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ClassificadoController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the resource.
      */
