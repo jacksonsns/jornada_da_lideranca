@@ -127,6 +127,12 @@
                         <span>Currículo Junior</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('classificados.index') }}" class="nav-link {{ request()->routeIs('classificados.*') ? 'active' : '' }}">
+                        <i class="fas fa-store me-2"></i>
+                        <span>Mercado JCI</span>
+                    </a>
+                </li>
             </ul>
         </nav>
 
