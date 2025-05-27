@@ -5,7 +5,7 @@
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-light px-3 py-2 rounded">
-            <li class="breadcrumb-item"><a href="{{ route('classificados.index') }}">Classificados</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('painel-parceiros.index') }}">Painel Parceiros</a></li>
             <li class="breadcrumb-item active" aria-current="page">Editar Anúncio</li>
         </ol>
     </nav>
@@ -18,7 +18,7 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('classificados.update', $classificado) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('painel-parceiros.update', $classificado) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -39,36 +39,6 @@
                               class="form-control @error('descricao') is-invalid @enderror"
                               placeholder="Inclua detalhes relevantes sobre o que está anunciando" required>{{ old('descricao', $classificado->descricao) }}</textarea>
                     @error('descricao')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <!-- Preço -->
-                <div class="form-group">
-                    <label for="preco">Preço</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">R$</span>
-                        </div>
-                        <input type="number" name="preco" id="preco"
-                               class="form-control @error('preco') is-invalid @enderror"
-                               value="{{ old('preco', $classificado->preco) }}" step="0.01" placeholder="0,00" required>
-                    </div>
-                    @error('preco')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <!-- Categoria -->
-                <div class="form-group">
-                    <label for="categoria">Categoria</label>
-                    <select name="categoria" id="categoria" class="form-control @error('categoria') is-invalid @enderror" required>
-                        <option value="">Selecione uma categoria</option>
-                        @foreach(['imoveis' => 'Imóveis', 'veiculos' => 'Veículos', 'eletronicos' => 'Eletrônicos', 'servicos' => 'Serviços'] as $valor => $nome)
-                            <option value="{{ $valor }}" {{ old('categoria', $classificado->categoria) === $valor ? 'selected' : '' }}>{{ $nome }}</option>
-                        @endforeach
-                    </select>
-                    @error('categoria')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -163,7 +133,7 @@
 
                 <!-- Botões -->
                 <div class="mt-4 d-flex justify-content-end">
-                    <a href="{{ route('classificados.show', $classificado) }}" class="btn btn-outline-secondary mr-2">Cancelar</a>
+                    <a href="{{ route('painel-parceiros.show', $classificado) }}" class="btn btn-outline-secondary mr-2">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Atualizar Anúncio</button>
                 </div>
             </form>

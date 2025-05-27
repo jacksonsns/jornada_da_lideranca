@@ -59,7 +59,7 @@ class ClassificadoController extends Controller
         // Estados para o filtro
         $estados = EstadosService::getEstados();
 
-        return view('classificados.index', compact('classificados', 'destaques', 'estados'));
+        return view('painel-parceiros.index', compact('classificados', 'destaques', 'estados'));
     }
 
     /**
@@ -68,7 +68,7 @@ class ClassificadoController extends Controller
     public function create()
     {
         $estados = EstadosService::getEstados();
-        return view('classificados.create', compact('estados'));
+        return view('painel-parceiros.create', compact('estados'));
     }
 
     /**
@@ -79,8 +79,6 @@ class ClassificadoController extends Controller
         $validated = $request->validate([
             'titulo' => 'required|string|max:255',
             'descricao' => 'required|string',
-            'preco' => 'required|numeric|min:0',
-            'categoria' => 'required|string|in:imoveis,veiculos,eletronicos,servicos',
             'estado' => 'required|string|size:2',
             'cidade' => 'required|string|max:255',
             'bairro' => 'nullable|string|max:255',
@@ -97,7 +95,7 @@ class ClassificadoController extends Controller
             }
         }
 
-        return redirect()->route('classificados.show', $classificado)
+        return redirect()->route('painel-parceiros.show', $classificado)
             ->with('success', 'Anúncio criado com sucesso!');
     }
 
@@ -106,20 +104,16 @@ class ClassificadoController extends Controller
      */
     public function show(Classificado $classificado)
     {
-        // Incrementa o contador de visualizações
         $classificado->increment('visualizacoes');
-
-        // Carrega o relacionamento com o usuário
         $classificado->load('user');
 
-        // Buscar anúncios relacionados
         $relacionados = Classificado::where('categoria', $classificado->categoria)
             ->where('id', '!=', $classificado->id)
             ->latest()
             ->take(4)
             ->get();
-
-        return view('classificados.show', compact('classificado', 'relacionados'));
+   
+        return view('painel-parceiros.show', compact('classificado', 'relacionados'));
     }
 
     /**
@@ -129,7 +123,7 @@ class ClassificadoController extends Controller
     {
         $this->authorize('update', $classificado);
         $estados = EstadosService::getEstados();
-        return view('classificados.edit', compact('classificado', 'estados'));
+        return view('painel-parceiros.edit', compact('classificado', 'estados'));
     }
 
     /**
@@ -142,8 +136,6 @@ class ClassificadoController extends Controller
         $validated = $request->validate([
             'titulo' => 'required|string|max:255',
             'descricao' => 'required|string',
-            'preco' => 'required|numeric|min:0',
-            'categoria' => 'required|string|in:imoveis,veiculos,eletronicos,servicos',
             'estado' => 'required|string|size:2',
             'cidade' => 'required|string|max:255',
             'bairro' => 'nullable|string|max:255',
@@ -163,7 +155,7 @@ class ClassificadoController extends Controller
             }
         }
 
-        return redirect()->route('classificados.show', $classificado)
+        return redirect()->route('painel-parceiros.show', $classificado)
             ->with('success', 'Anúncio atualizado com sucesso!');
     }
 
@@ -181,7 +173,7 @@ class ClassificadoController extends Controller
 
         $classificado->delete();
 
-        return redirect()->route('classificados.index')
+        return redirect()->route('painel-parceiros.index')
             ->with('success', 'Anúncio excluído com sucesso!');
     }
 }

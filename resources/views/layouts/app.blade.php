@@ -128,9 +128,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('classificados.index') }}" class="nav-link {{ request()->routeIs('classificados.*') ? 'active' : '' }}">
+                    <a href="{{ route('painel-parceiros.index') }}" class="nav-link {{ request()->routeIs('painel-parceiros.*') ? 'active' : '' }}">
                         <i class="fas fa-store me-2"></i>
-                        <span>Mercado JCI</span>
+                        <span>Painel Parceiros</span>
                     </a>
                 </li>
             </ul>

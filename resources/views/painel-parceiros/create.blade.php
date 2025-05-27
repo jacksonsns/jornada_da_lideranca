@@ -5,7 +5,7 @@
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-white px-3 py-2 rounded shadow-sm">
-            <li class="breadcrumb-item"><a href="{{ route('classificados.index') }}">Classificados</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('painel-parceiros.index') }}">Painel Parceiros</a></li>
             <li class="breadcrumb-item active" aria-current="page">Criar Anúncio</li>
         </ol>
     </nav>
@@ -17,7 +17,7 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('classificados.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('painel-parceiros.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <!-- Título -->
@@ -42,37 +42,6 @@
                     @enderror
                 </div>
 
-                <!-- Preço -->
-                <div class="form-group">
-                    <label for="preco">Preço</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">R$</span>
-                        </div>
-                        <input type="number" name="preco" id="preco" value="{{ old('preco') }}" step="0.01" required
-                            class="form-control @error('preco') is-invalid @enderror"
-                            placeholder="0,00">
-                    </div>
-                    @error('preco')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <!-- Categoria -->
-                <div class="form-group">
-                    <label for="categoria">Categoria</label>
-                    <select name="categoria" id="categoria" required
-                        class="form-control @error('categoria') is-invalid @enderror">
-                        <option value="">Selecione uma categoria</option>
-                        <option value="imoveis" {{ old('categoria') == 'imoveis' ? 'selected' : '' }}>Imóveis</option>
-                        <option value="veiculos" {{ old('categoria') == 'veiculos' ? 'selected' : '' }}>Veículos</option>
-                        <option value="eletronicos" {{ old('categoria') == 'eletronicos' ? 'selected' : '' }}>Eletrônicos</option>
-                        <option value="servicos" {{ old('categoria') == 'servicos' ? 'selected' : '' }}>Serviços</option>
-                    </select>
-                    @error('categoria')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
 
                 <!-- Estado e Cidade -->
                 <div class="form-row">
@@ -138,7 +107,7 @@
 
                 <!-- Ações -->
                 <div class="mt-4 text-right">
-                    <a href="{{ route('classificados.index') }}" class="btn btn-outline-secondary mr-2">
+                    <a href="{{ route('painel-parceiros.index') }}" class="btn btn-outline-secondary mr-2">
                         Cancelar
                     </a>
                     <button type="submit" class="btn btn-success">
