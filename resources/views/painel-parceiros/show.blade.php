@@ -7,7 +7,7 @@
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('classificados.index') }}">Classificados</a>
+                    <a href="{{ route('painel-parceiros.index') }}">Classificados</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $classificado->titulo }}</li>
             </ol>
@@ -52,7 +52,6 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                <div class="h4 text-success">R$ {{ number_format($classificado->preco, 2, ',', '.') }}</div>
                                 <div class="text-muted small">Publicado em {{ $classificado->created_at->format('d/m/Y') }}</div>
                             </div>
                         </div>
@@ -85,8 +84,8 @@
                         <!-- Ações -->
                         @can('update', $classificado)
                             <div class="mt-4 d-flex gap-2 justify-content-end">
-                                <a href="{{ route('classificados.edit', $classificado) }}" class="btn btn-outline-secondary">Editar Anúncio</a>
-                                <form action="{{ route('classificados.destroy', $classificado) }}" method="POST">
+                                <a href="{{ route('painel-parceiros.edit', $classificado) }}" class="btn btn-outline-secondary">Editar Anúncio</a>
+                                <form action="{{ route('painel-parceiros.destroy', $classificado) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este anúncio?')" class="btn btn-danger">
@@ -121,19 +120,12 @@
                                 <i class="fas fa-phone me-2"></i>{{ $classificado->telefone }}
                             </p>
                             <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $classificado->telefone) }}" 
-                               class="btn btn-success" 
+                               class="btn btn-success w-100" 
                                target="_blank">
                                 <i class="fab fa-whatsapp me-2"></i>Contatar via WhatsApp
                             </a>
                         </div>
                         @endif
-                        @auth
-                            @if(auth()->id() !== $classificado->user_id)
-                                <div class="mt-4">
-                                    <a href="#" class="btn btn-primary w-100">Enviar Mensagem</a>
-                                </div>
-                            @endif
-                        @endauth
                     </div>
                 </div>
 

@@ -131,12 +131,21 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/google/connect', [App\Http\Controllers\GoogleCalendarController::class, 'connect'])->name('google.connect');
     Route::get('/google/callback', [App\Http\Controllers\GoogleCalendarController::class, 'callback'])->name('google.callback');
     Route::get('/google/disconnect', [App\Http\Controllers\GoogleCalendarController::class, 'disconnect'])->name('google.disconnect');
-
-    Route::resource('classificados', ClassificadoController::class);
+    
+    Route::prefix('painel-parceiros')->group(function () {
+        Route::get('/', [ClassificadoController::class, 'index'])->name('painel-parceiros.index');
+        Route::get('/create', [ClassificadoController::class, 'create'])->name('painel-parceiros.create');
+        Route::post('/', [ClassificadoController::class, 'store'])->name('painel-parceiros.store');
+        Route::get('/{classificado}', [ClassificadoController::class, 'show'])->name('painel-parceiros.show');
+        Route::get('/{classificado}/edit', [ClassificadoController::class, 'edit'])->name('painel-parceiros.edit');
+        Route::put('/{classificado}', [ClassificadoController::class, 'update'])->name('painel-parceiros.update');
+        Route::delete('/{classificado}', [ClassificadoController::class, 'destroy'])->name('painel-parceiros.destroy');
+    });
+    
 
     // Rotas para imagens dos anúncios
     Route::delete('/classificados/imagens/{imagem}', [ClassificadoImagemController::class, 'destroy'])
-        ->name('classificados.imagens.destroy');
+        ->name('painel-parceiros.imagens.destroy');
 });
 
 // Rotas administrativas
