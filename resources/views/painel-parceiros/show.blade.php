@@ -124,7 +124,7 @@
                 <!-- Imagem/Logo Principal -->
                 @if($classificado->imagens->count() > 0)
                     <div class="clube-carousel d-flex align-items-center justify-content-center" style="background: #faf9ff; min-height: 260px;">
-                        <img src="{{ Storage::url($classificado->imagens[0]->caminho) }}" class="img-fluid" alt="Logo da empresa" style="max-height: 180px; max-width: 320px; object-fit: contain;">
+                        <img src="{{ Storage::url($classificado->imagens[0]->caminho) }}" class="img-fluid" alt="Logo da empresa" style="width: 100%;">
                     </div>
                 @else
                     <div class="d-flex justify-content-center align-items-center bg-secondary bg-opacity-10 clube-carousel" style="height: 180px;">
