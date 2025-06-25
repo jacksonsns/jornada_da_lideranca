@@ -130,7 +130,7 @@
                 <li class="nav-item">
                     <a href="{{ route('painel-parceiros.index') }}" class="nav-link {{ request()->routeIs('painel-parceiros.*') ? 'active' : '' }}">
                         <i class="fas fa-store me-2"></i>
-                        <span>Painel Parceiros</span>
+                        <span>Clube de Vantagens</span>
                     </a>
                 </li>
             </ul>

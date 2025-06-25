@@ -83,6 +83,11 @@ class ClassificadoController extends Controller
             'cidade' => 'required|string|max:255',
             'bairro' => 'nullable|string|max:255',
             'telefone' => 'nullable|string|max:20',
+            'categoria' => 'nullable|string|max:255',
+            'beneficio' => 'nullable|string|max:255',
+            'site' => 'nullable|string|max:255',
+            'instagram' => 'nullable|string|max:255',
+            'facebook' => 'nullable|string|max:255',
             'imagens.*' => 'nullable|image|max:2048',
         ]);
 
@@ -140,6 +145,11 @@ class ClassificadoController extends Controller
             'cidade' => 'required|string|max:255',
             'bairro' => 'nullable|string|max:255',
             'telefone' => 'nullable|string|max:20',
+            'categoria' => 'nullable|string|max:255',
+            'beneficio' => 'nullable|string|max:255',
+            'site' => 'nullable|string|max:255',
+            'instagram' => 'nullable|string|max:255',
+            'facebook' => 'nullable|string|max:255',
             'imagens.*' => 'nullable|image|max:2048',
             'destaque' => 'boolean',
         ]);
