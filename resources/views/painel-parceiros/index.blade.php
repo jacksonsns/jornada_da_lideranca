@@ -171,6 +171,8 @@
     .clube-recentes .parceiro-logo img {
         max-width: 48px;
         max-height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
     }
     .clube-recentes .parceiro-nome {
         font-size: 1.1rem;
@@ -215,6 +217,16 @@
             <i class="fas fa-user-plus me-2"></i> Quero fazer parte
         </a>
     </div>
+
+    {{-- CAMPO DE BUSCA --}}
+    <form method="GET" action="{{ route('painel-parceiros.index') }}" class="mb-4">
+        <div class="input-group" style="max-width: 400px; margin: 0 auto;">
+            <input type="text" name="busca" class="form-control" placeholder="Buscar parceiro ou benefício..." value="{{ request('busca') }}">
+            <button class="btn btn-primary" type="submit" style="background: #7c3aed; border: none;">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </form>
 
     {{-- BENEFÍCIOS EM DESTAQUE --}}
     <div class="clube-beneficios mb-5">
