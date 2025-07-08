@@ -12,9 +12,6 @@ class ClassificadoController extends Controller
 {
     use AuthorizesRequests;
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $query = Classificado::query();
@@ -22,14 +19,6 @@ class ClassificadoController extends Controller
         // Filtros
         if ($request->filled('categoria')) {
             $query->porCategoria($request->categoria);
-        }
-
-        if ($request->filled('preco_min')) {
-            $query->where('preco', '>=', $request->preco_min);
-        }
-
-        if ($request->filled('preco_max')) {
-            $query->where('preco', '<=', $request->preco_max);
         }
 
         if ($request->filled('estado')) {
