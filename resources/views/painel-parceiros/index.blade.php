@@ -209,7 +209,6 @@
             <div class="hero-title">Seja bem-vindo ao<br>Clube <span style="color:#fff;">de Vantagens da JCI Rio do Sul</span></div>
             <div class="hero-subtitle">Aproveite benefícios exclusivos para você!</div>
         </div>
-        <img src="/img/hero-characters.png" alt="Personagens" class="hero-img d-none d-md-block">
     </div>
 
     <div class="d-flex justify-content-end align-items-center mb-2" style="max-width: 100%;">
