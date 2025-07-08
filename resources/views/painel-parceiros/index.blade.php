@@ -206,7 +206,7 @@
     {{-- HERO SECTION --}}
     <div class="clube-hero">
         <div class="hero-text">
-            <div class="hero-title">Seja bem-vindo ao<br>Clube <span style="color:#fff;">Sua Marca</span></div>
+            <div class="hero-title">Seja bem-vindo ao<br>Clube <span style="color:#fff;">de Vantagens da JCI Rio do Sul</span></div>
             <div class="hero-subtitle">Aproveite benefícios exclusivos para você!</div>
         </div>
         <img src="/img/hero-characters.png" alt="Personagens" class="hero-img d-none d-md-block">
