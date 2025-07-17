@@ -29,7 +29,16 @@
                                 <p class="card-text">
                                     {{ Str::limit(strip_tags($capacitacao->insights), 150) }}
                                 </p>
-                                <a href="{{ route('capacitacoes.show', $capacitacao->id) }}" class="btn btn-outline-success btn-sm">
+                                @if($capacitacao->material_url)
+                                    <div class="mt-2">
+                                        <a href="{{ Storage::url($capacitacao->material_url) }}" 
+                                           class="btn btn-outline-primary btn-sm"
+                                           target="_blank">
+                                            <i class="fas fa-download me-1"></i> Material de Apoio
+                                        </a>
+                                    </div>
+                                @endif
+                                <a href="{{ route('capacitacoes.show', $capacitacao->id) }}" class="btn btn-outline-success btn-sm mt-2">
                                     Ler mais
                                 </a>
                             </div>
@@ -46,4 +55,4 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection

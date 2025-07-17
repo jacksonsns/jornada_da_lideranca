@@ -67,6 +67,18 @@
                 {!! $capacitacao->insights !!}
             </article>
 
+            @if($capacitacao->material_url)
+                <div class="mt-4 pt-3 border-top">
+                    <h4 class="mb-3">Material de Apoio</h4>
+                    <a href="{{ Storage::url($capacitacao->material_url) }}" 
+                       class="btn btn-primary"
+                       target="_blank">
+                        <i class="fas fa-download me-2"></i>
+                        Baixar Material
+                    </a>
+                </div>
+            @endif
+
             <div class="mt-5 pt-4 border-top">
                 <a href="{{ route('capacitacoes.index') }}" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left"></i> Voltar para Capacitações
@@ -75,4 +87,4 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection

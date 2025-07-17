@@ -81,7 +81,7 @@
                 <h5 class="modal-title" id="addCapacitacaoModalLabel">Nova Capacitação</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
-            <form id="capacitacaoForm" action="{{ route('admin.capacitacoes.store') }}" method="POST">
+            <form id="capacitacaoForm" action="{{ route('admin.capacitacoes.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="_method" value="POST">
                 <div class="modal-body">
@@ -96,6 +96,11 @@
                     <div class="mb-3">
                         <label for="insights" class="form-label">Insights</label>
                         <textarea class="form-control tinymce" id="insights" name="insights" rows="10"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Material</label>
+                        <input type="file" name="material" class="form-control" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.zip,.rar">
+                        <small class="text-muted">Formatos aceitos: PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, ZIP, RAR (máx. 10MB)</small>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -147,4 +152,4 @@
     });
 </script>
 @endpush
-@endsection 
+@endsection

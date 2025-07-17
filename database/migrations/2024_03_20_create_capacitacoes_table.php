@@ -13,6 +13,7 @@ return new class extends Migration
             $table->date('data');
             $table->string('titulo');
             $table->text('insights');
+            $table->string('material_url')->nullable();
             $table->timestamps();
         });
     }
@@ -21,4 +22,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('capacitacoes');
     }
-}; 
+};

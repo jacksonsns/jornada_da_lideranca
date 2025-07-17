@@ -14,10 +14,11 @@ class Capacitacao extends Model
     protected $fillable = [
         'data',
         'titulo',
-        'insights'
+        'insights',
+        'material_url'
     ];
 
     protected $casts = [
         'data' => 'date'
     ];
-} 
+}

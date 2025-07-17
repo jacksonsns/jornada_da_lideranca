@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Capacitacao;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CapacitacoesController extends Controller
 {
@@ -19,10 +20,19 @@ class CapacitacoesController extends Controller
         $request->validate([
             'data' => 'required|date',
             'titulo' => 'required|string|max:255',
-            'insights' => 'required|string'
+            'insights' => 'required|string',
+            'material' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,rar|max:10240'
         ]);
 
-        Capacitacao::create($request->all());
+        $data = $request->except('material');
+
+        if ($request->hasFile('material')) {
+            $file = $request->file('material');
+            $path = $file->store('capacitacoes/materiais', 'public');
+            $data['material_url'] = $path;
+        }
+
+        Capacitacao::create($data);
 
         return redirect()->route('admin.capacitacoes.index')
             ->with('success', 'Capacitação registrada com sucesso!');
@@ -33,11 +43,25 @@ class CapacitacoesController extends Controller
         $request->validate([
             'data' => 'required|date',
             'titulo' => 'required|string|max:255',
-            'insights' => 'required|string'
+            'insights' => 'required|string',
+            'material' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,rar|max:10240'
         ]);
 
         $capacitacao = Capacitacao::findOrFail($id);
-        $capacitacao->update($request->all());
+        $data = $request->except('material');
+
+        if ($request->hasFile('material')) {
+            // Delete old file if exists
+            if ($capacitacao->material_url) {
+                Storage::disk('public')->delete($capacitacao->material_url);
+            }
+
+            $file = $request->file('material');
+            $path = $file->store('capacitacoes/materiais', 'public');
+            $data['material_url'] = $path;
+        }
+
+        $capacitacao->update($data);
 
         return redirect()->route('admin.capacitacoes.index')
             ->with('success', 'Capacitação atualizada com sucesso!');
@@ -46,9 +70,15 @@ class CapacitacoesController extends Controller
     public function destroy($id)
     {
         $capacitacao = Capacitacao::findOrFail($id);
+        
+        // Delete material file if exists
+        if ($capacitacao->material_url) {
+            Storage::disk('public')->delete($capacitacao->material_url);
+        }
+        
         $capacitacao->delete();
 
         return redirect()->route('admin.capacitacoes.index')
             ->with('success', 'Capacitação excluída com sucesso!');
     }
-} 
+}
