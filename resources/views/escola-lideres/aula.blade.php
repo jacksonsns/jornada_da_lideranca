@@ -140,7 +140,7 @@
                                         </h5>
                                     </div>
                                     <div class="card-body">
-                                        <a href="{{ asset('storage/' . $aula->material_url) }}" 
+                                        <a href="{{ Storage::url($aula->material_url) }}" 
                                            class="btn btn-warning btn-block" 
                                            target="_blank">
                                             <i class="fas fa-download"></i> Baixar Material

@@ -60,7 +60,7 @@
                                         </td>
                                         <td>
                                             @if(isset($aula->material_url))
-                                                <a href="{{ asset('storage/' . $aula->material_url) }}" target="_blank" class="btn btn-sm btn-warning">
+                                                <a href="{{ Storage::url($aula->material_url) }}" target="_blank" class="btn btn-sm btn-warning">
                                                     <i class="fas fa-download"></i> Baixar
                                                 </a>
                                             @else
@@ -229,7 +229,7 @@
                             <small class="text-muted">Formatos aceitos: PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, ZIP, RAR (máx. 10MB)</small>
                             @if(isset($aula->material_url))
                                 <div class="mt-2">
-                                    <a href="{{ asset($aula->material_url) }}" target="_blank" class="btn btn-sm btn-info">
+                                    <a href="{{ Storage::url('materiais/' . $aula->material_url) }}" target="_blank" class="btn btn-sm btn-info">
                                         <i class="fas fa-download"></i> Material Atual
                                     </a>
                                 </div>
