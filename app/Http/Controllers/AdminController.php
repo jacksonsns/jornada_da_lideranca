@@ -230,10 +230,9 @@ class AdminController extends Controller
         $data = $request->all();
     
         if ($request->hasFile('material')) {
-            $material = $request->file('material');
-            $nomeArquivo = time() . '_' . $material->getClientOriginalName();
-            $material->storeAs('public/materiais', $nomeArquivo);
-            $data['material_url'] = 'materiais/' . $nomeArquivo;
+            $file = $request->file('material');
+            $path = $file->store('aulas/materiais', 'public');
+            $data['material_url'] = $path;
         }
     
         Aula::create($data);
