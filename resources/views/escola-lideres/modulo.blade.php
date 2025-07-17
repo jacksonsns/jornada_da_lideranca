@@ -106,25 +106,6 @@
                                         </p>
                                     </div>
                                 </div>
-
-                                <!-- Material de Apoio -->
-                                @if($modulo->material_url)
-                                    <div class="card">
-                                        <div class="card-header bg-warning text-dark">
-                                            <h5 class="mb-0">
-                                                <i class="fas fa-file-alt"></i>
-                                                Material de Apoio
-                                            </h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <a href="{{ $modulo->material_url }}" 
-                                               class="btn btn-warning btn-block" 
-                                               target="_blank">
-                                                <i class="fas fa-download"></i> Baixar Material
-                                            </a>
-                                        </div>
-                                    </div>
-                                @endif
                             </div>
                         </div>
                     @endif
