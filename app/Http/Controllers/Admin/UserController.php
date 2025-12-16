@@ -178,8 +178,11 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         
-        $pdf = PDF::loadView('admin.users.curriculo-junior-pdf', compact('user'));
-        
+            $pdf = PDF::loadView('admin.users.curriculo-junior-pdf', compact('user'))
+              ->setPaper('a4', 'portrait')
+              ->setOption('isRemoteEnabled', true)
+              ->setOption('isHtml5ParserEnabled', true);
+     
         return $pdf->stream('curriculo-junior-' . $user->name . '.pdf');
     }
 } 

@@ -23,7 +23,7 @@ class CurriculoJuniorController extends Controller
             'telefone' => 'nullable',
             'data_nascimento' => 'required|date',
             'ano_de_ingresso' => 'nullable|numeric',
-            'avatar' => 'nullable|image|max:2048',
+            'avatar' => 'nullable|image|max:2072',
             'padrinho' => 'required',
             'cargo' => 'required',
             'eventos' => 'nullable',
@@ -32,6 +32,11 @@ class CurriculoJuniorController extends Controller
             'premiacoes' => 'nullable',
             'empresas_vinculos' => 'nullable',
             'outros_cursos' => 'nullable|required_if:outro,on'
+        ],
+        [
+            'avatar.max' => 'O tamanho máximo permitido para o avatar é 2MB.',
+            'avatar.image' => 'O arquivo enviado deve ser uma imagem.',
+            'avatar.uploaded' => 'O tamanho máximo permitido para o avatar é 2MB.',
         ]);
 
         $data = $request->only([
@@ -76,7 +81,6 @@ class CurriculoJuniorController extends Controller
             $data[$field] = $request->has($field) && $request->input($field) === 'on';
         }
 
-        // Se o checkbox "outro" não estiver marcado, limpa o campo outros_cursos
         if (!$data['outro']) {
             $data['outros_cursos'] = null;
         }

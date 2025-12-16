@@ -81,6 +81,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('novos-desafios.perfis') }}" class="nav-link {{ request()->routeIs('novos-desafios.*') ? 'active' : '' }}" aria-expanded="false">
+                        <i class="fas fa-bolt text-warning"></i>
+                        <span>TEVEP</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ request()->is('admin/desafios*') ? 'active' : '' }}" href="{{ route('admin.desafios.index') }}">
                         <i class="fas fa-tasks"></i>
                         <span>Desafios</span>

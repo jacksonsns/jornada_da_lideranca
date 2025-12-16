@@ -100,7 +100,7 @@
                     <div class="mb-3">
                         <label class="form-label">Material</label>
                         <input type="file" name="material" class="form-control" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.zip,.rar">
-                        <small class="text-muted">Formatos aceitos: PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, ZIP, RAR (máx. 10MB)</small>
+                        <small class="text-danger">Formatos aceitos: PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, ZIP, RAR (máx. 10MB)</small>
                     </div>
                 </div>
                 <div class="modal-footer">

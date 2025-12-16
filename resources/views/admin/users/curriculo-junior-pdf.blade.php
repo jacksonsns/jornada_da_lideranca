@@ -8,7 +8,6 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f8f8;
         }
         .resume-container {
             width: 100%;
@@ -36,6 +35,7 @@
         }
         .avatar {
             width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
             border: 5px solid #fff;
@@ -52,30 +52,7 @@
              font-size: 16px;
              color: #555;
          }
-        .content-grid {
-            display: table;
-            width: 100%;
-            border-collapse: collapse;
-            position: relative;
-            z-index: 2;
-            padding: 0 20px 20px 20px;
-        }
-        .grid-row {
-            display: table-row;
-        }
-        .sidebar {
-            display: table-cell;
-            width: 35%;
-            background-color: #f0f0f0;
-            padding: 20px;
-            vertical-align: top;
-        }
-        .main-content {
-            display: table-cell;
-            width: 65%;
-            padding: 20px;
-            vertical-align: top;
-        }
+
         .section {
             margin-bottom: 25px;
             padding-bottom: 15px;
@@ -149,9 +126,9 @@
                                 ? 'data:image/jpeg;base64,' . base64_encode(file_get_contents($avatarPath))
                                 : 'https://ui-avatars.com/api/?name=' . urlencode($user->name) . '&background=random';
                         @endphp
-                        <img src="{{ $avatarUrl }}"
-                            alt="Foto de perfil" class="avatar"
-                        >
+                        <div style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden; margin: 0 auto; border: 5px solid #fff; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);">
+                            <img src="{{ $avatarUrl }}" alt="Foto de perfil" style="width: 100%; height: 100%;">
+                        </div>
                     </div>
                     <div class="section contact-info">
                         <div class="user-name">{{ $user->name ?? 'Não informado' }}</div>
@@ -163,7 +140,7 @@
                         <div class="info-item"><span class="info-label">Padrinho:</span> {{ $user->padrinho ?? 'Não informado' }}</div>
                     </div>
                 </div>
-
+            
                 <div class="main-content">
                     <div class="section skills-section">
                          <div class="section-title">Cursos oficiais da JCI e outros realizados</div>

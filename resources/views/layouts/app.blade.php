@@ -80,6 +80,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('tevep.user', ['user' => auth()->id()]) }}" class="nav-link {{ request()->routeIs('tevep.*') ? 'active' : '' }}" aria-expanded="false">
+                        <i class="fas fa-bolt text-warning"></i>
+                        <span>TEVEP</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('capacitacoes.*') ? 'active' : '' }}" href="{{ route('capacitacoes.index') }}">
                         <i class="fas fa-book text-success"></i>
                         <span>Capacitações</span>
@@ -186,7 +192,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="footer_iner text-center">
-                                <p>© Jornada da Liderança {{ date('Y') }} - <a href="https://github.com/jacksonsns" target="_blank">By Jsn Developer</a></p>
+                                <p>© Jornada da Liderança {{ date('Y') }} Todos os direitos reservados.</a></p>
                             </div>
                         </div>
                     </div>

@@ -63,6 +63,25 @@ Route::middleware(['auth'])->group(function () {
     Route::get('desafios', [DesafioController::class, 'index'])->name('desafios.index');
     Route::post('desafios/concluir', [DesafioController::class, 'concluir'])->name('desafios.concluir');
 
+    Route::get('visao-adm', [DesafioController::class, 'novosDesafios'])->name('visao-adm.index');
+
+    Route::get('novos-desafios/perfis', [DesafioController::class, 'selecionarPerfilNovosDesafios'])->name('novos-desafios.perfis');
+
+    Route::get('tevep/usuario/{user}', [DesafioController::class, 'visaoUsuario'])
+        ->name('visao-adm.usuario');
+
+    Route::get('tevep/{user}', [DesafioController::class, 'visaoUsuarioUser'])
+        ->name('tevep.user');
+
+    Route::get('novos-desafios/usuario/{user}/tevep/{desafioUser}/edit', [\App\Http\Controllers\TevepController::class, 'edit'])
+        ->name('tevep.edit');
+    Route::get('novos-desafios/usuario/{user}/tevep/{desafioUser}/create-user', [\App\Http\Controllers\TevepController::class, 'createUser'])
+        ->name('tevep.create-user');
+    Route::get('novos-desafios/usuario/{user}/tevep/{desafioUser}/edit-user', [\App\Http\Controllers\TevepController::class, 'editUser'])
+        ->name('tevep.edit-user');
+    Route::put('novos-desafios/usuario/{user}/tevep/{desafioUser}', [\App\Http\Controllers\TevepController::class, 'update'])
+        ->name('tevep.update');
+
     Route::post('jornada/{desafio}/concluir', [JornadaAspiranteController::class, 'concluir'])->name('jornada.concluir');
 
     // Jornada do Aspirante

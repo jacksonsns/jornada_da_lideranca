@@ -64,7 +64,7 @@
                 {{ $capacitacao->data->format('d/m/Y') }}
             </div>
             <article class="article-content">
-                {!! $capacitacao->insights !!}
+                {!! html_entity_decode($capacitacao->insights) !!}
             </article>
 
             @if($capacitacao->material_url)

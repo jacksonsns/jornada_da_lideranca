@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->call([
+            NovosDesafiosPerfilSeeder::class,
             UserSeeder::class,
             JornadaAspiranteSeeder::class,
             DesafioSeeder::class,

@@ -17,11 +17,10 @@ class CapacitacoesController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = $request->validate([
             'data' => 'required|date',
             'titulo' => 'required|string|max:255',
-            'insights' => 'required|string',
-            'material' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,rar|max:10240'
+            'insights' => 'required|string'
         ]);
 
         $data = $request->except('material');
@@ -40,12 +39,18 @@ class CapacitacoesController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validator = $request->validate([
             'data' => 'required|date',
             'titulo' => 'required|string|max:255',
             'insights' => 'required|string',
             'material' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,rar|max:10240'
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                            ->withErrors($validator)
+                            ->withInput();
+        }
 
         $capacitacao = Capacitacao::findOrFail($id);
         $data = $request->except('material');
