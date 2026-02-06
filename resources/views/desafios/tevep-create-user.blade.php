@@ -2,18 +2,33 @@
 
 @push('styles')
 <style>
-    .tevep-bg { background:#f4f7fb; }
-    .tevep-header { border-radius:18px; background:linear-gradient(135deg,#2563eb,#3b82f6); color:#fff; padding:18px 22px; box-shadow:0 12px 40px rgba(15,35,95,0.2); }
+    .tevep-bg {
+        background: transparent;
+        padding: 2.5rem 2.5rem 1.5rem;
+    }
+    .tevep-header {
+        border-radius:20px;
+        background: linear-gradient(135deg,#1b7aff,#33b3ff);
+        color:#fff;
+        padding:18px 22px;
+        box-shadow:0 18px 45px rgba(0,0,0,0.65);
+    }
     .tevep-title { font-size:1.25rem; font-weight:600; }
     .tevep-subtitle { font-size:0.85rem; opacity:.9; }
     .tevep-progress { font-size:0.9rem; }
-    .section-card { border-radius:18px; border:none; box-shadow:0 10px 30px rgba(15,35,95,0.05); margin-bottom:18px; }
+    .section-card {
+        border-radius:22px;
+        border:none;
+        background: radial-gradient(circle at 0 0, rgba(255,255,255,0.96), rgba(233,239,255,0.98));
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+        margin-bottom:18px;
+    }
     .section-title { font-weight:600; font-size:0.95rem; }
 </style>
 @endpush
 
 @section('content')
-<div class="main_content_iner tevep-bg">
+<div class="tevep-bg">
     <div class="container-fluid p-0 sm_padding_15px">
         <div class="row mb-2">
             <div class="col-6 d-flex align-items-center">
@@ -148,7 +163,7 @@
             <div class="card section-card mb-4">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                        <div class="section-title mb-0">Planejamento de Ações</div>
+                        <div class="section-title mb-0">Régua Única do Tempo - RUT</div>
                         <button type="button" class="btn btn-sm btn-primary" id="btn-add-acao">+ Nova Ação</button>
                     </div>
                     <div class="table-responsive">
@@ -207,7 +222,7 @@
             });
         });
 
-        // Planejamento de Ações dinâmico
+        // Régua Única do Tempo - RUT dinâmico
         const tabelaBody = document.getElementById('acoes-body');
         const btnAddAcao = document.getElementById('btn-add-acao');
         let acaoIndex = 0;

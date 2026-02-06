@@ -1,19 +1,36 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="mb-4">Dashboard</h1>
+<div class="container-fluid dashboard-page py-4">
+    <div class="row align-items-center mb-4">
+        <div class="col-md-8">
+            <h1 class="dashboard-title mb-2">Dashboard</h1>
+            <p class="dashboard-subtitle mb-0">Bem-vindo de volta! Selecione uma das opções para iniciar</p>
+        </div>
+        <div class="col-md-4 d-flex justify-content-md-end mt-3 mt-md-0">
+            <div class="dashboard-quick-actions text-md-right">
+                <span class="quick-actions-label d-block mb-2">Atalhos rápidos</span>
+                <div class="d-flex gap-2 justify-content-md-end">
+                    <button type="button" class="quick-action-btn" title="Quadro dos Sonhos">
+                        <i class="fas fa-star"></i>
+                    </button>
+                    <button type="button" class="quick-action-btn" title="Desafios">
+                        <i class="fas fa-trophy"></i>
+                    </button>
+                    <button type="button" class="quick-action-btn" title="Agenda">
+                        <i class="fas fa-calendar-alt"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row dashboard-cards-row">
         <!-- Quadro dos Sonhos -->
         <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card">
+            <div class="card dashboard-card">
                 <div class="card-body">
-                    <h5 class="card-title">
+                    <h5 class="card-title dashboard-card-title">
                         <i class="fas fa-star text-warning"></i>
                         Quadro dos Sonhos
                     </h5>
@@ -25,9 +42,9 @@
 
         <!-- Desafios -->
         <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card">
+            <div class="card dashboard-card">
                 <div class="card-body">
-                    <h5 class="card-title">
+                    <h5 class="card-title dashboard-card-title">
                         <i class="fas fa-trophy text-warning"></i>
                         Desafios
                     </h5>
@@ -39,9 +56,9 @@
 
         <!-- Jornada do Aspirante -->
         <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card">
+            <div class="card dashboard-card">
                 <div class="card-body">
-                    <h5 class="card-title">
+                    <h5 class="card-title dashboard-card-title">
                         <i class="fas fa-road text-info"></i>
                         Jornada do Aspirante
                     </h5>
@@ -53,9 +70,9 @@
 
         <!-- Escola de Líderes -->
         <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card">
+            <div class="card dashboard-card">
                 <div class="card-body">
-                    <h5 class="card-title">
+                    <h5 class="card-title dashboard-card-title">
                         <i class="fas fa-graduation-cap text-primary"></i>
                         Escola de Líderes
                     </h5>
@@ -67,9 +84,9 @@
 
         <!-- Capacitações -->
         <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card">
+            <div class="card dashboard-card">
                 <div class="card-body">
-                    <h5 class="card-title">
+                    <h5 class="card-title dashboard-card-title">
                         <i class="fas fa-book text-success"></i>
                         Capacitações
                     </h5>
@@ -81,9 +98,9 @@
 
         <!-- Projeto Individual -->
         <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card">
+            <div class="card dashboard-card">
                 <div class="card-body">
-                    <h5 class="card-title">
+                    <h5 class="card-title dashboard-card-title">
                         <i class="fas fa-project-diagram text-purple"></i>
                         Projeto Individual
                     </h5>

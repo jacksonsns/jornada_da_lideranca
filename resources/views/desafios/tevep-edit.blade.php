@@ -2,7 +2,7 @@
 
 @push('styles')
 <style>
-    .tevep-bg { background:#f4f7fb; }
+    .tevep-bg { background: transparent; }
     .tevep-header { border-radius:18px; background:linear-gradient(135deg,#2563eb,#3b82f6); color:#fff; padding:18px 22px; box-shadow:0 12px 40px rgba(15,35,95,0.2); }
     .tevep-title { font-size:1.25rem; font-weight:600; }
     .tevep-subtitle { font-size:0.85rem; opacity:.9; }
@@ -163,7 +163,7 @@
             <div class="card section-card mb-4">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                        <div class="section-title mb-0">Planejamento de Ações</div>
+                        <div class="section-title mb-0">Régua Única do Tempo - RUT</div>
                         <button type="button" class="btn btn-sm btn-primary" disabled>+ Nova Ação</button>
                     </div>
                     <div class="table-responsive">

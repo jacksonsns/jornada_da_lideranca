@@ -31,7 +31,9 @@ body {
     padding: 0;
     margin: 0;
     font-size: 14px;
-    background: #F5F7F9;
+    background: radial-gradient(circle at 0 0, rgba(74, 144, 226, 0.45), transparent 60%),
+                radial-gradient(circle at 100% 100%, rgba(0, 180, 255, 0.4), transparent 55%),
+                linear-gradient(135deg, #071428 0%, #051020 45%, #020815 100%);
 }
 
 @media (min-width: 1200px) {
@@ -258,6 +260,200 @@ p {
     font-family: "Barlow", sans-serif;
     font-weight: 300;
 }
+
+/* Dashboard custom styles (novo tema azul) */
+.dashboard-page {
+    min-height: calc(100vh - 120px);
+    background: radial-gradient(circle at 0 0, rgba(74, 144, 226, 0.4), transparent 60%),
+                radial-gradient(circle at 100% 100%, rgba(0, 180, 255, 0.35), transparent 55%),
+                linear-gradient(135deg, #071428 0%, #051020 45%, #020815 100%);
+    padding-bottom: 3rem;
+}
+
+.dashboard-title {
+    color: #f5f7ff;
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.dashboard-subtitle {
+    color: rgba(233, 241, 255, 0.8);
+    font-size: 0.95rem;
+}
+
+.dashboard-cards-row {
+    row-gap: 1.75rem;
+}
+
+.dashboard-card {
+    position: relative;
+    overflow: hidden;
+    border: none;
+    border-radius: 18px;
+    background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.08), transparent 55%),
+                linear-gradient(145deg, rgba(12, 33, 72, 0.95), rgba(6, 24, 60, 0.98));
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.dashboard-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 174, 255, 0.25), transparent 55%);
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+.dashboard-card .card-body {
+    position: relative;
+    padding: 1.6rem 1.7rem;
+    color: #e5eeff;
+}
+
+.dashboard-card-title {
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+}
+
+.dashboard-card-title i {
+    font-size: 1.1rem;
+}
+
+.dashboard-card .card-text {
+    font-size: 0.9rem;
+    color: rgba(223, 234, 255, 0.9);
+    margin-bottom: 1.1rem;
+}
+
+.dashboard-card .btn-primary {
+    border-radius: 999px;
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+    font-weight: 600;
+    background: -webkit-linear-gradient(135deg, #1b7aff, #33b3ff);
+    background: linear-gradient(135deg, #1b7aff, #33b3ff);
+    border: none;
+}
+
+.dashboard-card .btn-primary:hover {
+    background: -webkit-linear-gradient(135deg, #1664d4, #2794dd);
+    background: linear-gradient(135deg, #1664d4, #2794dd);
+}
+
+.dashboard-quick-actions {
+    color: rgba(223, 234, 255, 0.85);
+}
+
+.quick-actions-label {
+    font-size: 0.9rem;
+}
+
+.quick-action-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    margin-left: 0.4rem;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    color: #f5f7ff;
+    background: radial-gradient(circle at 30% 0, rgba(255, 255, 255, 0.26), transparent 55%),
+                linear-gradient(145deg, #0f2348, #153664);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+    -webkit-transition: -webkit-transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.quick-action-btn i {
+    font-size: 1rem;
+}
+
+.quick-action-btn:hover {
+    -webkit-transform: translateY(-2px);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.75);
+}
+
+@media (max-width: 767.98px) {
+    .dashboard-title {
+        font-size: 1.7rem;
+    }
+
+    .dashboard-card .card-body {
+        padding: 1.3rem 1.25rem;
+    }
+}
+
+/* Sidebar custom styles (tema azul escuro) */
+.sidebar {
+    background: linear-gradient(180deg, #050c1a 0%, #06152a 40%, #030a18 100%);
+    box-shadow: 8px 0 30px rgba(0, 0, 0, 0.6);
+}
+
+.sidebar .logo {
+    margin: 24px 22px 28px;
+    background: transparent;
+    border-radius: 10px;
+}
+
+.sidebar .logo img {
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.7));
+}
+
+.sidebar #sidebar_menu {
+    padding-top: 10px;
+}
+
+.sidebar #sidebar_menu li a,
+.sidebar #sidebar_menu li a.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    color: #c7d4ff;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 10px;
+    margin: 3px 14px;
+}
+
+.sidebar #sidebar_menu li a i {
+    width: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.sidebar #sidebar_menu li a:hover {
+    background: rgba(35, 91, 191, 0.35);
+    color: #ffffff;
+}
+
+.sidebar #sidebar_menu li a.active,
+.sidebar #sidebar_menu li a.nav-link.active {
+    background: linear-gradient(135deg, #1b7aff, #33b3ff);
+    color: #ffffff;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
+}
+
+.sidebar #sidebar_menu li a.active i,
+.sidebar #sidebar_menu li a.nav-link.active i {
+    color: #ffffff;
+}
+
 
 /* line 129, G:/admin_project/4 admin/directory/scss/_reset.scss */
 
@@ -3282,14 +3478,14 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th:first-child::before {
 /* line 2, G:/admin_project/4 admin/directory/scss/_header.scss */
 
 .header_iner {
-    background-color: #F5F7F9;
+    background: linear-gradient(90deg, #050c1a 0%, #071a34 50%, #050c1a 100%);
     position: fixed;
     top: 0;
     z-index: 99;
     padding: 30px;
     position: relative;
     border-radius: 0px;
-    border-bottom: 2px solid #DCDCEE;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 @media only screen and (min-width: 1200px) {
@@ -4018,8 +4214,8 @@ table.dataTable {
     overflow: hidden;
     overflow-y: auto;
     transition: 0.5s;
-    background: #FFFFFF;
-    box-shadow: 0 12px 30px rgba(80, 143, 244, 0.1);
+    background: linear-gradient(180deg, #050c1a 0%, #06152a 40%, #030a18 100%);
+    box-shadow: 8px 0 30px rgba(0, 0, 0, 0.6);
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
@@ -4979,6 +5175,9 @@ body::-webkit-scrollbar {
     min-height: 68vh;
     transition: .5s;
     margin: 20px 30px 30px 30px;
+    background: radial-gradient(circle at top, rgba(255, 255, 255, 0.9), rgba(230, 238, 255, 0.9));
+    border-radius: 26px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
 }
 
 @media (max-width: 991px) {

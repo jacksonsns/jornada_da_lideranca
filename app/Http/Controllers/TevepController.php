@@ -6,8 +6,10 @@ use App\Models\Tevep;
 use App\Models\TevepAcao;
 use App\Models\User;
 use App\Models\DesafioUser;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Str;
 
 class TevepController extends Controller
 {
@@ -50,6 +52,28 @@ class TevepController extends Controller
         ]);
     }
 
+    public function pdfUser(User $user, DesafioUser $desafioUser)
+    {
+        $desafioUser->loadMissing('desafio');
+
+        $tevep = Tevep::firstOrNew([
+            'user_id' => $user->id,
+            'desafio_user_id' => $desafioUser->id,
+        ])->loadMissing('acoes');
+
+        $nomeArquivo = 'tevep-' . Str::slug($user->name) . '-' . $desafioUser->id . '.pdf';
+
+        $pdf = Pdf::loadView('desafios.tevep-pdf-user', [
+            'usuario' => $user,
+            'desafioUser' => $desafioUser,
+            'tevep' => $tevep,
+        ])->setPaper('a4', 'portrait')
+            ->setOption('isRemoteEnabled', true)
+            ->setOption('isHtml5ParserEnabled', true);
+
+        return $pdf->stream($nomeArquivo);
+    }
+
     public function update(Request $request, User $user, DesafioUser $desafioUser)
     {
         // Normaliza campo de custo em formato brasileiro (ex: "R$ 500.000,00" -> 500000.00)
@@ -58,7 +82,7 @@ class TevepController extends Controller
             $sanitized = preg_replace('/[^0-9,.-]/', '', $rawCusto ?? '');
             $sanitized = str_replace('.', '', $sanitized);
             $sanitized = str_replace(',', '.', $sanitized);
-            $request->merge(['custo' => $sanitized]);
+            $request->merge(['custo' => $sanitized === '' ? null : $sanitized]);
         }
 
         $data = $request->validate([
@@ -72,12 +96,12 @@ class TevepController extends Controller
             'utilidade_objetivo' => 'nullable|string',
             'inerencias_planejamento' => 'nullable|string',
             'expectativas' => 'nullable|string',
-            'custo' => 'nullable|numeric',
+            'custo' => 'nullable|numeric|min:-99999999.99|max:99999999.99',
             'entrega' => 'nullable|string|max:255',
             'atendimento' => 'nullable|string|max:255',
             'qualidade' => 'nullable|string|max:255',
-            'inovacao' => 'nullable|string',
-            'logistica' => 'nullable|string',
+            'inovacao' => 'nullable|string|max:255',
+            'logistica' => 'nullable|string|max:255',
         ], [
             'area_estrategica.string' => 'A área estratégica deve ser um texto válido.',
             'area_estrategica.max' => 'A área estratégica não pode ter mais que 255 caracteres.',
@@ -102,6 +126,8 @@ class TevepController extends Controller
             'expectativas.string' => 'O campo expectativas deve ser um texto válido.',
 
             'custo.numeric' => 'O campo custo deve ser um número (use apenas números, pontos e vírgulas).',
+            'custo.min' => 'O campo custo está abaixo do valor permitido.',
+            'custo.max' => 'O campo custo excede o limite permitido.',
 
             'entrega.string' => 'O campo entrega deve ser um texto válido.',
             'entrega.max' => 'O campo entrega não pode ter mais que 255 caracteres.',
@@ -128,7 +154,7 @@ class TevepController extends Controller
                 $data
             );
 
-            // Atualiza planejamento de ações
+            // Atualiza Régua Única do Tempo - RUT
             $tevep->acoes()->delete();
 
             $acoes = $request->input('acoes', []);

@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class AreaFinanceira extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToTenant;
 
     protected $table = 'area_financeira';
 
     protected $fillable = [
+        'tenant_id',
         'projeto_id',
         'user_id',
         'tipo', // receita ou despesa

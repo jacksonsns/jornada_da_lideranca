@@ -2,56 +2,96 @@
 
 @push('styles')
 <style>
-    .usuario-bg { background: #f4f7fb; }
+    .usuario-bg {
+        background: transparent;
+        padding-bottom: 1.5rem;
+    }
     .top-strip {
-        border-radius: 18px;
-        background:#ffffff;
-        box-shadow: 0 10px 30px rgba(15, 35, 95, 0.06);
-        padding: 18px 22px;
+        border-radius: 22px;
+        background: transparent;
+        box-shadow: none;
+        padding: 4px 4px 2px;
     }
     .metric-card {
-        border-radius: 14px;
-        background:#f5f7ff;
-        border:none;
-        padding:14px 16px;
-        display:flex;
-        align-items:center;
-        justify-content:space-between;
+        position: relative;
+        overflow: hidden;
+        border-radius: 18px;
+        background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.08), transparent 60%),
+                    linear-gradient(145deg, rgba(12, 33, 72, 0.97), rgba(6, 24, 60, 0.99));
+        border: none;
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7);
+        color: #e5eeff;
     }
-    .metric-card.primary { background: linear-gradient(135deg,#2563eb,#3b82f6); color:#ffffff; }
+    .metric-card.primary {
+        background: linear-gradient(135deg,#1b7aff,#33b3ff);
+        color:#ffffff;
+    }
     .metric-card.primary .label { color:#e0e7ff; }
     .metric-card.primary .value { color:#ffffff; }
-    .metric-card .label { font-size:0.75rem; font-weight:600; text-transform:uppercase; color:#8b9bb7; letter-spacing:0.04em; }
-    .metric-card .value { font-size:1.4rem; font-weight:700; color:#1b3150; }
+    .metric-card .label {
+        font-size:0.75rem;
+        font-weight:600;
+        text-transform:uppercase;
+        color:rgba(223,234,255,0.85);
+        letter-spacing:0.04em;
+    }
+    .metric-card .value {
+        font-size:1.4rem;
+        font-weight:700;
+        color:#ffffff;
+    }
     .metric-icon {
         width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-        background:rgba(255,255,255,0.3); color:#ffffff; font-size:18px;
+        background:rgba(255,255,255,0.22); color:#ffffff; font-size:18px;
     }
 
-    .section-card { border-radius:18px; border:none; box-shadow:0 10px 30px rgba(15,35,95,0.05); }
+    .section-card {
+        border-radius:22px;
+        border:none;
+        background: radial-gradient(circle at 0 0, rgba(255,255,255,0.96), rgba(233,239,255,0.98));
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
     .tab-pill { border-radius:999px; padding:6px 16px; font-size:0.85rem; cursor:pointer; font-weight:500; }
     .tab-pill-active { background:#2563eb; color:#fff; }
     .tab-pill-inactive { background:#e5e7eb; color:#4b5563; }
 
-    .projeto-card { border-radius:18px; border:none; box-shadow:0 12px 40px rgba(15,35,95,0.06); margin-bottom:18px; }
+    .projeto-card {
+        border-radius:20px;
+        border:none;
+        background: radial-gradient(circle at 0 0, rgba(255,255,255,0.96), rgba(235,242,255,0.99));
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+        margin-bottom:18px;
+    }
     .projeto-header small { font-size:0.8rem; }
     .progresso-label { font-size:0.85rem; }
 
     .etapas-wrapper { margin-top:10px; }
     .etapa-card {
-        border-radius:12px;
-        border:1px solid #e2e8f0;
-        background:#f9fafb;
+        border-radius:14px;
+        border:1px solid rgba(148, 163, 184, 0.45);
+        background: radial-gradient(circle at 0 0, rgba(248,250,252,0.98), rgba(226,232,240,0.95));
         padding:8px 10px;
         text-align:center;
         font-size:0.8rem;
+        box-shadow: 0 10px 25px rgba(15,35,95,0.35);
     }
     .etapa-card strong { display:block; font-size:0.9rem; color:#2563eb; }
+
+    .tevep-usuario-header-text {
+        max-width: 260px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 </style>
 @endpush
 
 @section('content')
-<div class="main_content_iner usuario-bg">
+<div class="p-5 usuario-bg">
     <div class="container-fluid p-0 sm_padding_15px">
         <div class="row mb-2">
             <div class="col-6 d-flex align-items-center">
@@ -62,7 +102,7 @@
                 @endisset
             </div>
             <div class="col-6 text-end d-flex justify-content-end align-items-center gap-2">
-                <div class="me-2 text-end">
+                <div class="me-2 text-end tevep-usuario-header-text">
                     <div class="fw-semibold">{{ $usuario->name }}</div>
                     <small class="text-muted">{{ $usuario->cargo ?? 'Membro' }}</small>
                 </div>
@@ -152,9 +192,14 @@
                                         </div>
                                         <div>
                                             @if($desafioUser)
-                                                <a href="{{ route('tevep.edit-user', ['user' => $usuario->id, 'desafioUser' => $desafioUser->id]) }}" class="btn btn-sm btn-outline-primary">
-                                                Editar TEVEP
-                                                </a>
+                                                <div class="d-flex gap-2 justify-content-end">
+                                                    <a href="{{ route('tevep.edit-user', ['user' => $usuario->id, 'desafioUser' => $desafioUser->id]) }}" class="btn btn-sm btn-outline-primary">
+                                                    Editar TEVEP
+                                                    </a>
+                                                    <a href="{{ route('tevep.pdf-user', ['user' => $usuario->id, 'desafioUser' => $desafioUser->id]) }}" class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener noreferrer">
+                                                    Gerar PDF
+                                                    </a>
+                                                </div>
                                             @endif
                                         </div>
                                     </div>

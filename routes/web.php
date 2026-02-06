@@ -79,6 +79,8 @@ Route::middleware(['auth'])->group(function () {
         ->name('tevep.create-user');
     Route::get('novos-desafios/usuario/{user}/tevep/{desafioUser}/edit-user', [\App\Http\Controllers\TevepController::class, 'editUser'])
         ->name('tevep.edit-user');
+    Route::get('novos-desafios/usuario/{user}/tevep/{desafioUser}/pdf-user', [\App\Http\Controllers\TevepController::class, 'pdfUser'])
+        ->name('tevep.pdf-user');
     Route::put('novos-desafios/usuario/{user}/tevep/{desafioUser}', [\App\Http\Controllers\TevepController::class, 'update'])
         ->name('tevep.update');
 

@@ -19,6 +19,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'tenant_id',
         'name',
         'email',
         'telefone',
@@ -79,6 +80,11 @@ class User extends Authenticatable
     ];
 
     // Relacionamentos
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class);
+    }
+
     public function quadroDosSonhos()
     {
         return $this->hasOne(QuadroDosSonhos::class);

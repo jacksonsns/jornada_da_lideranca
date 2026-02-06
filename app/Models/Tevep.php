@@ -33,6 +33,7 @@ class Tevep extends Model
     protected $casts = [
         'data_inicio' => 'date',
         'data_fim' => 'date',
+        'custo' => 'decimal:2',
     ];
 
     public function user()
