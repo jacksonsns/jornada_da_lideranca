@@ -3,10 +3,43 @@
 @section('title', 'Meus Projetos Individuais')
 
 @section('content')
-<div class="container">
+<style>
+    .projetos-page-wrapper {
+        padding: 1.5rem 1.5rem 1rem;
+    }
+
+    .projetos-shell-card {
+        border-radius: 26px;
+        border: none;
+        background: radial-gradient(circle at 0 0, rgba(255,255,255,0.96), rgba(233,239,255,0.98));
+        box-shadow: 0 22px 55px rgba(0,0,0,0.65);
+        overflow: hidden;
+    }
+
+    .projetos-shell-card .card-header {
+        border: none;
+        border-radius: 26px 26px 0 0 !important;
+        background: linear-gradient(135deg,#1b7aff,#33b3ff);
+        box-shadow: 0 10px 25px rgba(15,35,95,0.45);
+    }
+
+    .projetos-status-badge {
+        border-radius: 999px;
+        padding: 4px 10px;
+        font-size: 12px;
+    }
+
+    @media (max-width: 768px) {
+        .projetos-page-wrapper {
+            padding: 1rem 1rem 0.75rem;
+        }
+    }
+</style>
+
+<div class="container-fluid projetos-page-wrapper">
     <div class="row">
         <div class="col-12">
-            <div class="card shadow mb-4">
+            <div class="card shadow mb-4 projetos-shell-card">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h4 class="mb-0 text-light">
                         <i class="fas fa-project-diagram"></i>
@@ -48,7 +81,7 @@
                                         <td>{{ $projeto->data_inicio->format('d/m/Y') }}</td>
                                         <td>{{ $projeto->data_fim ? $projeto->data_fim->format('d/m/Y') : '-' }}</td>
                                         <td>
-                                            <span class="badge bg-{{ $projeto->status === 'em_andamento' ? 'primary' : ($projeto->status === 'concluido' ? 'success' : 'danger') }}">
+                                            <span class="badge projetos-status-badge bg-{{ $projeto->status === 'em_andamento' ? 'primary' : ($projeto->status === 'concluido' ? 'success' : 'danger') }}">
                                                 {{ ucfirst(str_replace('_', ' ', $projeto->status)) }}
                                             </span>
                                         </td>
