@@ -4,10 +4,23 @@
 
 @push('styles')
 <script src="https://cdn.tiny.cloud/1/arnqtux8mc5e5tdi0zd5osuhx5epskldqa6ntewso2cha78x/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<style>
+    .caps-admin-wrapper {
+        padding: 2.2rem 2.2rem 1.5rem;
+    }
+    .caps-admin-card {
+        border-radius: 26px;
+        border: none;
+        background: radial-gradient(circle at 0 0, rgba(255,255,255,0.96), rgba(233,239,255,0.98));
+        box-shadow: 0 22px 55px rgba(0,0,0,0.65);
+        padding-bottom: 0.5rem;
+    }
+</style>
 @endpush
 
 @section('content')
-<div class="white_card card_height_100 mb_30">
+<div class="caps-admin-wrapper">
+<div class="caps-admin-card">
     <div class="white_card_header">
         <div class="box_header m-0">
             <div class="main-title">
@@ -71,6 +84,7 @@
             </table>
         </div>
     </div>
+</div>
 </div>
 
 <!-- Modal Adicionar/Editar Capacitação -->
