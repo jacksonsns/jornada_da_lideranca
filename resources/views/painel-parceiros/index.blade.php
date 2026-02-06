@@ -49,18 +49,29 @@
         font-size: 28px;
         color: #7c3aed;
     }
+    .clube-page-wrapper {
+        padding: 2.2rem 1.8rem 1.8rem;
+        background:
+            radial-gradient(circle at 0 0, rgba(59,130,246,0.38), transparent 55%),
+            radial-gradient(circle at 100% 100%, rgba(56,189,248,0.35), transparent 55%),
+            linear-gradient(135deg,#071428 0%,#020815 100%);
+        border-radius: 26px;
+        box-shadow: 0 26px 70px rgba(0,0,0,0.75);
+    }
+
     .clube-hero {
-        background: linear-gradient(90deg, #7c3aed 60%, #a78bfa 100%);
-        border-radius: 18px;
-        min-height: 220px;
+        background: linear-gradient(135deg,#1b7aff,#7c3aed);
+        border-radius: 28px;
+        min-height: 200px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 40px 48px;
+        padding: 32px 42px;
         color: #fff;
-        margin-bottom: 32px;
+        margin-bottom: 22px;
         position: relative;
         overflow: hidden;
+        box-shadow: 0 26px 70px rgba(15,23,42,0.8);
     }
     .clube-hero .hero-text {
         z-index: 2;
@@ -78,6 +89,17 @@
         height: 180px;
         z-index: 2;
     }
+    .clube-hero::before {
+        content: '';
+        position: absolute;
+        inset: -40%;
+        background:
+            radial-gradient(circle at 0 0, rgba(59,130,246,0.65), transparent 60%),
+            radial-gradient(circle at 100% 100%, rgba(147,51,234,0.7), transparent 55%);
+        opacity: .8;
+        z-index: 0;
+    }
+
     .clube-hero::after {
         content: '';
         position: absolute;
@@ -88,11 +110,11 @@
         z-index: 1;
     }
     .clube-beneficios {
-        background: #fff;
-        border-radius: 18px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        padding: 32px 32px 16px 32px;
-        margin-bottom: 32px;
+        background: radial-gradient(circle at 0 0, rgba(255,255,255,0.96), rgba(233,239,255,0.98));
+        border-radius: 22px;
+        box-shadow: 0 22px 55px rgba(15,23,42,0.65);
+        padding: 22px 32px 18px 32px;
+        margin-bottom: 26px;
     }
     .clube-beneficios .beneficios-list {
         display: flex;
@@ -106,16 +128,18 @@
         align-items: center;
         gap: 8px;
         width: 110px;
+        transition: transform .2s ease, box-shadow .2s ease;
     }
     .clube-beneficios .beneficio-logo {
-        background: #f3f3f3;
-        border-radius: 12px;
-        width: 70px;
-        height: 70px;
+        background: #f3f3ff;
+        border-radius: 18px;
+        width: 72px;
+        height: 72px;
         display: flex;
         align-items: center;
         justify-content: center;
         margin-bottom: 6px;
+        box-shadow: 0 8px 22px rgba(148,163,184,0.45);
     }
     .clube-beneficios .beneficio-logo img {
         max-width: 60px;
@@ -124,38 +148,44 @@
     .clube-beneficios .beneficio-nome {
         font-size: 15px;
         font-weight: 500;
-        color: #222;
+        color: #111827;
         text-align: center;
     }
+
+    .clube-beneficios .beneficio-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 30px rgba(15,23,42,0.35);
+    }
     .clube-section-title {
-        font-size: 1.4rem;
+        font-size: 1.15rem;
         font-weight: 700;
-        color: #7c3aed;
-        margin-bottom: 18px;
-        text-align: left;
+        color: #0f172a;
+        margin-bottom: 0;
+        text-align: center;
     }
     .clube-recentes {
-        background: #fff;
-        border-radius: 18px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        padding: 32px;
+        background: radial-gradient(circle at 0 0, rgba(255,255,255,0.96), rgba(233,239,255,0.98));
+        border-radius: 26px;
+        box-shadow: 0 26px 70px rgba(15,23,42,0.8);
+        padding: 26px 32px 30px 32px;
     }
     .clube-recentes .recentes-list {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 28px;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 30px;
     }
     .clube-recentes .parceiro-card {
-        background: #faf9ff;
-        border-radius: 16px;
-        box-shadow: 0 1px 4px rgba(124,58,237,0.06);
-        padding: 18px 14px 14px 14px;
+        background: linear-gradient(145deg, rgba(246,248,255,0.98), rgba(228,237,255,0.98));
+        border-radius: 24px;
+        box-shadow: 0 26px 70px rgba(15,23,42,0.75);
+        padding: 20px 18px 18px 18px;
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
-        min-height: 220px;
+        min-height: 260px;
         position: relative;
+        transition: transform .2s ease, box-shadow .2s ease;
     }
     .clube-recentes .parceiro-logo {
         background: #fff;
@@ -167,6 +197,7 @@
         justify-content: center;
         margin-bottom: 10px;
         border: 2px solid #e5e7eb;
+        box-shadow: 0 10px 24px rgba(148,163,184,0.6);
     }
     .clube-recentes .parceiro-logo img {
         max-width: 48px;
@@ -175,21 +206,75 @@
         object-fit: cover;
     }
     .clube-recentes .parceiro-nome {
-        font-size: 1.1rem;
+        font-size: 1.05rem;
         font-weight: 600;
-        color: #222;
+        color: #111827;
         margin-bottom: 4px;
     }
     .clube-recentes .parceiro-desc {
-        font-size: 0.95rem;
-        color: #6c6c6c;
-        margin-bottom: 8px;
+        font-size: 0.9rem;
+        color: #6b7280;
+        margin-bottom: 4px;
+        max-height: 150px;
+        overflow: hidden;
+    }
+
+    .clube-recentes .parceiro-cta {
+        margin-top: auto;
+        margin-bottom: 4px;
+        padding: 8px 18px;
+        border-radius: 999px;
+        background: linear-gradient(135deg,#1d4ed8,#6366f1);
+        color: #ffffff;
+        font-size: 0.85rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 12px 30px rgba(15,23,42,0.7);
+    }
+
+    .clube-recentes .parceiro-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px rgba(15,23,42,0.55);
     }
     .clube-recentes .parceiro-stars {
         color: #fbbf24;
         font-size: 1rem;
         margin-bottom: 6px;
     }
+    .btn-fazer-parte {
+        background: linear-gradient(135deg,#1b7aff,#7c3aed);
+        border: none;
+        border-radius: 28px;
+        font-weight: 600;
+        font-size: 0.98rem;
+        box-shadow: 0 16px 40px rgba(15,23,42,0.85);
+        transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+        color: #ffffff !important;
+    }
+
+    .btn-fazer-parte:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 36px rgba(30,64,175,0.75);
+    }
+
+    .btn-fazer-parte i {
+        color: #ffffff !important;
+    }
+
+    .clube-search-group .form-control {
+        border-radius: 999px 0 0 999px;
+        border: none;
+        box-shadow: 0 12px 30px rgba(15,23,42,0.55);
+    }
+
+    .clube-search-group .btn {
+        border-radius: 0 999px 999px 0;
+        border: none;
+        background: linear-gradient(135deg,#1b7aff,#33b3ff);
+    }
+
     @media (max-width: 576px) {
         .btn-fazer-parte {
             width: 100% !important;
@@ -202,26 +287,28 @@
     }
 </style>
 
-<div class="container my-4" style="max-width: 1300px;">
-    {{-- HERO SECTION --}}
-    <div class="clube-hero">
-        <div class="hero-text">
-            <div class="hero-title">Seja bem-vindo ao<br>Clube <span style="color:#fff;">de Vantagens da JCI Rio do Sul</span></div>
-            <div class="hero-subtitle">Aproveite benefícios exclusivos para você!</div>
+<div class="container my-4 p-3" style="max-width: 1300px;">
+    <div class="clube-page-wrapper">
+        {{-- HERO SECTION --}}
+        <div class="clube-hero">
+            <div class="hero-text">
+                <div class="hero-title">Seja bem-vindo ao<br>Clube <span style="color:#fff;">de Vantagens da JCI Rio do Sul</span></div>
+                <div class="hero-subtitle">Aproveite benefícios exclusivos para você!</div>
+            </div>
         </div>
     </div>
 
-    <div class="d-flex justify-content-end align-items-center mb-2" style="max-width: 100%;">
-        <a href="{{ route('painel-parceiros.create') }}" class="btn px-4 py-2 btn-fazer-parte" style="background: #7c3aed; color: #fff; border-radius: 28px; font-weight: 600; font-size: 1.08rem; box-shadow: 0 2px 8px rgba(124,58,237,0.07); transition: background 0.2s;">
+    <div class="d-flex justify-content-end align-items-center mb-2 mt-3" style="max-width: 100%;">
+        <a href="{{ route('painel-parceiros.create') }}" class="btn px-4 py-2 btn-fazer-parte">
             <i class="fas fa-user-plus me-2"></i> Quero fazer parte
         </a>
     </div>
 
     {{-- CAMPO DE BUSCA --}}
     <form method="GET" action="{{ route('painel-parceiros.index') }}" class="mb-4">
-        <div class="input-group" style="max-width: 400px; margin: 0 auto;">
+        <div class="input-group clube-search-group" style="max-width: 400px; margin: 0 auto;">
             <input type="text" name="busca" class="form-control" placeholder="Buscar parceiro ou benefício..." value="{{ request('busca') }}">
-            <button class="btn btn-primary" type="submit" style="background: #7c3aed; border: none;">
+            <button class="btn btn-primary" type="submit">
                 <i class="fas fa-search"></i>
             </button>
         </div>
@@ -248,7 +335,7 @@
 
     {{-- ADICIONADOS RECENTEMENTE --}}
     <div class="clube-recentes">
-        <div class="clube-section-title">Adicionados recentemente</div>
+        <div class="clube-section-title mb-3">Adicionados recentemente</div>
         <div class="recentes-list">
             @foreach($classificados as $classificado)
                 <a href="{{ route('painel-parceiros.show', $classificado) }}" class="text-decoration-none parceiro-card">
@@ -261,6 +348,9 @@
                     </div>
                     <div class="parceiro-nome">{{ $classificado->titulo }}</div>
                     <div class="parceiro-desc">{{ $classificado->descricao ?? 'Benefício exclusivo no site ' . $classificado->titulo }}</div>
+                    <div class="parceiro-cta">
+                        <span>Ver benefício</span>
+                    </div>
                 </a>
             @endforeach
         </div>
