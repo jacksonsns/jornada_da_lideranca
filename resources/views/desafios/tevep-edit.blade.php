@@ -2,13 +2,104 @@
 
 @push('styles')
 <style>
-    .tevep-bg { background: transparent; }
-    .tevep-header { border-radius:18px; background:linear-gradient(135deg,#2563eb,#3b82f6); color:#fff; padding:18px 22px; box-shadow:0 12px 40px rgba(15,35,95,0.2); }
-    .tevep-title { font-size:1.25rem; font-weight:600; }
-    .tevep-subtitle { font-size:0.85rem; opacity:.9; }
-    .tevep-progress { font-size:0.9rem; }
-    .section-card { border-radius:18px; border:none; box-shadow:0 10px 30px rgba(15,35,95,0.05); margin-bottom:18px; }
-    .section-title { font-weight:600; font-size:0.95rem; }
+    .tevep-bg {
+        padding: 2.2rem 2rem 2rem;
+        background:
+            radial-gradient(circle at 0 0, rgba(59,130,246,0.40), transparent 55%),
+            radial-gradient(circle at 100% 100%, rgba(56,189,248,0.32), transparent 55%),
+            linear-gradient(135deg,#020617 0%,#020617 40%,#02061b 100%);
+    }
+
+    .tevep-header {
+        border-radius: 22px;
+        background: linear-gradient(135deg,#1b7aff,#33b3ff);
+        color: #ffffff;
+        padding: 18px 22px;
+        box-shadow: 0 22px 60px rgba(15,23,42,0.9);
+    }
+
+    .tevep-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+    .tevep-subtitle {
+        font-size: 0.85rem;
+        opacity: .9;
+    }
+
+    .tevep-progress {
+        font-size: 0.9rem;
+    }
+
+    .section-card {
+        border-radius: 22px;
+        border: 1px solid rgba(148,163,184,0.30);
+        background: radial-gradient(circle at 0 0, rgba(59,130,246,0.22), transparent 55%),
+                    radial-gradient(circle at 100% 100%, rgba(129,140,248,0.18), transparent 55%),
+                    rgba(15,23,42,0.98);
+        box-shadow: 0 22px 60px rgba(15,23,42,0.9);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        margin-bottom: 18px;
+    }
+
+    .section-title {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: #e5e7eb;
+    }
+
+    .section-card .card-body {
+        padding: 1.3rem 1.4rem 1.4rem;
+    }
+
+    .section-card label,
+    .section-card p,
+    .section-card span,
+    .section-card th,
+    .section-card td {
+        color: #e5e7eb;
+    }
+
+    .section-card input,
+    .section-card textarea,
+    .section-card select {
+        background-color: rgba(15,23,42,0.9);
+        border-color: rgba(55,65,81,0.9);
+        color: #e5e7eb;
+    }
+
+    .section-card input::placeholder,
+    .section-card textarea::placeholder {
+        color: #6b7280;
+    }
+
+    .section-card .text-danger {
+        color: #fecaca !important;
+    }
+
+    .alert-success {
+        border-radius: 999px;
+        border: 1px solid rgba(34,197,94,0.6);
+        background: linear-gradient(135deg, rgba(22,163,74,0.22), rgba(21,128,61,0.4));
+        color: #bbf7d0;
+        box-shadow: 0 16px 40px rgba(6,95,70,0.65);
+    }
+
+    .alert-danger {
+        border-radius: 16px;
+        border: 1px solid rgba(248,113,113,0.8);
+        background: linear-gradient(135deg, rgba(220,38,38,0.20), rgba(127,29,29,0.65));
+        color: #fecaca;
+        box-shadow: 0 16px 40px rgba(127,29,29,0.65);
+    }
+
+    @media (max-width: 767.98px) {
+        .tevep-bg {
+            padding: 1.6rem 1.1rem 1.6rem;
+        }
+    }
 </style>
 @endpush
 

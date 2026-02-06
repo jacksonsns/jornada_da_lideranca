@@ -1,17 +1,131 @@
 @extends('layouts.app-admin')
 
 @section('content')
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Gerenciar Desafios</h1>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createDesafioModal">
-            <i class="fas fa-plus"></i> Novo Desafio
-        </button>
-    </div>
+@push('styles')
+<style>
+    .admin-desafios-shell {
+        padding: 2.2rem 1.9rem 2rem;
+        background:
+            radial-gradient(circle at 0 0, rgba(59,130,246,0.40), transparent 55%),
+            radial-gradient(circle at 100% 100%, rgba(56,189,248,0.32), transparent 55%),
+            linear-gradient(135deg,#020617 0%,#020617 40%,#02061b 100%);
+        border-radius: 26px;
+        box-shadow: 0 26px 70px rgba(0,0,0,0.95);
+    }
 
-    <div class="card shadow mb-4">
-        <div class="card-body">
-            <div class="table-responsive">
+    .admin-desafios-header-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #e5edff;
+    }
+
+    .admin-desafios-header-subtitle {
+        font-size: 0.9rem;
+        color: #9ca3af;
+    }
+
+    .admin-desafios-cta {
+        border-radius: 999px;
+        border: none;
+        padding: 0.45rem 1.2rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        background: linear-gradient(135deg,#1d4ed8,#6366f1);
+        box-shadow: 0 16px 40px rgba(15,23,42,0.9);
+        color: #ffffff !important;
+    }
+
+    .admin-desafios-cta i {
+        margin-right: 0.35rem;
+    }
+
+    .admin-desafios-card {
+        border: none;
+        border-radius: 22px;
+        background: radial-gradient(circle at 0 0, rgba(59,130,246,0.18), transparent 55%),
+                    radial-gradient(circle at 100% 100%, rgba(129,140,248,0.16), transparent 55%),
+                    rgba(15,23,42,0.98);
+        box-shadow: 0 22px 60px rgba(15,23,42,0.9);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        overflow: hidden;
+    }
+
+    .admin-desafios-card .card-body {
+        padding: 1.3rem 1.4rem 1.4rem;
+    }
+
+    .admin-desafios-table-wrapper table {
+        color: #e5e7eb;
+        margin-bottom: 0;
+    }
+
+    .admin-desafios-table-wrapper thead {
+        background: linear-gradient(135deg,rgba(15,23,42,0.98),rgba(30,64,175,0.95));
+    }
+
+    .admin-desafios-table-wrapper thead th {
+        border-bottom: none;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #9ca3af;
+    }
+
+    .admin-desafios-table-wrapper tbody tr {
+        background-color: transparent;
+        transition: background-color .16s ease, transform .16s ease;
+    }
+
+    .admin-desafios-table-wrapper tbody tr:hover {
+        background-color: rgba(30,64,175,0.18);
+        transform: translateY(-1px);
+    }
+
+    .admin-desafios-table-wrapper tbody td {
+        border-top-color: rgba(55,65,81,0.9);
+        font-size: 0.9rem;
+    }
+
+    .admin-desafios-table-actions .btn {
+        border-radius: 999px;
+        padding: 0.25rem 0.55rem;
+        font-size: 0.8rem;
+    }
+
+    .admin-desafios-pagination {
+        margin-top: 1.2rem;
+    }
+
+    @media (max-width: 767.98px) {
+        .admin-desafios-shell {
+            padding: 1.6rem 1.1rem 1.6rem;
+        }
+
+        .admin-desafios-header-title {
+            font-size: 1.3rem;
+        }
+    }
+</style>
+@endpush
+
+<div class="container-fluid py-4">
+    <div class="admin-desafios-shell">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div>
+                <h1 class="admin-desafios-header-title mb-1">Gerenciar Desafios</h1>
+                <p class="admin-desafios-header-subtitle mb-0">Crie, edite e acompanhe os desafios ativos.</p>
+            </div>
+            <div>
+                <button type="button" class="btn admin-desafios-cta" data-bs-toggle="modal" data-bs-target="#createDesafioModal">
+                    <i class="fas fa-plus"></i> Novo Desafio
+                </button>
+            </div>
+        </div>
+
+        <div class="card admin-desafios-card mb-0">
+            <div class="card-body">
+                <div class="table-responsive admin-desafios-table-wrapper">
                 <table class="table table-bordered" id="desafiosTable">
                     <thead>
                         <tr>
@@ -29,7 +143,7 @@
                             <td>{{ $desafio->pontos }}</td>
                             <td>{{ $desafio->users_count }}</td>
                             <td>{{ $desafio->users->count() }}</td>
-                            <td>
+                            <td class="admin-desafios-table-actions">
                                 <button type="button" class="btn btn-sm btn-info edit-desafio" 
                                     data-bs-toggle="modal" 
                                     data-bs-target="#editDesafioModal"
@@ -53,7 +167,10 @@
                     </tbody>
                 </table>
             </div>
-            {{ $desafios->links() }}
+            <div class="d-flex justify-content-center admin-desafios-pagination">
+                {{ $desafios->links() }}
+            </div>
+        </div>
         </div>
     </div>
 </div>

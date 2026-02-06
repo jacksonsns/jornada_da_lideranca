@@ -1,17 +1,138 @@
 @extends('layouts.app-admin')
 
 @section('content')
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Gerenciar Jornada do Aspirante</h1>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createJornadaModal">
-            <i class="fas fa-plus"></i> Nova Jornada
-        </button>
-    </div>
+@push('styles')
+<style>
+    .admin-jornada-shell {
+        padding: 2.2rem 1.9rem 2rem;
+        background:
+            radial-gradient(circle at 0 0, rgba(59,130,246,0.40), transparent 55%),
+            radial-gradient(circle at 100% 100%, rgba(56,189,248,0.32), transparent 55%),
+            linear-gradient(135deg,#020617 0%,#020617 40%,#02061b 100%);
+        border-radius: 26px;
+        box-shadow: 0 26px 70px rgba(0,0,0,0.95);
+    }
 
-    <div class="card shadow mb-4">
-        <div class="card-body">
-            <div class="table-responsive">
+    .admin-jornada-header-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #e5edff;
+    }
+
+    .admin-jornada-header-subtitle {
+        font-size: 0.9rem;
+        color: #9ca3af;
+    }
+
+    .admin-jornada-cta {
+        border-radius: 999px;
+        border: none;
+        padding: 0.45rem 1.2rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        background: linear-gradient(135deg,#1d4ed8,#6366f1);
+        box-shadow: 0 16px 40px rgba(15,23,42,0.9);
+        color: #ffffff !important;
+    }
+
+    .admin-jornada-cta i {
+        margin-right: 0.35rem;
+    }
+
+    .admin-jornada-card {
+        border: none;
+        border-radius: 22px;
+        background: radial-gradient(circle at 0 0, rgba(59,130,246,0.18), transparent 55%),
+                    radial-gradient(circle at 100% 100%, rgba(129,140,248,0.16), transparent 55%),
+                    rgba(15,23,42,0.98);
+        box-shadow: 0 22px 60px rgba(15,23,42,0.9);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        overflow: hidden;
+    }
+
+    .admin-jornada-card .card-body {
+        padding: 1.3rem 1.4rem 1.4rem;
+    }
+
+    .admin-jornada-table-wrapper table {
+        color: #e5e7eb;
+        margin-bottom: 0;
+    }
+
+    .admin-jornada-table-wrapper thead {
+        background: linear-gradient(135deg,rgba(15,23,42,0.98),rgba(30,64,175,0.95));
+    }
+
+    .admin-jornada-table-wrapper thead th {
+        border-bottom: none;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #9ca3af;
+    }
+
+    .admin-jornada-table-wrapper tbody tr {
+        background-color: transparent;
+        transition: background-color .16s ease, transform .16s ease;
+    }
+
+    .admin-jornada-table-wrapper tbody tr:hover {
+        background-color: rgba(30,64,175,0.18);
+        transform: translateY(-1px);
+    }
+
+    .admin-jornada-table-wrapper tbody td {
+        border-top-color: rgba(55,65,81,0.9);
+        font-size: 0.9rem;
+    }
+
+    .admin-jornada-table-actions .btn {
+        border-radius: 999px;
+        padding: 0.25rem 0.55rem;
+        font-size: 0.8rem;
+    }
+
+    .admin-jornada-status.badge {
+        padding: 0.35rem 0.7rem;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .admin-jornada-pagination {
+        margin-top: 1.2rem;
+    }
+
+    @media (max-width: 767.98px) {
+        .admin-jornada-shell {
+            padding: 1.6rem 1.1rem 1.6rem;
+        }
+
+        .admin-jornada-header-title {
+            font-size: 1.3rem;
+        }
+    }
+</style>
+@endpush
+
+<div class="container-fluid py-4">
+    <div class="admin-jornada-shell">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div>
+                <h1 class="admin-jornada-header-title mb-1">Gerenciar Jornada do Aspirante</h1>
+                <p class="admin-jornada-header-subtitle mb-0">Defina e organize as etapas da jornada.</p>
+            </div>
+            <div>
+                <button type="button" class="btn admin-jornada-cta" data-bs-toggle="modal" data-bs-target="#createJornadaModal">
+                    <i class="fas fa-plus"></i> Nova Jornada
+                </button>
+            </div>
+        </div>
+
+        <div class="card admin-jornada-card mb-0">
+            <div class="card-body">
+                <div class="table-responsive admin-jornada-table-wrapper">
                 <table class="table table-bordered" id="jornadasTable">
                     <thead>
                         <tr>
@@ -29,11 +150,11 @@
                             <td>{{ $jornada->titulo }}</td>
                             <td>{{ $jornada->pontos }}</td>
                             <td>
-                                <span class="badge bg-{{ $jornada->obrigatorio ? 'success' : 'warning' }}">
+                                <span class="badge admin-jornada-status bg-{{ $jornada->obrigatorio ? 'success' : 'warning' }}">
                                     {{ $jornada->obrigatorio ? 'Sim' : 'Não' }}
                                 </span>
                             </td>
-                            <td>
+                            <td class="admin-jornada-table-actions">
                                 <button type="button" class="btn btn-sm btn-info edit-jornada" 
                                     data-bs-toggle="modal" 
                                     data-bs-target="#editJornadaModal"
@@ -57,7 +178,10 @@
                     </tbody>
                 </table>
             </div>
-            {{ $jornadas->links() }}
+            <div class="d-flex justify-content-center admin-jornada-pagination">
+                {{ $jornadas->links() }}
+            </div>
+        </div>
         </div>
     </div>
 </div>

@@ -189,7 +189,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="footer_iner text-center">
-                                <p>© Jornada da Liderança {{ date('Y') }} - <a href="https://github.com/jacksonsns" target="_blank">By Jsn Developer</a></p>
+                                <p>© Jornada da Liderança {{ date('Y') }}. Todos os direitos reservados.</p>
                             </div>
                         </div>
                     </div>
