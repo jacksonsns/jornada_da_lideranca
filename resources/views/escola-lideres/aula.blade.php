@@ -3,10 +3,48 @@
 @section('title', $aula->titulo)
 
 @section('content')
-<div class="container-fluid">
+<style>
+    .escola-aula-page-wrapper {
+        padding: 1.5rem 1.5rem 1rem;
+    }
+
+    .escola-shell-card {
+        border-radius: 26px;
+        border: none;
+        background: radial-gradient(circle at 0 0, rgba(255,255,255,0.96), rgba(233,239,255,0.98));
+        box-shadow: 0 22px 55px rgba(0,0,0,0.65);
+        overflow: hidden;
+    }
+
+    .escola-shell-card .card-header {
+        border: none;
+        border-radius: 26px 26px 0 0 !important;
+        background: linear-gradient(135deg,#1b7aff,#33b3ff);
+        box-shadow: 0 10px 25px rgba(15,35,95,0.45);
+    }
+
+    .escola-shell-card.secondary-header .card-header {
+        background: linear-gradient(135deg,#1bbf7f,#2fd58e);
+    }
+
+    .escola-inner-card {
+        border-radius: 18px;
+        border: none;
+        background: linear-gradient(145deg, rgba(246,248,255,0.98), rgba(228,237,255,0.98));
+        box-shadow: 0 18px 34px rgba(15,23,42,0.4);
+    }
+
+    @media (max-width: 768px) {
+        .escola-aula-page-wrapper {
+            padding: 1rem 1rem 0.75rem;
+        }
+    }
+</style>
+
+<div class="container-fluid escola-aula-page-wrapper">
     <div class="row">
         <div class="col-12">
-            <div class="card shadow mb-4">
+            <div class="card shadow mb-4 escola-shell-card">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h4 class="mb-0 text-light">
                         <i class="fas fa-play-circle"></i>
@@ -21,7 +59,7 @@
                     <div class="row d-none d-md-flex">
                         <div class="col-md-8">
                             <!-- Conteúdo da Aula -->
-                            <div class="card mb-4">
+                            <div class="card mb-4 escola-inner-card">
                                 <div class="card-body">
                                     <h5 class="card-title">Conteúdo</h5>
                                     <div class="mb-4">
@@ -39,7 +77,7 @@
 
                             <!-- Avaliação (Desktop) -->
                             @if($matricula->aulasAssistidas->contains($aula->id))
-                                <div class="card">
+                                <div class="card escola-inner-card">
                                     <div class="card-header bg-success text-white">
                                         <h5 class="mb-0 text-light">
                                             <i class="fas fa-star"></i>

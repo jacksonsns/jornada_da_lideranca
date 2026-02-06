@@ -6,7 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>@yield('title', 'Admin - Jornada da Liderança')</title>
 
-        <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/png">
+        <link rel="icon" href="{{ asset('img/negocios-logo.jpeg') }}" type="image/png">
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="{{ asset('css/bootstrap1.min.css') }}" />
         <!-- themefy CSS -->
@@ -68,7 +68,7 @@
     <body class="crm_body_bg">
         <nav class="sidebar">
             <div class="logo d-flex justify-content-between">
-                <a href="{{ route('admin.index') }}"><img src="{{ asset('img/logo.png') }}" alt=""></a>
+                <a href="{{ route('admin.index') }}"><img src="{{ asset('img/negocios-logo.jpeg') }}" alt=""></a>
                 <div class="sidebar_close_icon d-lg-none">
                     <i class="ti-close"></i>
                 </div>

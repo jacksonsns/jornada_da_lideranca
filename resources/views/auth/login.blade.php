@@ -3,7 +3,7 @@
 @section('content')
 <div class="auth-container">
     <div class="logo">
-        <img src="{{ asset('img/logo.png') }}" alt="Logo">
+        <img src="{{ asset('img/negocios-logo.jpeg') }}" alt="Logo">
     </div>
 
     <form method="POST" action="{{ route('login') }}">
