@@ -2,19 +2,43 @@
 
 @section('content')
 <style>
+    .dream-page-wrapper {
+        padding: 2.5rem 2.5rem 1.5rem;
+    }
+
+    .preview-container {
+        margin-top: 18px;
+        display: none;
+    }
+
+    .dream-shell-card {
+        border-radius: 26px;
+        border: none;
+        background: radial-gradient(circle at 0 0, rgba(255,255,255,0.96), rgba(233,239,255,0.98));
+        box-shadow: 0 22px 55px rgba(0,0,0,0.65);
+        overflow: hidden;
+    }
+
+    .dream-shell-card .card-header {
+        border: none;
+        border-radius: 26px 26px 0 0 !important;
+        background: linear-gradient(135deg,#1b7aff,#33b3ff);
+        box-shadow: 0 10px 25px rgba(15,35,95,0.45);
+    }
+
     .dream-gallery {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-        padding: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 22px;
+        padding: 4px 4px 14px;
     }
 
     .dream-item {
         position: relative;
-        border-radius: 12px;
+        border-radius: 18px;
         overflow: hidden;
-        background: #ffffff;
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        background: radial-gradient(circle at 0 0, rgba(255,255,255,0.9), rgba(229,235,255,0.96));
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         display: flex;
         flex-direction: column;
@@ -23,47 +47,59 @@
     }
 
     .dream-item:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        transform: translateY(-6px) scale(1.01);
+        box-shadow: 0 22px 40px rgba(0, 0, 0, 0.6);
     }
 
-    .dream-item img {
-        flex: 1;
+    .dream-image-container {
+        position: relative;
+        height: 65%;
+        overflow: hidden;
+        border-bottom: 1px solid rgba(255,255,255,0.55);
+    }
+
+    .dream-image {
         width: 100%;
+        height: 100%;
         object-fit: cover;
-        transition: transform 0.3s ease;
+        transition: transform 0.6s ease;
+        transform-origin: center;
+    }
+
+    .dream-item:hover .dream-image {
+        transform: scale(1.08);
     }
 
     .dream-title {
-        background: rgba(0, 0, 0, 0.65);
+        padding: 10px 14px;
+        background: linear-gradient(90deg,#051634,#10224f);
         color: #fff;
-        padding: 10px;
-        font-size: 15px;
-        font-weight: 600;
-        text-align: center;
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        backdrop-filter: blur(4px);
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        justify-content: center;
-        gap: 6px;
+        font-size: 14px;
+        flex: 1;
+        border-radius: 0 0 18px 18px;
     }
 
-    .upload-btn {
-        display: inline-block;
-        padding: 10px 15px;
-        background-color: #007bff;
-        color: white;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background 0.3s;
+    .dream-title span {
+        max-width: 75%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-weight: 500;
+        letter-spacing: 0.02em;
     }
 
-    .dream-title i {
-        color: #ffc107;
-        font-size: 16px;
+    .dream-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to top, rgba(4, 23, 63, 0.85), rgba(4,23,63,0.25), transparent);
+        opacity: 0;
+        transition: opacity 0.35s ease;
     }
 
     .dream-delete {
@@ -87,14 +123,36 @@
     }
 
     .delete-btn:hover {
-        background: rgba(255, 0, 0, 0.85);
-        color: #fff;
+        background: radial-gradient(circle at 0 0, rgba(255,255,255,0.96), rgba(229,57,53,1));
+        transform: scale(1.07) translateY(-1px);
+        box-shadow: 0 12px 26px rgba(0,0,0,0.65);
     }
 
     .delete-btn i {
         font-size: 14px;
     }
 
+    .upload-btn {
+        display: inline-block;
+        padding: 10px 15px;
+        background-image: linear-gradient(135deg,#1b7aff,#33b3ff);
+        color: white;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+    }
+
+    .upload-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 14px 32px rgba(0,0,0,0.6);
+    }
+
+    .upload-hint {
+        font-size: 12px;
+        color: #6c8ab0;
+        margin-top: 10px;
+    }
 
     @media (max-width: 768px) {
         .dream-item {
@@ -110,12 +168,12 @@
 </style>
 
 
-<div class="main_content_iner">
+<div class="main_content_iner dream-page-wrapper">
     <div class="container-fluid p-0 sm_padding_15px">
         <div class="row">
             <!-- Galeria de Sonhos -->
             <div class="col-lg-8">
-                <div class="card shadow-lg">
+                <div class="card shadow-lg dream-shell-card">
                     <div class="card-header bg-info text-white text-center">
                         <h4 class="text-light">🌟 Meu Quadro dos Sonhos</h4>
                     </div>
@@ -150,7 +208,7 @@
 
             <!-- Formulário de Upload -->
             <div class="col-lg-4">
-                <div class="card shadow-lg">
+                <div class="card shadow-lg dream-shell-card">
                     <div class="card-header bg-primary text-white text-center">
                         <h4 class="text-light">🎯 Adicione seu Sonho</h4>
                     </div>
