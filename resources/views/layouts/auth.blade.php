@@ -14,29 +14,44 @@
         }
 
         body {
-            background-color: #ffffff;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            background:
+                radial-gradient(circle at top left, rgba(88, 101, 242, 0.28), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.22), transparent 55%),
+                linear-gradient(135deg, #020617 0%, #020617 40%, #020617 100%);
+            padding: 1.5rem 1rem;
         }
 
         .auth-container {
             width: 100%;
-            max-width: 400px;
-            padding: 2rem;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 420px;
+            padding: 2.25rem 2.2rem 2.1rem;
+            border-radius: 24px;
+            background:
+                radial-gradient(circle at top left, rgba(56, 189, 248, 0.24), transparent 60%),
+                radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.3), transparent 60%),
+                linear-gradient(140deg, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.98));
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            box-shadow: 0 28px 80px rgba(15, 23, 42, 0.9);
+            color: #e5e7eb;
         }
 
         .logo {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 2.2rem;
         }
 
         .logo img {
-            height: 50px;
+            height: 72px;
+            max-width: 100%;
+            object-fit: contain;
+            border-radius: 999px;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
         }
 
         .form-group {
@@ -45,46 +60,58 @@
 
         .form-label {
             display: block;
-            margin-bottom: 0.5rem;
-            color: #333;
+            margin-bottom: 0.45rem;
+            color: #e5e7eb;
             font-weight: 600;
+            font-size: 0.9rem;
         }
 
         .form-input {
             width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 0.375rem;
-            background-color: #f8fafc;
-            color: #1a202c;
-            transition: all 0.3s ease;
+            padding: 0.8rem 1rem;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.8);
+            background-color: rgba(15, 23, 42, 0.9);
+            color: #e5e7eb;
+            font-size: 0.92rem;
+            transition: all 0.18s ease-out;
+        }
+
+        .form-input::placeholder {
+            color: rgba(148, 163, 184, 0.9);
         }
 
         .form-input:focus {
             outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            background-color: rgba(15, 23, 42, 0.98);
+            border-color: rgba(59, 130, 246, 0.9);
+            box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.9);
+            color: #f9fafb;
         }
 
         .btn {
             display: block;
             width: 100%;
-            padding: 0.75rem 1rem;
+            padding: 0.8rem 1rem;
             border: none;
-            border-radius: 0.375rem;
+            border-radius: 999px;
             font-weight: 600;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            font-size: 0.94rem;
+            transition: all 0.18s ease-out;
         }
 
         .btn-primary {
-            background-color: #3b82f6;
-            color: white;
+            background: linear-gradient(135deg, #0ea5e9, #2563eb);
+            color: #f9fafb;
+            border: 1px solid rgba(191, 219, 254, 0.9);
+            box-shadow: 0 14px 40px rgba(37, 99, 235, 0.75);
         }
 
         .btn-primary:hover {
-            background-color: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 18px 55px rgba(37, 99, 235, 0.9);
         }
 
         .remember-forgot {
@@ -92,42 +119,76 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
+            font-size: 0.86rem;
         }
 
         .remember-me {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            color: rgba(209, 213, 219, 0.9);
+        }
+
+        .remember-me input[type="checkbox"] {
+            accent-color: #0ea5e9;
         }
 
         .forgot-password {
-            color: #ef4444;
+            color: #38bdf8;
             text-decoration: none;
-            font-size: 0.875rem;
+            font-size: 0.86rem;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
         }
 
         .register-link {
             text-align: center;
             margin-top: 1.5rem;
-            color: #4b5563;
+            color: rgba(209, 213, 219, 0.9);
+            font-size: 0.9rem;
         }
 
         .register-link a {
-            color: #ef4444;
+            color: #f97316;
             text-decoration: none;
             font-weight: 600;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
         }
 
         .terms {
             text-align: center;
             margin-top: 1.5rem;
-            font-size: 0.875rem;
-            color: #6b7280;
+            font-size: 0.8rem;
+            color: rgba(148, 163, 184, 0.95);
         }
 
         .terms a {
-            color: #6b7280;
+            color: inherit;
             text-decoration: none;
+        }
+
+        .terms a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 575.98px) {
+            body {
+                padding: 1.2rem 0.75rem;
+            }
+
+            .auth-container {
+                padding: 1.8rem 1.5rem 1.7rem;
+                border-radius: 20px;
+            }
+
+            .logo img {
+                height: 64px;
+            }
         }
     </style>
 </head>

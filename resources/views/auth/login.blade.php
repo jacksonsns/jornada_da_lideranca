@@ -45,10 +45,6 @@
         <div class="register-link">
             Não possui uma conta? <a href="{{ route('register') }}">Cadastrar</a>
         </div>
-
-        <div class="terms">
-            <a href="#">Termos de uso & Políticas de Privacidade</a>
-        </div>
     </form>
 </div>
 @endsection
